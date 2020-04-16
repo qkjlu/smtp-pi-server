@@ -17,5 +17,8 @@
     "start": "node app"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "12.16.1"
+  }
 }
