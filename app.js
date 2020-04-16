@@ -18,9 +18,10 @@ http.listen(3000, function () {
   console.log("listening on *:3000");
 });
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+console.log('yo');
+// app.get("/", (req, res) => {
+//   res.sendFile(__dirname + "/index.html");
+// });
 
 io.on("connection", (socket) => {
   console.log("a user connected");
