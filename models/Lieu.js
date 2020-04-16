@@ -1,8 +1,13 @@
+const uuid = require('uuid').v4
 const Model = require("sequelize").Model;
 module.exports = (sequelize, DataTypes) => {
   class Lieu extends Model {}
   Lieu.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+      },
       adresse: {
         type: DataTypes.CHAR,
         allowNull: false,
@@ -25,5 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Lieux",
     }
   );
+  Lieu.beforeCreate( lieu => lieu.id = uuid())
   return Lieu;
 };

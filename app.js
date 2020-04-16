@@ -2,7 +2,7 @@ var app = require("express")();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var routes = require("./routes");
-
+app.use(require("express").json())
 app.use("/admins", routes.admins);
 app.use("/camionneurs", routes.camionneurs);
 app.use("/chantiers", routes.chantiers);

@@ -9,7 +9,7 @@ const Chantier = sequelize.import(__dirname + "/Chantier");
 const Etape = sequelize.import(__dirname + "/Etape");
 const Grutier = sequelize.import(__dirname + "/Grutier");
 const Lieu = sequelize.import(__dirname + "/Lieu");
-Camionneur.hasMany(Etape);
+Camionneur.hasMany(Etape, { foreignKey: { allowNull: false }});
 Camionneur.belongsToMany(Chantier, { through: "ChantierCamionneur" });
 Chantier.belongsToMany(Camionneur, { through: "ChantierCamionneur" });
 Etape.belongsTo(Chantier, { foreignKey: { allowNull: false } });
