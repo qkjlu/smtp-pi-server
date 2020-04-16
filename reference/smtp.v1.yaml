@@ -28,7 +28,36 @@ paths:
       tags:
         - camionneurs
         - get
-      description: Renvoie la liste des camionneurs au format JSON
+      description: Permet de récupérer la liste de tous les camionneurs
+    post:
+      summary: Créer un camionneur
+      operationId: post-camionneurs
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Camionneur.v1.yaml
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nom:
+                  type: string
+                prenom:
+                  type: string
+              required:
+                - nom
+                - prenom
+        description: ''
+      description: 'Permet de créer un camionneur, il est ensuite renvoyé.'
   /chantiers:
     get:
       summary: Récupérer la liste des chantiers
@@ -36,11 +65,11 @@ paths:
         - chantiers
         - get
       operationId: get-chantiers
-      description: Renvoie la liste des chantiers au format JSON
+      description: Permet de récupérer la liste de tous les chantiers
       requestBody: {}
       responses:
         '200':
-          description: 'OK[]'
+          description: OK
           content:
             application/json:
               schema:
@@ -59,6 +88,39 @@ paths:
                     type: integer
                   updatedAt:
                     type: integer
+    post:
+      summary: Créer un chantier
+      operationId: post-chantiers
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Chantiers.v1.json
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      description: 'Permet de créer un chantier, il est ensuite renvoyé.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nom:
+                  type: string
+                lieuChargementId:
+                  type: string
+                  description: 'uuid [clé étrangère]'
+                lieuDéchargementId:
+                  type: string
+                  description: 'uuid [clé étrangère]'
+              required:
+                - nom
+                - lieuChargementId
+                - lieuDéchargementId
   /etapes:
     get:
       summary: Récupérer la liste des étapes
@@ -71,45 +133,33 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: uuid
-                  dateDebut:
-                    type: integer
-                    description: timestamp
-                  dateFin:
-                    type:
-                      - integer
-                      - 'null'
-                    description: timestamp
-                  type:
-                    type: string
-                  tempsManoeuvre:
-                    type:
-                      - integer
-                      - 'null'
-                    description: temps de la manoeuvre en seconde
-                  CamionneurId:
-                    type: integer
-                    description: "id du camionneur ayant effectué l'étape"
-                  ChantierId:
-                    type: integer
-                    description: "id du chantier pour lequel l'étape est effectué"
-                  createdAt:
-                    type: integer
-                    description: timestamp
-                  updatedAt:
-                    type: integer
-                    description: timestamp
+                $ref: ../models/Etape.v1.json
       operationId: get-etapes
+      description: 'Permet de récupérer la liste de toutes les étapes '
     post:
-      summary: Créer une étape
+      summary: Commencer une étape
       operationId: post-etapes
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Etape.v1.json
+        '400':
+          description: Bad Request
+          content:
+            text/html:
+              schema:
+                type: string
+              examples: {}
+        '500':
+          description: Internal Server Error
+          content:
+            text/html:
+              schema:
+                type: object
+                properties: {}
       requestBody:
         content:
           application/json:
@@ -121,7 +171,7 @@ paths:
                   description: timestamp
                 type:
                   type: string
-                  description: '"chargement", "déchargement", "pause", "panne"'
+                  description: '"chargement", "déchargement"'
                 CamionneurId:
                   type: integer
                   description: "id du cammioneur effectuant l'étape"
@@ -137,6 +187,7 @@ paths:
       tags:
         - etapes
         - post
+      description: "Permet de commencer une étape pour un camionneur et un chantier donné, l'étape créer et ensuite renvoyé."
   /grutiers:
     get:
       summary: Récupérer la liste des grutiers
@@ -165,6 +216,35 @@ paths:
                     type: integer
                     description: timestamp
       operationId: get-grutiers
+      description: Permet de récupérer la liste de tous les grutiers
+    post:
+      summary: Créer un grutier
+      operationId: post-grutiers
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Grutier.v1.json
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      description: "Permet d'ajouter un grutier à la base de données, le grutier créer et ensuite renvoyé."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nom:
+                  type: string
+                prenom:
+                  type: string
+              required:
+                - nom
+                - prenom
   /lieux:
     get:
       summary: Récupérer la liste des lieux
@@ -195,6 +275,38 @@ paths:
                     type: integer
                     description: timestamp
       operationId: get-lieux
+      description: Permet de récupérer la liste de tous les lieux
+    post:
+      summary: Créer un lieu
+      operationId: post-lieux
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Lieu.v1.json
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      description: 'Permet de créer un lieu, le lieu créé et ensuite renvoyé.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adresse:
+                  type: string
+                longitude:
+                  type: number
+                latitude:
+                  type: number
+              required:
+                - adresse
+                - longitude
+                - latitude
 components:
   schemas: {}
 servers:

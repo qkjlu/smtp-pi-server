@@ -1,0 +1,24 @@
+title: Camionneur
+type: object
+x-examples: {}
+description: ''
+properties:
+  id:
+    type: string
+    description: 'uuid [clé primaire]'
+  nom:
+    type: string
+  prenom:
+    type: string
+  createdAt:
+    type: string
+    description: timestamp with time zone (généré automatiquement)
+  updatedAt:
+    description: timestamp with time zone (généré automatiquement)
+    type: string
+required:
+  - id
+  - nom
+  - prenom
+  - createdAt
+  - updatedAt

@@ -1,0 +1,31 @@
+{
+  "title": "Grutiers",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "uuid [clé primaire]"
+    },
+    "nom": {
+      "type": "string"
+    },
+    "prenom": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "timestamp with time zone (généré automatiquement)"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "timestamp with time zone (généré automatiquement)"
+    }
+  },
+  "required": [
+    "id",
+    "nom",
+    "prenom",
+    "createdAt",
+    "updatedAt"
+  ]
+}
