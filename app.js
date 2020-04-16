@@ -1,4 +1,4 @@
-require('dotenv').config()
+require("dotenv").config();
 var express = require("express");
 var app = express();
 var http = require("http").createServer(app);
@@ -8,7 +8,7 @@ var routes = require("./routes");
 const port = process.env.PORT || 3000;
 
 //app.use(cors())
-app.use(express.json())
+app.use(express.json());
 app.use("/admins", routes.admins);
 app.use("/camionneurs", routes.camionneurs);
 app.use("/chantiers", routes.chantiers);
@@ -18,14 +18,14 @@ app.use("/lieux", routes.lieux);
 app.use("/db", routes.db);
 
 app.get("/", (req, res) => {
-  res.send("Bienvenue sur l'API SMTP, lien vers la doc : https://stoplight.io/p/docs/gh/qkjlu/smtp-pi-server");
+  res.send(
+    "Bienvenue sur l'API SMTP, lien vers la doc : <a href=https://stoplight.io/p/docs/gh/qkjlu/smtp-pi-server> API SMTP </a>"
+  );
 });
 
 http.listen(port, function () {
   console.log("Application listening on port " + port);
 });
-
-
 
 // io.on("connection", (socket) => {
 //   console.log("a user connected");
