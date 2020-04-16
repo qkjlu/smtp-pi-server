@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === "dev") {
   });
 }
 if (process.env.NODE_ENV === "production") {
+  console.log('prod');
   sequelize = new Sequelize(
     process.env.DATABASE_URL,
     {
