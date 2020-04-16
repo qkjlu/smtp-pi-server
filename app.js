@@ -1,9 +1,9 @@
 var express = require("express");
 var app = express();
-var http = require("http").createServer(app);
+//var http = require("http").createServer(app);
 //var io = require("socket.io")(http);
 //var routes = require("./routes");
-var cors = require('cors');
+//var cors = require('cors');
 const port = 3000
 
 
@@ -18,13 +18,15 @@ const port = 3000
 // app.use("/lieux", routes.lieux);
 // app.use("/db", routes.db);
 
+app.get("/", (req, res) => {
+  res.send("ça marche");
+});
+
 app.listen(port, function () {
   console.log("listening on *:3000");
 });
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+
 
 // io.on("connection", (socket) => {
 //   console.log("a user connected");
