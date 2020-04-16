@@ -38,6 +38,8 @@ Chantier.belongsTo(Lieu, {
   as: "lieuChargement",
   foreignKey: { allowNull: false },
 });
+sequelize.sync();
+
 
 exports.Admin = Admin;
 exports.Camionneur = Camionneur;
