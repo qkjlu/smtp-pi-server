@@ -8,21 +8,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: uuid
-                  nom:
-                    type: string
-                  prenom:
-                    type: string
-                  updatedAt:
-                    type: integer
-                    description: timestamp
-                  createdAt:
-                    type: integer
-                    description: timestamp
+                $ref: ../models/Camionneur.v1.yaml
               examples: {}
       operationId: get-camionneurs
       tags:
@@ -73,21 +59,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: uuid
-                  nom:
-                    type: string
-                  lieuDéchargementId:
-                    type: integer
-                  lieuChargementId:
-                    type: integer
-                  createdAt:
-                    type: integer
-                  updatedAt:
-                    type: integer
+                $ref: ../models/Chantiers.v1.json
     post:
       summary: Créer un chantier
       operationId: post-chantiers
@@ -200,21 +172,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: uuid
-                  nom:
-                    type: string
-                  prenom:
-                    type: string
-                  createdAt:
-                    type: integer
-                    description: timestamp
-                  updatedAt:
-                    type: integer
-                    description: timestamp
+                $ref: ../models/Grutier.v1.json
       operationId: get-grutiers
       description: Permet de récupérer la liste de tous les grutiers
     post:
@@ -257,23 +215,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: uuid
-                  adresse:
-                    type: string
-                  longitude:
-                    type: number
-                  latitude:
-                    type: number
-                  createdAt:
-                    type: integer
-                    description: timestamp
-                  updatedAt:
-                    type: integer
-                    description: timestamp
+                $ref: ../models/Lieu.v1.json
       operationId: get-lieux
       description: Permet de récupérer la liste de tous les lieux
     post:
