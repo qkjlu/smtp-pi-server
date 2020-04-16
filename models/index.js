@@ -45,7 +45,6 @@ Chantier.belongsTo(Lieu, {
   } catch (error) {
     console.error(error)
   }
-  console.log('synced')
 })()
 
 

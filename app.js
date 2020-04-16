@@ -1,19 +1,22 @@
-var app = require("express")();
+var express = require("express");
+var app = express();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var routes = require("./routes");
 var cors = require('cors');
 const port = 3000
 
+
+
 //app.use(cors())
-app.use(require("express").json())
-app.use("/admins", routes.admins);
-app.use("/camionneurs", routes.camionneurs);
-app.use("/chantiers", routes.chantiers);
-app.use("/etapes", routes.etapes);
-app.use("/grutiers", routes.grutiers);
-app.use("/lieux", routes.lieux);
-app.use("/db", routes.db);
+// app.use(express.json())
+// app.use("/admins", routes.admins);
+// app.use("/camionneurs", routes.camionneurs);
+// app.use("/chantiers", routes.chantiers);
+// app.use("/etapes", routes.etapes);
+// app.use("/grutiers", routes.grutiers);
+// app.use("/lieux", routes.lieux);
+// app.use("/db", routes.db);
 
 http.listen(port, function () {
   console.log("listening on *:3000");
