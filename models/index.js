@@ -8,19 +8,17 @@ if (process.env.NODE_ENV === "dev") {
   });
 }
 if (process.env.NODE_ENV === "production") {
-
   sequelize = new Sequelize(
     process.env.DATABASE_URL,
     {
       dialect: "postgres",
       protocol: "postgres",
+      logging: true
     }
   );
 }
 
 const Admin = sequelize.import(__dirname + "/Admin");
-console.log(__dirname);
-console.log(Admin);
 const Camionneur = sequelize.import(__dirname + "/Camionneur");
 const Chantier = sequelize.import(__dirname + "/Chantier");
 const Etape = sequelize.import(__dirname + "/Etape");
