@@ -1,0 +1,209 @@
+paths:
+  /camionneurs:
+    get:
+      summary: Récupérer la liste des camionneurs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: uuid
+                  nom:
+                    type: string
+                  prenom:
+                    type: string
+                  updatedAt:
+                    type: integer
+                    description: timestamp
+                  createdAt:
+                    type: integer
+                    description: timestamp
+              examples: {}
+      operationId: get-camionneurs
+      tags:
+        - camionneurs
+        - get
+      description: Renvoie la liste des camionneurs au format JSON
+  /chantiers:
+    get:
+      summary: Récupérer la liste des chantiers
+      tags:
+        - chantiers
+        - get
+      operationId: get-chantiers
+      description: Renvoie la liste des chantiers au format JSON
+      requestBody: {}
+      responses:
+        '200':
+          description: 'OK[]'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: uuid
+                  nom:
+                    type: string
+                  lieuDéchargementId:
+                    type: integer
+                  lieuChargementId:
+                    type: integer
+                  createdAt:
+                    type: integer
+                  updatedAt:
+                    type: integer
+  /etapes:
+    get:
+      summary: Récupérer la liste des étapes
+      tags:
+        - etapes
+        - get
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: uuid
+                  dateDebut:
+                    type: integer
+                    description: timestamp
+                  dateFin:
+                    type:
+                      - integer
+                      - 'null'
+                    description: timestamp
+                  type:
+                    type: string
+                  tempsManoeuvre:
+                    type:
+                      - integer
+                      - 'null'
+                    description: temps de la manoeuvre en seconde
+                  CamionneurId:
+                    type: integer
+                    description: "id du camionneur ayant effectué l'étape"
+                  ChantierId:
+                    type: integer
+                    description: "id du chantier pour lequel l'étape est effectué"
+                  createdAt:
+                    type: integer
+                    description: timestamp
+                  updatedAt:
+                    type: integer
+                    description: timestamp
+      operationId: get-etapes
+    post:
+      summary: Créer une étape
+      operationId: post-etapes
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dateDébut:
+                  type: integer
+                  description: timestamp
+                type:
+                  type: string
+                  description: '"chargement", "déchargement", "pause", "panne"'
+                CamionneurId:
+                  type: integer
+                  description: "id du cammioneur effectuant l'étape"
+                ChantierId:
+                  type: integer
+                  description: "id du chantier pour lequel l'étape est effectué"
+              required:
+                - dateDébut
+                - type
+                - CamionneurId
+                - ChantierId
+        description: ''
+      tags:
+        - etapes
+        - post
+  /grutiers:
+    get:
+      summary: Récupérer la liste des grutiers
+      tags:
+        - grutiers
+        - get
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: uuid
+                  nom:
+                    type: string
+                  prenom:
+                    type: string
+                  createdAt:
+                    type: integer
+                    description: timestamp
+                  updatedAt:
+                    type: integer
+                    description: timestamp
+      operationId: get-grutiers
+  /lieux:
+    get:
+      summary: Récupérer la liste des lieux
+      tags:
+        - 'lieux '
+        - get
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: uuid
+                  adresse:
+                    type: string
+                  longitude:
+                    type: number
+                  latitude:
+                    type: number
+                  createdAt:
+                    type: integer
+                    description: timestamp
+                  updatedAt:
+                    type: integer
+                    description: timestamp
+      operationId: get-lieux
+components:
+  schemas: {}
+servers:
+  - url: 'http://localhost:3000'
+info:
+  title: SMTP API
+  version: 0.0.1
+  description: ''
+  contact:
+    name: Lucas Mas
+    email: lucas_mas@msn.com
+openapi: 3.0.0

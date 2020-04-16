@@ -1,0 +1,17 @@
+title: Camionneur
+type: object
+x-examples: {}
+description: ''
+properties:
+  id:
+    type: integer
+  nom:
+    type: string
+  prenom:
+    type: string
+  createdAt:
+    type: integer
+    description: timestam
+  updatedAt:
+    type: integer
+    description: timestamp
