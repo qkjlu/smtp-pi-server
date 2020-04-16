@@ -3,6 +3,7 @@ var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var routes = require("./routes");
 var cors = require('cors');
+const port = 3000
 
 //app.use(cors())
 app.use(require("express").json())
@@ -14,7 +15,7 @@ app.use("/grutiers", routes.grutiers);
 app.use("/lieux", routes.lieux);
 app.use("/db", routes.db);
 
-http.listen(3000, function () {
+http.listen(port, function () {
   console.log("listening on *:3000");
 });
 
