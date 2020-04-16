@@ -2,20 +2,20 @@ require('dotenv').config()
 var express = require("express");
 var app = express();
 var http = require("http").createServer(app);
-//var io = require("socket.io")(http);
-//var routes = require("./routes");
+var io = require("socket.io")(http);
+var routes = require("./routes");
 //var cors = require('cors');
 const port = process.env.PORT || 3000;
 
-//app.use(cors())
-// app.use(express.json())
-// app.use("/admins", routes.admins);
-// app.use("/camionneurs", routes.camionneurs);
-// app.use("/chantiers", routes.chantiers);
-// app.use("/etapes", routes.etapes);
-// app.use("/grutiers", routes.grutiers);
-// app.use("/lieux", routes.lieux);
-// app.use("/db", routes.db);
+app.use(cors())
+app.use(express.json())
+app.use("/admins", routes.admins);
+app.use("/camionneurs", routes.camionneurs);
+app.use("/chantiers", routes.chantiers);
+app.use("/etapes", routes.etapes);
+app.use("/grutiers", routes.grutiers);
+app.use("/lieux", routes.lieux);
+app.use("/db", routes.db);
 
 app.get("/", (req, res) => {
   res.send("ça marche");

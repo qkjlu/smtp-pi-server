@@ -47,7 +47,6 @@ Chantier.belongsTo(Lieu, {
   }
 })()
 
-
 exports.Admin = Admin;
 exports.Camionneur = Camionneur;
 exports.Chantier = Chantier;
