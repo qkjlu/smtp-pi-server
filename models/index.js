@@ -16,10 +16,11 @@ if (process.env.NODE_ENV === "production") {
       protocol: "postgres",
     }
   );
-  console.log('prod');
 }
 
 const Admin = sequelize.import(__dirname + "/Admin");
+console.log(__dirname);
+console.log(Admin);
 const Camionneur = sequelize.import(__dirname + "/Camionneur");
 const Chantier = sequelize.import(__dirname + "/Chantier");
 const Etape = sequelize.import(__dirname + "/Etape");
