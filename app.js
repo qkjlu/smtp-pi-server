@@ -4,7 +4,7 @@ var io = require("socket.io")(http);
 var routes = require("./routes");
 var cors = require('cors');
 
-app.use(cors())
+//app.use(cors())
 app.use(require("express").json())
 app.use("/admins", routes.admins);
 app.use("/camionneurs", routes.camionneurs);
