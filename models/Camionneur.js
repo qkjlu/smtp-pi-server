@@ -6,24 +6,24 @@ module.exports = (sequelize, DataTypes) => {
       {
         id: {
           primaryKey: true,
-          type: DataTypes.UUID
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4
         },
         nom: {
-          type: DataTypes.CHAR,
+          type: DataTypes.STRING,
           allowNull: false,
         },
         prenom: {
-          type: DataTypes.CHAR,
+          type: DataTypes.STRING,
           allowNull: false,
         },
       },
       { sequelize, modelName: "Camionneur"  }
     );
-    Camionneur.beforeCreate( camionneur => camionneur.id = uuid())
     Camionneur.associate = models => {
       Camionneur.hasMany(models.Etape, { foreignKey: { allowNull: false } });
       Camionneur.belongsToMany(models.Chantier, { through: "ChantierCamionneur" });
-      Camionneur.belongsToMany(models.Entreprise, { through: "EntrepriseCamionneur", foreignKey : { allowNull: false } });
+      Camionneur.belongsToMany(models.Entreprise, { through: "EntrepriseCamionneur"});
     }
     return Camionneur;
   };

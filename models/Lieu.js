@@ -7,9 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
+        defaultValue: DataTypes.UUIDV4
       },
       adresse: {
-        type: DataTypes.CHAR,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       longitude: {
@@ -30,7 +31,6 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Lieux",
     }
   );
-  Lieu.beforeCreate( lieu => lieu.id = uuid())
   Lieu.associate = models => {
     Lieu.belongsToMany(models.Grutier, { through: "LieuGrutier" });
     Lieu.hasMany(models.Chantier)

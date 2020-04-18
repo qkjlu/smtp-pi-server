@@ -14,6 +14,7 @@ app.use("/chantiers", routes.chantiers);
 app.use("/etapes", routes.etapes);
 app.use("/grutiers", routes.grutiers);
 app.use("/lieux", routes.lieux);
+app.use("/entreprises", routes.entreprises);
 
 app.get("/", (req, res) => {
   res.send(

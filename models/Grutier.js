@@ -7,20 +7,20 @@ module.exports = (sequelize, DataTypes) => {
       {
         id: {
           primaryKey: true,
-          type: DataTypes.UUID
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4
         },
         nom: {
-          type: DataTypes.CHAR,
+          type: DataTypes.STRING,
           allowNull: false,
         },
         prenom: {
-          type: DataTypes.CHAR,
+          type: DataTypes.STRING,
           allowNull: false,
         }
       },
       { sequelize, modelName: "Grutier"  }
     );
-    Grutier.beforeCreate( grutier => grutier.id = uuid())
     Grutier.associate = models => {
       Grutier.belongsToMany(models.Lieu, { through: "LieuGrutier" });
       Grutier.belongsToMany(models.Entreprise, { through: "EntrepriseGrutier", allowNull : false })

@@ -1,5 +1,5 @@
 "use strict";
-const { Lieux, Camionneurs, Admins, Grutiers, Chantiers, Etapes, ChantierCamionneur, LieuGrutier } = require("../models/MockData");
+const { Lieux, Entreprises, Camionneurs, Admins, Grutiers, Chantiers, Etapes, ChantierCamionneur, LieuGrutier } = require("../models/MockData");
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -7,7 +7,8 @@ module.exports = {
       queryInterface.bulkInsert("Lieux", Lieux),
       queryInterface.bulkInsert("Camionneurs", Camionneurs),
       queryInterface.bulkInsert("Admins", Admins),
-      queryInterface.bulkInsert("Grutiers", Grutiers)
+      queryInterface.bulkInsert("Grutiers", Grutiers),
+      queryInterface.bulkInsert("Entreprises", Entreprises)
     ])
       .then(queryInterface.bulkInsert("Chantier", Chantiers))
       .then(queryInterface.bulkInsert("Etapes", Etapes))

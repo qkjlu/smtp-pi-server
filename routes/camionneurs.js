@@ -1,7 +1,8 @@
 const router = require('express').Router()
-const Camionneur = require('../models').sequelize.model('Camionneur')
+const sequelize = require('../models').sequelize;
+const Camionneur = sequelize.model('Camionneur')
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
     try {
         res.json(await Camionneur.findAll())
     } catch (error) {
@@ -11,18 +12,17 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { nom, prenom } = req.body;
-    if (!(nom && prenom)) {
-      const error = new Error("Bad request");
-      error.status = 400;
-      next(error);
+    const { nom, prenom, entreprise } = req.body;
+    if (!(nom && prenom && entreprise)) {
+      res.sendStatus(400)
     }
-    res.status(201).json(
-      await Camionneur.create({ nom, prenom })
-    );
+    const newCamionneur = await Camionneur.create({ nom, prenom });
+    await newCamionneur.addEntreprise(entreprise)
+    res.status(201).json(newCamionneur);
   } catch (error) {
     next(error);
   }
 });
+
 
 module.exports = router

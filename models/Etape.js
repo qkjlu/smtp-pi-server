@@ -7,18 +7,19 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         primaryKey: true,
-        type: DataTypes.UUID
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4
       },
       dateDebut: {
         type: DataTypes.DATE,
         allowNull: false,
       },
       dateFin: {
-        type: DataTypes.CHAR,
+        type: DataTypes.STRING,
         allowNull: true,
       },
       type: {
-        type: DataTypes.CHAR,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           isIn: [['chargement', 'déchargement', 'pause', 'panne']]
@@ -30,7 +31,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     { sequelize, modelName: "Etape"  }
   );
-  Etape.beforeCreate( etape => etape.id = uuid())
   Etape.associate = models => {
     Etape.belongsTo(models.Camionneur, { foreignKey: { allowNull: false } })
     Etape.belongsTo(models.Chantier, { foreignKey: { allowNull: false } });

@@ -8,15 +8,15 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
+        defaultValue: DataTypes.UUIDV4
       },
       nom: {
-        type: DataTypes.CHAR,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },
     { sequelize, modelName: "Chantier"  }
   );
-  Chantier.beforeCreate((chantier) => (chantier.id = uuid()));
   Chantier.associate = (models) => {
     Chantier.belongsToMany(models.Camionneur, {
       through: "ChantierCamionneur",

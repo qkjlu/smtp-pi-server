@@ -11,18 +11,13 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { nom, prenom } = req.body;
-    if (!(nom && prenom)) {
-      const error = new Error("Bad request");
-      error.status = 400;
-      next(error);
+    const { nom, prenom, entreprise } = req.body;
+    if (!(nom && prenom && entreprise)) {
+      res.sendStatus(400);
     }
-    res.status(201).json(
-      await Grutier.create({
-        nom,
-        prenom,
-      })
-    );
+    const newGrutier = await Grutier.create({ nom, prenom });
+    await newGrutier.addEntreprise(entreprise)
+    res.status(201).json(newGrutier);
   } catch (error) {
     next(error);
   }

@@ -13,9 +13,7 @@ router.post("/", async (req, res, next) => {
     try {
       const { adresse, longitude, latitude } = req.body;
       if (!(adresse && longitude && latitude)) {
-        const error = new Error("Bad request");
-        error.status = 400;
-        next(error);
+        res.sendStatus(400);
       }
       res.status(201).json(
         await Lieu.create({

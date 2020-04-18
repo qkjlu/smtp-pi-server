@@ -13,9 +13,7 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   const { dateDebut, type, CamionneurId, ChantierId } = req.body;
   if (!(dateDebut && type && CamionneurId && ChantierId)) {
-      const error = new Error("Bad request");
-      error.status = 400;
-      next(error);
+    res.sendStatus(400);
   }
   try {
     res.status(201).json(
