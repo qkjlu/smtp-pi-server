@@ -28,8 +28,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
     },
-    { sequelize }
+    { sequelize, modelName: "Etape"  }
   );
   Etape.beforeCreate( etape => etape.id = uuid())
+  Etape.associate = models => {
+    Etape.belongsTo(models.Camionneur, { foreignKey: { allowNull: false } })
+    Etape.belongsTo(models.Chantier, { foreignKey: { allowNull: false } });
+  }
   return Etape;
 };

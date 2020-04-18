@@ -17,8 +17,13 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false,
         },
       },
-      { sequelize }
+      { sequelize, modelName: "Camionneur"  }
     );
     Camionneur.beforeCreate( camionneur => camionneur.id = uuid())
+    Camionneur.associate = models => {
+      Camionneur.hasMany(models.Etape, { foreignKey: { allowNull: false } });
+      Camionneur.belongsToMany(models.Chantier, { through: "ChantierCamionneur" });
+      Camionneur.belongsToMany(models.Entreprise, { through: "EntrepriseCamionneur", foreignKey : { allowNull: false } });
+    }
     return Camionneur;
   };

@@ -18,8 +18,12 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false,
         }
       },
-      { sequelize }
+      { sequelize, modelName: "Grutier"  }
     );
     Grutier.beforeCreate( grutier => grutier.id = uuid())
+    Grutier.associate = models => {
+      Grutier.belongsToMany(models.Lieu, { through: "LieuGrutier" });
+      Grutier.belongsToMany(models.Entreprise, { through: "EntrepriseGrutier", allowNull : false })
+    }
     return Grutier;
   };

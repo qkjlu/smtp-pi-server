@@ -1,7 +1,7 @@
 const uuid = require("uuid").v4;
 
 const uuidAdmins = [uuid(), uuid()];
-exports.Admins = [
+const Admins = [
   {
     id: uuidAdmins[0],
     nom: "Perralta",
@@ -18,7 +18,7 @@ exports.Admins = [
   },
 ];
 const uuidCamionneurs = [uuid(), uuid()];
-exports.Camionneurs = [
+const Camionneurs = [
   {
     id: uuidCamionneurs[0],
     nom: "Dubois",
@@ -30,8 +30,8 @@ exports.Camionneurs = [
     prenom: "Pedro",
   },
 ];
-const uuidGrutiers = [uuid(),uuid()];
-exports.Grutiers = [
+const uuidGrutiers = [uuid(), uuid()];
+const Grutiers = [
   {
     id: uuidGrutiers[0],
     nom: "Raoult",
@@ -45,7 +45,7 @@ exports.Grutiers = [
 ];
 const uuidChantiers = [uuid(), uuid()];
 const uuidLieux = [uuid(), uuid(), uuid()];
-exports.Chantiers = [
+const Chantiers = [
   {
     id: uuidChantiers[0],
     nom: "Chantier Jacou",
@@ -59,8 +59,7 @@ exports.Chantiers = [
     lieuDéchargementId: uuidLieux[1],
   },
 ];
-
-exports.Lieux = [
+const Lieux = [
   {
     id: uuidLieux[0],
     adresse: "10 avenue de la Liberté",
@@ -81,7 +80,7 @@ exports.Lieux = [
   },
 ];
 const uuidEtapes = [uuid(), uuid(), uuid()];
-exports.Etapes = [
+const Etapes = [
   {
     id: uuidEtapes[0],
     dateDebut: 1586344415,
@@ -108,3 +107,40 @@ exports.Etapes = [
     ChantierId: uuidChantiers[1],
   },
 ];
+const uuidEntreprises = [uuid(), uuid()];
+const Entreprises = [
+  {
+    id: uuidEntreprises[0],
+    nom: "SMTP34",
+  },
+  {
+    id: uuidEntreprises[1],
+    nom: "Altrad",
+  },
+];
+const LieuGrutier = [
+  {
+    LieuId: uuidLieux[0],
+    GrutierId: uuidGrutiers[0],
+  },
+  {
+    LieuId: uuidLieux[1],
+    GrutierId: uuidGrutiers[1],
+  },
+  {
+    LieuId: uuidLieux[0],
+    GrutierId: uuidGrutiers[1],
+  },
+];
+const ChantierCamionneur = [
+  {
+    CamionneurId: uuidCamionneurs[0],
+    ChantierId: uuidChantiers[1]
+  },
+  {
+    CamionneurId: uuidCamionneurs[1],
+    ChantierId: uuidChantiers[0]
+  },
+];
+
+module.exports = { Lieux, Camionneurs, Admins, Grutiers, Chantiers, Etapes, ChantierCamionneur, LieuGrutier }

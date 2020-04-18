@@ -1,12 +1,12 @@
-const Model = require('sequelize').Model;
-const uuid = require('uuid').v4
+const Model = require("sequelize").Model;
+const uuid = require("uuid").v4;
 module.exports = (sequelize, DataTypes) => {
   class Admin extends Model {}
   Admin.init(
     {
       id: {
         primaryKey: true,
-        type: DataTypes.UUID
+        type: DataTypes.UUID,
       },
       nom: {
         type: DataTypes.CHAR,
@@ -25,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     },
-    { sequelize }
+    { sequelize, modelName: "Admin" }
   );
-  Admin.beforeCreate( admin => admin.id = uuid())
+  Admin.beforeCreate((admin) => (admin.id = uuid()));
   return Admin;
 };

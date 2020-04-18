@@ -1,4 +1,4 @@
-const uuid = require('uuid').v4
+const uuid = require("uuid").v4;
 const Model = require("sequelize").Model;
 
 module.exports = (sequelize, DataTypes) => {
@@ -14,8 +14,21 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     },
-    { sequelize }
+    { sequelize, modelName: "Chantier"  }
   );
-  Chantier.beforeCreate( chantier => chantier.id = uuid())
+  Chantier.beforeCreate((chantier) => (chantier.id = uuid()));
+  Chantier.associate = (models) => {
+    Chantier.belongsToMany(models.Camionneur, {
+      through: "ChantierCamionneur",
+    });
+    Chantier.belongsTo(models.Lieu, {
+      as: "lieuDéchargement",
+      foreignKey: { allowNull: false },
+    });
+    Chantier.belongsTo(models.Lieu, {
+      as: "lieuChargement",
+      foreignKey: { allowNull: false },
+    });
+  };
   return Chantier;
 };

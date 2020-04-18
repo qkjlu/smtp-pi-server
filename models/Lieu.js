@@ -31,5 +31,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Lieu.beforeCreate( lieu => lieu.id = uuid())
+  Lieu.associate = models => {
+    Lieu.belongsToMany(models.Grutier, { through: "LieuGrutier" });
+    Lieu.hasMany(models.Chantier)
+  }
   return Lieu;
 };

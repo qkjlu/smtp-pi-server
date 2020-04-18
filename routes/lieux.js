@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const Models = require('../models')
+const Lieu = require('../models').sequelize.model('Lieu')
 
 router.get('/', async (req, res, next) => {
     try {
-        res.json(await Models.Lieu.findAll())
+        res.json(await Lieu.findAll())
     } catch (error) {
         next(error)
     }
@@ -18,7 +18,7 @@ router.post("/", async (req, res, next) => {
         next(error);
       }
       res.status(201).json(
-        await Models.Lieu.create({
+        await Lieu.create({
           adresse,
           longitude,
           latitude

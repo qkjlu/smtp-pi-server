@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const Models = require("../models");
+const Etape = require("../models").sequelize.model('Etape');
 
 router.get("/", async (req, res, next) => {
     try {
-        res.json(await Models.Etape.findAll());
+        res.json(await Etape.findAll());
     } catch (error) {
         next(error)
     }
@@ -19,7 +19,7 @@ router.post("/", async (req, res, next) => {
   }
   try {
     res.status(201).json(
-      await Models.Etape.create({
+      await Etape.create({
         dateDebut,
         type,
         CamionneurId,

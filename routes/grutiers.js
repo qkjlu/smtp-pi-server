@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const Models = require("../models");
+const Grutier = require("../models").sequelize.model("Grutier");
 
 router.get("/", async (req, res, next) => {
   try {
-    res.json(await Models.Grutier.findAll());
+    res.json(await Grutier.findAll());
   } catch (error) {
     next(error);
   }
@@ -18,7 +18,7 @@ router.post("/", async (req, res, next) => {
       next(error);
     }
     res.status(201).json(
-      await Models.Grutier.create({
+      await Grutier.create({
         nom,
         prenom,
       })

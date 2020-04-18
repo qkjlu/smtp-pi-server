@@ -1,8 +1,8 @@
 const router = require('express').Router()
-const Models = require('../models')
+const Admin = require('../models').sequelize.model('Admin')
 
 router.get('/', async (req, res) => {
-    res.json(await Models.Admin.findAll())
+    res.json(await Admin.findAll())
 })
 
 router.post('/', async (req, res) => {
