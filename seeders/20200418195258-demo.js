@@ -1,5 +1,6 @@
 "use strict";
 const { Lieux, Entreprises, Camionneurs, Admins, Grutiers, Chantiers, Etapes, ChantierCamionneur, LieuGrutier } = require("../models/MockData");
+const sequelize = require('../models')
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -10,7 +11,7 @@ module.exports = {
       queryInterface.bulkInsert("Grutiers", Grutiers),
       queryInterface.bulkInsert("Entreprises", Entreprises)
     ])
-      .then(queryInterface.bulkInsert("Chantier", Chantiers))
+      .then(queryInterface.bulkInsert("Chantiers", Chantiers))
       .then(queryInterface.bulkInsert("Etapes", Etapes))
       .then(
         Promise.all([
@@ -23,16 +24,6 @@ module.exports = {
       ).catch(err => console.log(err))
   },
   down: (queryInterface, Sequelize) => {
-    return Promise.all([
-      Lieux.truncate(),
-      Entreprises.truncate(),
-      Camionneurs.truncate(),
-      Admins.truncate(),
-      Grutiers.truncate(),
-      Chantiers.truncate(),
-      Etapes.truncate(),
-      ChantierCamionneur.truncate(),
-      LieuGrutier.truncate()
-    ])
+    return sequelize.truncate()
   },
 };
