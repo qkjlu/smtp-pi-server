@@ -23,12 +23,16 @@ module.exports = {
       ).catch(err => console.log(err))
   },
   down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
+    return Promise.all([
+      Lieux.truncate(),
+      Entreprises.truncate(),
+      Camionneurs.truncate(),
+      Admins.truncate(),
+      Grutiers.truncate(),
+      Chantiers.truncate(),
+      Etapes.truncate(),
+      ChantierCamionneur.truncate(),
+      LieuGrutier.truncate()
+    ])
   },
 };
