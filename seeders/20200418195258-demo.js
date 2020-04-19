@@ -1,6 +1,6 @@
 "use strict";
 const { Lieux, Entreprises, Camionneurs, Admins, Grutiers, Chantiers, Etapes, ChantierCamionneur, LieuGrutier } = require("../models/MockData");
-const sequelize = require('../models')
+const sequelize = require('../models').sequelize;
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
