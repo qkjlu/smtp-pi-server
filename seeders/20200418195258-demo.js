@@ -14,16 +14,13 @@ const sequelize = require("../models").sequelize;
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return sequelize
-      .then(
-        Promise.all([
-          queryInterface.bulkInsert("Lieux", Lieux),
-          queryInterface.bulkInsert("Camionneurs", Camionneurs),
-          queryInterface.bulkInsert("Admins", Admins),
-          queryInterface.bulkInsert("Grutiers", Grutiers),
-          queryInterface.bulkInsert("Entreprises", Entreprises),
-        ])
-      )
+    return Promise.all([
+      queryInterface.bulkInsert("Lieux", Lieux),
+      queryInterface.bulkInsert("Camionneurs", Camionneurs),
+      queryInterface.bulkInsert("Admins", Admins),
+      queryInterface.bulkInsert("Grutiers", Grutiers),
+      queryInterface.bulkInsert("Entreprises", Entreprises),
+    ])
       .then(queryInterface.bulkInsert("Chantiers", Chantiers))
       .then(queryInterface.bulkInsert("Etapes", Etapes))
       .then(
@@ -34,7 +31,5 @@ module.exports = {
       )
       .catch((err) => console.log(err));
   },
-  down: (queryInterface, Sequelize) => {
-    
-  },
+  down: (queryInterface, Sequelize) => {},
 };
