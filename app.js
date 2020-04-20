@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(
   jwt({ secret: process.env.JWT_SECRET }).unless({
-    path: [/.*\/authenticate/]
+    path: [/.*\/authenticate/, "/"]
   })
 );
 app.use("/admins", routes.admins);
