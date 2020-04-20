@@ -15,7 +15,7 @@ const sequelize = require("../models").sequelize;
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return sequelize
-      .sync()
+      .sync({ force : true })
       .then(
         Promise.all([
           queryInterface.bulkInsert("Lieux", Lieux),
@@ -36,6 +36,6 @@ module.exports = {
       .catch((err) => console.log(err));
   },
   down: (queryInterface, Sequelize) => {
-    return sequelize.drop();
+    
   },
 };
