@@ -15,7 +15,6 @@ const sequelize = require("../models").sequelize;
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return sequelize
-      .sync({ force : true })
       .then(
         Promise.all([
           queryInterface.bulkInsert("Lieux", Lieux),
