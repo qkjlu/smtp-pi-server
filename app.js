@@ -1,4 +1,5 @@
 require("dotenv").config();
+var jwt = require("express-jwt");
 var express = require("express");
 var app = express();
 var http = require("http").createServer(app);
@@ -8,6 +9,11 @@ var routes = require("./routes");
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(
+  jwt({ secret: process.env.JWT_SECRET }).unless({
+    path: [/.*\/authenticate/]
+  })
+);
 app.use("/admins", routes.admins);
 app.use("/camionneurs", routes.camionneurs);
 app.use("/chantiers", routes.chantiers);

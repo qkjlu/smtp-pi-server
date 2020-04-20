@@ -1,27 +1,37 @@
 const uuid = require("uuid").v4;
-
 const dateNow = new Date().toISOString();
-const uuidAdmins = [uuid(), uuid()];
+
+const uuidAdmins = [uuid(), uuid(), uuid()];
 const Admins = [
   {
     id: uuidAdmins[0],
-    nom: "Perralta",
-    prenom: "Gérard",
-    mail: "g.perralta@gmail.coml",
-    password: "123",
+    nom: "Rana",
+    prenom: "Michel",
+    mail: "michelrana@smtp.fr",
+    password: "rana123",
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     id: uuidAdmins[1],
-    nom: "Dupond",
-    prenom: "Eric",
-    mail: "d.eric@gmail.coml",
-    password: "derick",
+    nom: "Bahroun",
+    prenom: "Rayan",
+    mail: "rayanbahroun@smtp.fr",
+    password: "bahroun123",
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
+  },
+  {
+    id: uuidAdmins[2],
+    nom: "Mas",
+    prenom: "Lucas",
+    mail: "lucasmas@smtp.fr",
+    password: "mas123",
+    createdAt: dateNow,
+    updatedAt: dateNow,
   },
 ];
+
 const uuidCamionneurs = [uuid(), uuid()];
 const Camionneurs = [
   {
@@ -29,14 +39,14 @@ const Camionneurs = [
     nom: "Dubois",
     prenom: "Francis",
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     id: uuidCamionneurs[1],
     nom: "Sanchez",
     prenom: "Pedro",
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
 ];
 const uuidGrutiers = [uuid(), uuid()];
@@ -46,14 +56,14 @@ const Grutiers = [
     nom: "Raoult",
     prenom: "Didier",
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     id: uuidGrutiers[1],
     nom: "Johnson",
     prenom: "Boris",
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
 ];
 const uuidChantiers = [uuid(), uuid()];
@@ -65,7 +75,7 @@ const Chantiers = [
     lieuChargementId: uuidLieux[0],
     lieuDéchargementId: uuidLieux[1],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     id: uuidChantiers[1],
@@ -73,7 +83,7 @@ const Chantiers = [
     lieuChargementId: uuidLieux[2],
     lieuDéchargementId: uuidLieux[1],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
 ];
 const Lieux = [
@@ -83,7 +93,7 @@ const Lieux = [
     latitude: 78.22226,
     longitude: 127.26325,
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     id: uuidLieux[1],
@@ -91,7 +101,7 @@ const Lieux = [
     latitude: 178.265,
     longitude: 317.23,
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     id: uuidLieux[2],
@@ -99,7 +109,7 @@ const Lieux = [
     latitude: 854.3621,
     longitude: 99.21548,
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
 ];
 const uuidEtapes = [uuid(), uuid(), uuid()];
@@ -113,7 +123,7 @@ const Etapes = [
     CamionneurId: uuidCamionneurs[0],
     ChantierId: uuidChantiers[0],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     id: uuidEtapes[1],
@@ -123,7 +133,7 @@ const Etapes = [
     CamionneurId: uuidCamionneurs[0],
     ChantierId: uuidChantiers[0],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     id: uuidEtapes[2],
@@ -133,7 +143,7 @@ const Etapes = [
     CamionneurId: uuidCamionneurs[1],
     ChantierId: uuidChantiers[1],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
 ];
 const uuidEntreprises = [uuid(), uuid()];
@@ -142,13 +152,13 @@ const Entreprises = [
     id: uuidEntreprises[0],
     nom: "SMTP34",
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     id: uuidEntreprises[1],
     nom: "Altrad",
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
 ];
 const LieuGrutier = [
@@ -156,19 +166,19 @@ const LieuGrutier = [
     LieuId: uuidLieux[0],
     GrutierId: uuidGrutiers[0],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     LieuId: uuidLieux[1],
     GrutierId: uuidGrutiers[1],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     LieuId: uuidLieux[0],
     GrutierId: uuidGrutiers[1],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
 ];
 const ChantierCamionneur = [
@@ -176,14 +186,46 @@ const ChantierCamionneur = [
     CamionneurId: uuidCamionneurs[0],
     ChantierId: uuidChantiers[1],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
   {
     CamionneurId: uuidCamionneurs[1],
     ChantierId: uuidChantiers[0],
     createdAt: dateNow,
-    updatedAt: dateNow
+    updatedAt: dateNow,
   },
 ];
 
-module.exports = { Lieux, Entreprises, Camionneurs, Admins, Grutiers, Chantiers, Etapes, ChantierCamionneur, LieuGrutier }
+const EntrepriseCamionneur = [
+  {
+    CamionneurId: uuidCamionneurs[0],
+    EntrepriseId: uuidEntreprises[0],
+    createdAt: dateNow,
+    updatedAt: dateNow,
+  },
+];
+
+const EntrepriseGrutier = [
+  {
+    GrutierId: uuidGrutiers[0],
+    EntrepriseId: uuidEntreprises[0],
+    createdAt: dateNow,
+    updatedAt: dateNow,
+  },
+];
+
+
+
+module.exports = {
+  Lieux,
+  Entreprises,
+  Camionneurs,
+  Admins,
+  Grutiers,
+  Chantiers,
+  Etapes,
+  ChantierCamionneur,
+  LieuGrutier,
+  EntrepriseCamionneur,
+  EntrepriseGrutier,
+};

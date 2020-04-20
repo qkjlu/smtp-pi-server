@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     Camionneur.associate = models => {
       Camionneur.hasMany(models.Etape, { foreignKey: { allowNull: false } });
       Camionneur.belongsToMany(models.Chantier, { through: "ChantierCamionneur" });
-      Camionneur.belongsToMany(models.Entreprise, { through: "EntrepriseCamionneur"});
+      Camionneur.belongsToMany(models.Entreprise, { through: "EntrepriseCamionneur" });
     }
     return Camionneur;
   };
