@@ -106,8 +106,8 @@ const uuidEtapes = [uuid(), uuid(), uuid()];
 const Etapes = [
   {
     id: uuidEtapes[0],
-    dateDebut: 1586344415,
-    dateFin: 1586348015,
+    dateDebut: dateNow,
+    dateFin: dateNow,
     type: "chargement",
     tempsManoeuvre: 75,
     CamionneurId: uuidCamionneurs[0],
@@ -117,7 +117,7 @@ const Etapes = [
   },
   {
     id: uuidEtapes[1],
-    dateDebut: 1586344415,
+    dateDebut: dateNow,
     type: "déchargement",
     tempsManoeuvre: 127,
     CamionneurId: uuidCamionneurs[0],
@@ -127,7 +127,7 @@ const Etapes = [
   },
   {
     id: uuidEtapes[2],
-    dateDebut: 1586355215,
+    dateDebut: dateNow,
     type: "chargement",
     tempsManoeuvre: 112,
     CamionneurId: uuidCamionneurs[1],
