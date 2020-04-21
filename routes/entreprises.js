@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const Entreprise = require("../models").sequelize.model("Entreprise");
+var _ = require("lodash");
+const helper = require("../routes/helper")
 
 router.get("/", async (req, res, next) => {
   try {
@@ -8,6 +10,21 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
+
+router.get("/:id", async (req, res, next) => {
+  helper.getById(Entreprise, req, res, next);
+  // try {
+  //   const { id } = req.params;
+  //   const entrepriseToFind = await Entreprise.findByPk(id);
+  //   if (_.isEmpty(entrepriseToFind)) {
+  //     res.sendStatus(204);
+  //   } else {
+  //     res.json(entrepriseToFind);
+  //   }
+  // } catch (error) {
+  //   next(error);
+  // }
+})
 
 router.post("/", async (req, res, next) => {
   try {

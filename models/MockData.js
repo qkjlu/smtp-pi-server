@@ -203,11 +203,23 @@ const EntrepriseCamionneur = [
     createdAt: dateNow,
     updatedAt: dateNow,
   },
+  {
+    CamionneurId: uuidCamionneurs[1],
+    EntrepriseId: uuidEntreprises[1],
+    createdAt: dateNow,
+    updatedAt: dateNow,
+  },
 ];
 
 const EntrepriseGrutier = [
   {
     GrutierId: uuidGrutiers[0],
+    EntrepriseId: uuidEntreprises[0],
+    createdAt: dateNow,
+    updatedAt: dateNow,
+  },
+  {
+    GrutierId: uuidGrutiers[1],
     EntrepriseId: uuidEntreprises[0],
     createdAt: dateNow,
     updatedAt: dateNow,

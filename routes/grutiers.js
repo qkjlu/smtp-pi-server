@@ -2,8 +2,10 @@ const router = require("express").Router();
 const sequelize = require("../models").sequelize;
 const Grutier = sequelize.model("Grutier");
 const Entreprise = sequelize.model("Entreprise");
+const Lieu = sequelize.model("Lieu");
 var _ = require("lodash");
 var jwt = require("jsonwebtoken");
+const helper = require("../routes/helper");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -19,6 +21,18 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  helper.getById(Grutier, req, res, next, {
+    include: {
+      model: Entreprise,
+    },
+  });
+});
+
+router.get("/:id/entreprises", async (req, res, next) => {
+  helper.getAssociatedById(Grutier, Entreprise, req, res, next);
+});
+
 router.post("/", async (req, res, next) => {
   try {
     const { nom, prenom, entreprise } = req.body;
@@ -28,6 +42,56 @@ router.post("/", async (req, res, next) => {
     const newGrutier = await Grutier.create({ nom, prenom });
     await newGrutier.addEntreprise(entreprise);
     res.status(201).json(newGrutier);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/:id/lieu", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { lieu } = req.body;
+    if (!lieu) {
+      res.sendStatus(400);
+    }
+    const grutierToAddLieu = await Grutier.findByPk(id, {
+      include: {
+        model: Lieu,
+      },
+    });
+    const lieuxGrutierId = grutierToAddLieu.map((g) => g.id);
+    if (_.indexOf(lieuxGrutierId, lieu) != -1) {
+      res.sendStatus(409);
+    } else {
+      res.status(201).json(await grutierToAddLieu.addLieu(lieu));
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/:id/entreprise", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { entreprise } = req.body;
+    if (!entreprise) {
+      res.sendStatus(400);
+    }
+    const grutierToAddEntreprise = await Grutier.findByPk(id, {
+      include: {
+        model: Entreprise,
+      },
+    });
+    const entreprisesGrutierId = grutierToAddEntreprise
+      .get("Entreprises")
+      .map((ets) => ets.id);
+    if (_.indexOf(entreprisesGrutierId, entreprise) != -1) {
+      res.sendStatus(409);
+    } else {
+      res
+        .status(201)
+        .json(await grutierToAddEntreprise.addEntreprise(entreprise));
+    }
   } catch (error) {
     next(error);
   }
