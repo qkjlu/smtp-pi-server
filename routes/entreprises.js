@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Entreprise = require("../models").sequelize.model("Entreprise");
 var _ = require("lodash");
-const helper = require("../routes/helper")
+const helper = require("../routes/helpers/helper")
 
 router.get("/", async (req, res, next) => {
   try {

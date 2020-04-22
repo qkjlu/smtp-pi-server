@@ -1,4 +1,4 @@
-var _ = require("lodash");
+const _ = require("lodash");
 
 let helper = {};
 helper.getById = async (model, req, res, next, options = {}) => {

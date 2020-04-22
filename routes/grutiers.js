@@ -5,7 +5,11 @@ const Entreprise = sequelize.model("Entreprise");
 const Lieu = sequelize.model("Lieu");
 var _ = require("lodash");
 var jwt = require("jsonwebtoken");
-const helper = require("../routes/helper");
+const helper = require("./helpers/helper");
+const {
+  personnelValidationRules,
+  personnelValidate,
+} = require("./helpers/validator");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -33,12 +37,9 @@ router.get("/:id/entreprises", async (req, res, next) => {
   helper.getAssociatedById(Grutier, Entreprise, req, res, next);
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", personnelValidationRules(), personnelValidate, async (req, res, next) => {
   try {
     const { nom, prenom, entreprise } = req.body;
-    if (!(nom && prenom && entreprise)) {
-      res.sendStatus(400);
-    }
     const newGrutier = await Grutier.create({ nom, prenom });
     await newGrutier.addEntreprise(entreprise);
     res.status(201).json(newGrutier);

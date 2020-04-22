@@ -2,9 +2,13 @@ const router = require("express").Router();
 const sequelize = require("../models").sequelize;
 const Camionneur = sequelize.model("Camionneur");
 const Entreprise = sequelize.model("Entreprise");
-var _ = require("lodash");
-var jwt = require("jsonwebtoken");
-var helper = require('../routes/helper')
+const _ = require("lodash");
+const jwt = require("jsonwebtoken");
+const helper = require("../routes/helpers/helper");
+const {
+  personnelValidationRules,
+  personnelValidate,
+} = require("./helpers/validator");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -22,7 +26,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const camionneurToFind = await Camionneur.findByPk(id, {
       include: {
         model: Entreprise,
@@ -36,18 +40,15 @@ router.get("/:id", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 router.get("/:id/entreprises", async (req, res, next) => {
   helper.getAssociatedById(Camionneur, Entreprise, req, res, next);
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", personnelValidationRules(), personnelValidate, async (req, res, next) => {
   try {
     const { nom, prenom, entreprise } = req.body;
-    if (!(nom && prenom && entreprise)) {
-      res.sendStatus(400);
-    }
     const newCamionneur = await Camionneur.create({ nom, prenom });
     await newCamionneur.addEntreprise(entreprise);
     res.status(201).json(newCamionneur);
@@ -71,12 +72,12 @@ router.post("/:id/entreprise", async (req, res, next) => {
     const entreprisesCamionneurId = camionneurToAddEntreprise
       .get("Entreprises")
       .map((ets) => ets.id);
-    if (_.indexOf(entreprisesCamionneurId, entreprise) != -1 ) {
-      res.sendStatus(409)
+    if (_.indexOf(entreprisesCamionneurId, entreprise) != -1) {
+      res.sendStatus(409);
     } else {
       res
-      .status(201)
-      .json(await camionneurToAddEntreprise.addEntreprise(entreprise));
+        .status(201)
+        .json(await camionneurToAddEntreprise.addEntreprise(entreprise));
     }
   } catch (error) {
     next(error);

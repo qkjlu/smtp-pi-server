@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Lieu = require('../models').sequelize.model('Lieu')
+const { getByIdRules, getByIdValidate } = require("./helpers/validator")
 
 router.get('/', async (req, res, next) => {
     try {
@@ -7,6 +8,16 @@ router.get('/', async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+})
+
+router.get("/:id",  async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const lieuToFind = await Lieu.findByPk(id);
+    res.json(lieuToFind);
+  } catch (error) {
+    next(error);
+  }
 })
 
 router.post("/", async (req, res, next) => {
