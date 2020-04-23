@@ -27,4 +27,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    res.status(204).json(
+      await Chantier.destroy({ where: { id: id } })
+    )
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router;
