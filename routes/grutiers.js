@@ -9,6 +9,9 @@ const helper = require("./helpers/helper");
 const {
   personnelValidationRules,
   personnelValidate,
+  updatePersonnelRules,
+  deleteRules,
+  validate
 } = require("./helpers/validator");
 
 router.get("/", async (req, res, next) => {
@@ -127,5 +130,28 @@ router.post("/authenticate", async (req, res, next) => {
     next(error);
   }
 });
+
+router.patch(
+  "/:id",
+  updatePersonnelRules("Grutier"),
+  validate,
+  async (req, res, next) => {
+    const { id } = req.params;
+    const { nom, prenom } = req.body;
+    await Grutier.update({ nom, prenom }, { where: { id } })
+    res.sendStatus(204);
+  }
+);
+
+router.delete("/", deleteRules("Grutier"), validate, async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    res.status(204).json(
+      await Grutier.destroy({ where: { id: id } })
+    )
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = router;

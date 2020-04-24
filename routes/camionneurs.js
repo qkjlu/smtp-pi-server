@@ -8,6 +8,9 @@ const helper = require("../routes/helpers/helper");
 const {
   personnelValidationRules,
   personnelValidate,
+  updatePersonnelRules,
+  deleteRules,
+  validate,
 } = require("./helpers/validator");
 
 router.get("/", async (req, res, next) => {
@@ -46,16 +49,21 @@ router.get("/:id/entreprises", async (req, res, next) => {
   helper.getAssociatedById(Camionneur, Entreprise, req, res, next);
 });
 
-router.post("/", personnelValidationRules(), personnelValidate, async (req, res, next) => {
-  try {
-    const { nom, prenom, entreprise } = req.body;
-    const newCamionneur = await Camionneur.create({ nom, prenom });
-    await newCamionneur.addEntreprise(entreprise);
-    res.status(201).json(newCamionneur);
-  } catch (error) {
-    next(error);
+router.post(
+  "/",
+  personnelValidationRules(),
+  personnelValidate,
+  async (req, res, next) => {
+    try {
+      const { nom, prenom, entreprise } = req.body;
+      const newCamionneur = await Camionneur.create({ nom, prenom });
+      await newCamionneur.addEntreprise(entreprise);
+      res.status(201).json(newCamionneur);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.post("/:id/entreprise", async (req, res, next) => {
   try {
@@ -114,4 +122,26 @@ router.post("/authenticate", async (req, res, next) => {
   }
 });
 
+router.patch(
+  "/:id",
+  updatePersonnelRules("Camionneur"),
+  validate,
+  async (req, res, next) => {
+    const { id } = req.params;
+    const { nom, prenom } = req.body;
+    await Camionneur.update({ nom, prenom }, { where: { id } })
+    res.sendStatus(204);
+  }
+);
+
+router.delete("/", deleteRules("Camionneur"), validate, async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    res.status(204).json(
+      await Camionneur.destroy({ where: { id: id } })
+    )
+  } catch (error) {
+    next(error)
+  }
+})
 module.exports = router;
