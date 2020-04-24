@@ -11,7 +11,7 @@ const {
   personnelValidate,
   updatePersonnelRules,
   deleteRules,
-  validate
+  validate,
 } = require("./helpers/validator");
 
 router.get("/", async (req, res, next) => {
@@ -40,16 +40,21 @@ router.get("/:id/entreprises", async (req, res, next) => {
   helper.getAssociatedById(Grutier, Entreprise, req, res, next);
 });
 
-router.post("/", personnelValidationRules(), personnelValidate, async (req, res, next) => {
-  try {
-    const { nom, prenom, entreprise } = req.body;
-    const newGrutier = await Grutier.create({ nom, prenom });
-    await newGrutier.addEntreprise(entreprise);
-    res.status(201).json(newGrutier);
-  } catch (error) {
-    next(error);
+router.post(
+  "/",
+  personnelValidationRules(),
+  personnelValidate,
+  async (req, res, next) => {
+    try {
+      const { nom, prenom, entreprise } = req.body;
+      const newGrutier = await Grutier.create({ nom, prenom });
+      await newGrutier.addEntreprise(entreprise);
+      res.status(201).json(newGrutier);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.post("/:id/lieu", async (req, res, next) => {
   try {
@@ -138,7 +143,7 @@ router.patch(
   async (req, res, next) => {
     const { id } = req.params;
     const { nom, prenom } = req.body;
-    await Grutier.update({ nom, prenom }, { where: { id } })
+    await Grutier.update({ nom, prenom }, { where: { id } });
     res.sendStatus(204);
   }
 );
@@ -146,12 +151,10 @@ router.patch(
 router.delete("/", deleteRules("Grutier"), validate, async (req, res, next) => {
   try {
     const { id } = req.body;
-    res.status(204).json(
-      await Grutier.destroy({ where: { id: id } })
-    )
+    res.status(204).json(await Grutier.destroy({ where: { id: id } }));
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 module.exports = router;

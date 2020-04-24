@@ -171,10 +171,24 @@ const validator = {
     ];
   },
   removeAssociatedRules: (associatedModel) => {
-    associatedModelLowerCase = associatedModel.toLowerCase();
     return [
-      param("id").isUUID().withMessage("L'id doit être un UUID"),
-      body(associatedModelLowerCase)
+      param("id")
+        .isUUID()
+        .withMessage("L'id doit être un UUID")
+        .bail()
+        .custom((id) => {
+          return sequelize
+            .model(model)
+            .findByPk(id)
+            .then((res) => {
+              if (_.isEmpty(res)) {
+                return Promise.reject(
+                  "L'id spécifié n'existe pas dans la base de donnée"
+                );
+              }
+            });
+        }),
+      body(associatedModel.toLowerCase())
         .exists()
         .withMessage(`N'est pas spécifié`)
         .bail()
@@ -187,12 +201,10 @@ const validator = {
             .findByPk(associatedId)
             .then((res) => {
               if (_.isEmpty(res)) {
-                return Promise.reject(
-                  "N'existe pas dans la base de donnée"
-                );
+                return Promise.reject("N'existe pas dans la base de donnée");
               }
             });
-        }),
+        })
     ];
   },
 };
