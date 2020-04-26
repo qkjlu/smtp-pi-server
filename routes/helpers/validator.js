@@ -170,7 +170,7 @@ const validator = {
         }),
     ];
   },
-  removeAssociatedRules: (associatedModel) => {
+  removeAssociatedRules: (model, associatedModel) => {
     return [
       param("id")
         .isUUID()
@@ -204,7 +204,7 @@ const validator = {
                 return Promise.reject("N'existe pas dans la base de donnée");
               }
             });
-        })
+        }),
     ];
   },
 };

@@ -141,10 +141,14 @@ router.patch(
   updatePersonnelRules("Grutier"),
   validate,
   async (req, res, next) => {
-    const { id } = req.params;
-    const { nom, prenom } = req.body;
-    await Grutier.update({ nom, prenom }, { where: { id } });
-    res.sendStatus(204);
+    try {
+      const { id } = req.params;
+      const { nom, prenom } = req.body;
+      await Grutier.update({ nom, prenom }, { where: { id } });
+      res.sendStatus(204);
+    } catch (error) {
+      next(error);
+    }
   }
 );
 

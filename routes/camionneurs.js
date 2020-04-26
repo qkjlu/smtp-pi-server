@@ -127,21 +127,28 @@ router.patch(
   updatePersonnelRules("Camionneur"),
   validate,
   async (req, res, next) => {
-    const { id } = req.params;
-    const { nom, prenom } = req.body;
-    await Camionneur.update({ nom, prenom }, { where: { id } })
-    res.sendStatus(204);
+    try {
+      const { id } = req.params;
+      const { nom, prenom } = req.body;
+      await Camionneur.update({ nom, prenom }, { where: { id } });
+      res.sendStatus(204);
+    } catch (error) {
+      next(error)
+    }
   }
 );
 
-router.delete("/", deleteRules("Camionneur"), validate, async (req, res, next) => {
-  try {
-    const { id } = req.body;
-    res.status(204).json(
-      await Camionneur.destroy({ where: { id: id } })
-    )
-  } catch (error) {
-    next(error)
+router.delete(
+  "/",
+  deleteRules("Camionneur"),
+  validate,
+  async (req, res, next) => {
+    try {
+      const { id } = req.body;
+      res.status(204).json(await Camionneur.destroy({ where: { id: id } }));
+    } catch (error) {
+      next(error);
+    }
   }
-})
+);
 module.exports = router;

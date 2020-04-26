@@ -64,7 +64,7 @@ router.delete("/", async (req, res, next) => {
 
 router.delete(
   "/:id/grutier",
-  removeAssociatedRules("Grutier"),
+  removeAssociatedRules("Entreprise", "Grutier"),
   validate,
   async (req, res, next) => {
     try {
@@ -80,7 +80,7 @@ router.delete(
 
 router.delete(
   "/:id/camionneur",
-  removeAssociatedRules("Camionneur"),
+  removeAssociatedRules("Entreprise", "Camionneur"),
   validate,
   async (req, res, next) => {
     try {
