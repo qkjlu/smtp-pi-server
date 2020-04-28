@@ -10,16 +10,7 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 const generator = new Generator('html', path.resolve(__dirname, 'socketdoc'));
 
-(async function(){
-  try {
-    await generator.generateFromFile('iodoc.yaml');
-    console.log('Socket doc generated!');
-  } catch (e) {
-    console.error(e);
-  }
-})();
-
-
+app.use(express.static('public'))
 app.use(express.json());
 app.use(
   jwt({ secret: process.env.JWT_SECRET }).unless({
@@ -43,7 +34,8 @@ app.use("/entreprises", routes.entreprises);
 
 app.get("/", (req, res) => {
   res.send(
-    "Bienvenue sur l'API SMTP, lien vers la doc : <a href=https://stoplight.io/p/docs/gh/qkjlu/smtp-pi-server> API SMTP </a>"
+    "Bienvenue sur l'API SMTP, lien vers la doc : <a href=https://stoplight.io/p/docs/gh/qkjlu/smtp-pi-server> API SMTP </a> \n" +
+    "Lien vers la doc socket"
   );
 });
 
@@ -51,9 +43,6 @@ app.get("/io", (req, res) => {
   res.sendFile(__dirname + "/io.html");
 });
 
-app.get("/socketdoc", (req, res) => {
-  res.sendFile(__dirname + "/socketdoc/index.html");
-});
 
 http.listen(port, function () {
   console.log("Application listening on port " + port);
