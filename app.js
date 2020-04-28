@@ -35,7 +35,7 @@ app.use("/entreprises", routes.entreprises);
 app.get("/", (req, res) => {
   res.send(
     "Bienvenue sur l'API SMTP, lien vers la doc : <a href=https://stoplight.io/p/docs/gh/qkjlu/smtp-pi-server> API SMTP </a> \n" +
-    "Lien vers la doc socket : <a href=/public/socketdoc> Socket SMTP </a>"
+    "Lien vers la doc socket : <a href=/public/socketdoc/index.html> Socket SMTP </a>"
   );
 });
 
