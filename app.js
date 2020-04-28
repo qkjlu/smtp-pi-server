@@ -19,7 +19,7 @@ app.use(
       "/",
       { url: "/entreprises", methods: ["GET"] },
       "/io",
-      "/public/socketdoc",
+      "/public/socketdoc/index.html",
       "/favicon.ico",
     ],
   })
