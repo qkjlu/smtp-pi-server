@@ -1,12 +1,24 @@
 require("dotenv").config();
+const Generator = require("asyncapi-generator")
 var jwt = require("express-jwt");
 var express = require("express");
 var app = express();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var routes = require("./routes");
-
+const path = require('path');
 const port = process.env.PORT || 3000;
+const generator = new Generator('html', path.resolve(__dirname, 'socketdoc'));
+
+(async function(){
+  try {
+    await generator.generateFromFile('iodoc.yaml');
+    console.log('Socket doc generated!');
+  } catch (e) {
+    console.error(e);
+  }
+})();
+
 
 app.use(express.json());
 app.use(
@@ -16,6 +28,7 @@ app.use(
       "/",
       { url: "/entreprises", methods: ["GET"] },
       "/io",
+      "/socketdoc",
       "/favicon.ico",
     ],
   })
@@ -38,9 +51,15 @@ app.get("/io", (req, res) => {
   res.sendFile(__dirname + "/io.html");
 });
 
+app.get("/socketdoc", (req, res) => {
+  res.sendFile(__dirname + "/socketdoc/index.html");
+});
+
 http.listen(port, function () {
   console.log("Application listening on port " + port);
 });
+
+
 
 io.on("connection", (socket) => {
   let userId;
@@ -48,12 +67,12 @@ io.on("connection", (socket) => {
   let connectedToChantier = false;
 
   // Le client se connecte à un chantier (room)
-  socket.on("connectToChantier", (data) => {
+  socket.on("chantier/connect", (data) => {
     connectedToChantier = true;
     userId = data.userId;
     chantierId = data.chantierId;
     socket.join(`chantier:${data.chantierId}`, () => {
-      socket.to(`chantier:${data.chantierId}`).emit("userConnectedToChantier", {
+      socket.to(`chantier:${data.chantierId}`).emit("chantier/user/connected", {
         userId: data.userId,
         coordinates: data.coordinates,
       });
@@ -61,16 +80,16 @@ io.on("connection", (socket) => {
   });
 
   // Le client se déconnecte d'un chantier
-  socket.on("disconnectOfChantier", () => {
+  socket.on("chantier/disconnect", () => {
     connectedToChantier = false;
     chantierId = undefined;
     socket
       .to(`chantier:${data.chantierId}`)
-      .emit("userDisconnectedOfChantier", { userId });
+      .emit("chantier/user/disconnected", { userId });
   });
 
   // Le client envoie ses coordonnées GPS au chantier
-  socket.on("sendCoordinatesToChantier", (coordinates) => {
+  socket.on("chantier/sendCoordinates", (coordinates) => {
     console.log(coordinates);
     if (!connectedToChantier) {
       socket.to(socket.conn).emit("error", {
@@ -80,7 +99,7 @@ io.on("connection", (socket) => {
     } else {
       socket
         .to(`chantier:${chantierId}`)
-        .emit("userSentCoordinates", { userId, coordinates });
+        .emit("chantier/user/sentCoordinates", { userId, coordinates });
     }
   });
   // socket.broadcast.emit("user connected");

@@ -55,13 +55,13 @@
         latitude: 52,
       };
       $("#con").click(function () {
-        socket.emit("connectToChantier", {
+        socket.emit("chantier/connect", {
           userId,
           chantierId,
           coordinates,
         });
       });
-      socket.on("userConnectedToChantier", function (data) {
+      socket.on("chantier/user/connected", function (data) {
         $("#messages").append(
           $("<li>")
             .text(`L'utilisateur ${data.userId} vient de se connecter au chantier \n
@@ -69,9 +69,9 @@
             Latitude: ${data.coordinates.latitude}
             `)
         );
-        socket.emit("sendCoordinatesToChantier", coordinates);
+        socket.emit("chantier/sendCoordinates", coordinates);
       });
-      socket.on("userSentCoordinates", (data) => {
+      socket.on("chantier/user/sentCoordinates", (data) => {
         $("#messages").append(
           $("<li>")
             .text(` Utilisateur ${data.userId} : \n

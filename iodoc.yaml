@@ -20,7 +20,8 @@ servers:
     protocol: ws
 
 channels:
-  connectToChantier:
+  chantier/connect:
+    description: Permet de se connecter un chantier
     publish:
       message:
         payload:
@@ -41,7 +42,7 @@ channels:
                   type: number
                 latitude:
                   type: number
-  userConnectedToChantier:
+  chantier/user/connected:
     description: Un utilisateur vient de se connecter au chantier
     subscribe:
       message:
@@ -57,8 +58,8 @@ channels:
                   type: number
                 latitude:
                   type: number
-  sendCoordinatesToChantier:
-    description: Envoyer des coordonnées à un chantier
+  chantier/sendCoordinates:
+    description: Permet d'envoyer des coordonnées à un chantier
     publish:
       message:
         payload:
@@ -73,7 +74,7 @@ channels:
                   type: number
                 latitude:
                   type: number
-  userSentCoordinates:
+  chantier/user/sentCoordinates:
     description: Un utilisateur a envoyé des coordonnées
     subscribe:
       message:
