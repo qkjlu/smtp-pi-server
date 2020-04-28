@@ -1,0 +1,91 @@
+asyncapi: 2.0.0
+info:
+  title: SMTP Map API
+  version: "0.1.0"
+  description: |
+    L'API SMTP Map permet de gérer la flotte de camion des chantiers
+
+    ### Fonctionnalités principales:
+
+    * Envoyer / Recevoir en temps réel la position GPS des camions
+    * Se connecter à différents chantiers
+
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  production:
+    url: https://smtp-pi.herokuapp.com/
+    protocol: ws
+
+channels:
+  connectToChantier:
+    publish:
+      message:
+        payload:
+          type: object
+          required:
+            - userId
+            - chantierId
+            - coordinates
+          properties:
+            userId:
+              type: uuid
+            chantierId:
+              type: uuid
+            coordinates:
+              type: object
+              properties:
+                longitude:
+                  type: number
+                latitude:
+                  type: number
+  userConnectedToChantier:
+    description: Un utilisateur vient de se connecter au chantier
+    subscribe:
+      message:
+        payload:
+          type: object
+          properties:
+            userId:
+              type: uuid
+            coordinates:
+              type: object
+              properties:
+                longitude:
+                  type: number
+                latitude:
+                  type: number
+  sendCoordinatesToChantier:
+    description: Envoyer des coordonnées à un chantier
+    publish:
+      message:
+        payload:
+          type: object
+          required:
+            - coordinates
+          properties:
+            coordinates:
+              type: object
+              properties:
+                longitude:
+                  type: number
+                latitude:
+                  type: number
+  userSentCoordinates:
+    description: Un utilisateur a envoyé des coordonnées
+    subscribe:
+      message:
+        payload:
+          type: object
+          properties:
+            userId:
+              type: uuid
+            coordinates:
+              type: object
+              properties:
+                longitude:
+                  type: number
+                latitude:
+                  type: number

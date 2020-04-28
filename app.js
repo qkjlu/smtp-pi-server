@@ -11,7 +11,13 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(
   jwt({ secret: process.env.JWT_SECRET }).unless({
-    path: [/.*\/authenticate/, "/",  { url: '/entreprises', methods: ['GET']  }]
+    path: [
+      /.*\/authenticate/,
+      "/",
+      { url: "/entreprises", methods: ["GET"] },
+      "/io",
+      "/favicon.ico",
+    ],
   })
 );
 app.use("/admins", routes.admins);
@@ -28,27 +34,70 @@ app.get("/", (req, res) => {
   );
 });
 
+app.get("/io", (req, res) => {
+  res.sendFile(__dirname + "/io.html");
+});
+
 http.listen(port, function () {
   console.log("Application listening on port " + port);
 });
 
-// io.on("connection", (socket) => {
-//   console.log("a user connected");
-//   socket.broadcast.emit("user connected");
-//   socket.on("disconnect", function () {
-//     console.log("user disconnected");
-//     socket.broadcast.emit("user disconnected");
-//   });
-//   socket.on("chat message", function (msg) {
-//     console.log("message: " + msg.nickname + " : " + msg.content);
-//     socket.broadcast.emit("chat message", msg);
-//   });
-//   socket.on("is typing", function (nickname) {
-//     console.log(nickname + " is typing");
-//     socket.broadcast.emit("is typing", nickname);
-//   });
-//   socket.on("stop typing", function () {
-//     console.log("stop typing");
-//     socket.broadcast.emit("stop typing");
-//   });
-// });
+io.on("connection", (socket) => {
+  let userId;
+  let chantierId;
+  let connectedToChantier = false;
+
+  // Le client se connecte à un chantier (room)
+  socket.on("connectToChantier", (data) => {
+    connectedToChantier = true;
+    userId = data.userId;
+    chantierId = data.chantierId;
+    socket.join(`chantier:${data.chantierId}`, () => {
+      socket.to(`chantier:${data.chantierId}`).emit("userConnectedToChantier", {
+        userId: data.userId,
+        coordinates: data.coordinates,
+      });
+    });
+  });
+
+  // Le client se déconnecte d'un chantier
+  socket.on("disconnectOfChantier", () => {
+    connectedToChantier = false;
+    chantierId = undefined;
+    socket
+      .to(`chantier:${data.chantierId}`)
+      .emit("userDisconnectedOfChantier", { userId });
+  });
+
+  // Le client envoie ses coordonnées GPS au chantier
+  socket.on("sendCoordinatesToChantier", (coordinates) => {
+    console.log(coordinates);
+    if (!connectedToChantier) {
+      socket.to(socket.conn).emit("error", {
+        msg:
+          "Erreur : il faut être connecté à un chantier pour envoyer les coordonnées GPS",
+      });
+    } else {
+      socket
+        .to(`chantier:${chantierId}`)
+        .emit("userSentCoordinates", { userId, coordinates });
+    }
+  });
+  // socket.broadcast.emit("user connected");
+  // socket.on("disconnect", function () {
+  //   console.log("user disconnected");
+  //   socket.broadcast.emit("user disconnected");
+  // });
+  // socket.on("chat message", function (msg) {
+  //   console.log("message: " + msg.nickname + " : " + msg.content);
+  //   socket.broadcast.emit("chat message", msg);
+  // });
+  // socket.on("is typing", function (nickname) {
+  //   console.log(nickname + " is typing");
+  //   socket.broadcast.emit("is typing", nickname);
+  // });
+  // socket.on("stop typing", function () {
+  //   console.log("stop typing");
+  //   socket.broadcast.emit("stop typing");
+  // });
+});
