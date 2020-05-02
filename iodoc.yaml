@@ -21,7 +21,7 @@ servers:
 
 channels:
   chantier/connect:
-    description: Permet de se connecter un chantier
+    description: Permet de se connecter à un chantier
     publish:
       message:
         payload:
