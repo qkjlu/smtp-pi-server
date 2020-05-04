@@ -49,7 +49,7 @@ http.listen(port, function () {
   console.log("Application listening on port " + port);
 });
 
-
+let UsersCoordinates = {}
 
 io.on("connection", (socket) => {
   let userId;
@@ -64,7 +64,6 @@ io.on("connection", (socket) => {
     socket.join(`chantier:${data.chantierId}`, () => {
       socket.to(`chantier:${data.chantierId}`).emit("chantier/user/connected", {
         userId: data.userId,
-        coordinates: data.coordinates,
       });
     });
   });
@@ -80,7 +79,6 @@ io.on("connection", (socket) => {
 
   // Le client envoie ses coordonnées GPS au chantier
   socket.on("chantier/sendCoordinates", (coordinates) => {
-    console.log(coordinates);
     if (!connectedToChantier) {
       socket.to(socket.conn).emit("erreur", {
         msg:

@@ -51,13 +51,6 @@ channels:
           properties:
             userId:
               type: uuid
-            coordinates:
-              type: object
-              properties:
-                longitude:
-                  type: number
-                latitude:
-                  type: number
   chantier/sendCoordinates:
     description: Permet d'envoyer des coordonnées à un chantier
     publish:
