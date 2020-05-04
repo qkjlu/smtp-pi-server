@@ -82,7 +82,7 @@ io.on("connection", (socket) => {
   socket.on("chantier/sendCoordinates", (coordinates) => {
     console.log(coordinates);
     if (!connectedToChantier) {
-      socket.to(socket.conn).emit("error", {
+      socket.to(socket.conn).emit("erreur", {
         msg:
           "Erreur : il faut être connecté à un chantier pour envoyer les coordonnées GPS",
       });
