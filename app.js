@@ -1,16 +1,16 @@
 require("dotenv").config();
-const Generator = require("asyncapi-generator")
+const Generator = require("asyncapi-generator");
 var jwt = require("express-jwt");
 var express = require("express");
 var app = express();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var routes = require("./routes");
-const path = require('path');
+const path = require("path");
 const port = process.env.PORT || 3000;
-const generator = new Generator('html', path.resolve(__dirname, 'socketdoc'));
+const generator = new Generator("html", path.resolve(__dirname, "socketdoc"));
 
-app.use(express.static('public'))
+app.use(express.static("public"));
 app.use(express.json());
 app.use(
   jwt({ secret: process.env.JWT_SECRET }).unless({
@@ -32,11 +32,10 @@ app.use("/grutiers", routes.grutiers);
 app.use("/lieux", routes.lieux);
 app.use("/entreprises", routes.entreprises);
 
-
 app.get("/", (req, res) => {
   res.send(
     "Bienvenue sur l'API SMTP, lien vers la doc : <a href=https://stoplight.io/p/docs/gh/qkjlu/smtp-pi-server> API SMTP </a> \n" +
-    "Lien vers la doc socket : <a href=/socketdoc/index.html> Socket SMTP </a>"
+      "Lien vers la doc socket : <a href=/socketdoc/index.html> Socket SMTP </a>"
   );
 });
 
@@ -44,12 +43,11 @@ app.get("/io", (req, res) => {
   res.sendFile(__dirname + "/io.html");
 });
 
-
 http.listen(port, function () {
   console.log("Application listening on port " + port);
 });
 
-let UsersCoordinates = {}
+let usersData = {};
 
 io.on("connection", (socket) => {
   let userId;
@@ -58,6 +56,13 @@ io.on("connection", (socket) => {
 
   // Le client se connecte à un chantier (room)
   socket.on("chantier/connect", (data) => {
+    usersData = {
+      ...usersData,
+      [data.userId]: {
+        chantierId: data.chantierId,
+        coordinates: { longitude: -1, latitude: -1 },
+      },
+    };
     connectedToChantier = true;
     userId = data.userId;
     chantierId = data.chantierId;
