@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     { sequelize, modelName: "Etape"  }
   );
   Etape.associate = models => {
-    Etape.belongsTo(models.Camionneur, { foreignKey: { allowNull: false } })
+    Etape.belongsTo(models.Camionneur, { foreignKey: { allowNull: true } })
     Etape.belongsTo(models.Chantier, { foreignKey: { allowNull: true } });
   }
   return Etape;
