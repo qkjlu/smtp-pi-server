@@ -49,7 +49,7 @@
     $(function () {
       var socket = io();
       const userId = Math.floor(Math.random() * 100);
-      const chantierId = 1;
+      const chantierId = "7ef473b7-0e99-45c1-85bb-80df719e3041";
       const coordinates = {
         longitude: -128,
         latitude: 52,
@@ -60,6 +60,9 @@
           chantierId,
           coordinates,
         });
+      });
+      $("#routes").click(function () {
+        socket.emit("chantier/routes");
       });
       socket.on("chantier/user/connected", function (data) {
         $("#messages").append(
@@ -121,6 +124,7 @@
   </script>
   <body>
     <button id="con">ConnectToChantier</button>
+    <button id="routes">chantier/routes</button>
     <ul id="messages"></ul>
     <!-- <ul id="messages"></ul>
     <p id="t"></p>

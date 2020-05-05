@@ -1,14 +1,13 @@
 require("dotenv").config();
-const Generator = require("asyncapi-generator");
-var jwt = require("express-jwt");
-var express = require("express");
-var app = express();
-var http = require("http").createServer(app);
-var io = require("socket.io")(http);
-var routes = require("./routes");
-const path = require("path");
+const jwt = require("express-jwt");
+const express = require("express");
+const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+const routes = require("./routes");
+const _ = require("lodash");
+const sequelize = require("./models").sequelize;
 const port = process.env.PORT || 3000;
-const generator = new Generator("html", path.resolve(__dirname, "socketdoc"));
 
 app.use(express.static("public"));
 app.use(express.json());
@@ -48,11 +47,12 @@ http.listen(port, function () {
 });
 
 let usersData = {};
+let routesChantiers = {};
 
 io.on("connection", (socket) => {
-  let userId;
-  let chantierId;
-  let connectedToChantier = false;
+  let socketUserId;
+  let socketChantierId;
+  let socketConnectedToChantier = false;
 
   // Le client se connecte à un chantier (room)
   socket.on("chantier/connect", (data) => {
@@ -63,38 +63,60 @@ io.on("connection", (socket) => {
         coordinates: { longitude: -1, latitude: -1 },
       },
     };
-    connectedToChantier = true;
-    userId = data.userId;
-    chantierId = data.chantierId;
+    socketConnectedToChantier = true;
+    socketUserId = data.userId;
+    socketChantierId = data.chantierId;
     socket.join(`chantier:${data.chantierId}`, () => {
       socket.to(`chantier:${data.chantierId}`).emit("chantier/user/connected", {
         userId: data.userId,
       });
     });
-  });
 
-  // Le client se déconnecte d'un chantier
-  socket.on("chantier/disconnect", () => {
-    connectedToChantier = false;
-    chantierId = undefined;
-    socket
-      .to(`chantier:${data.chantierId}`)
-      .emit("chantier/user/disconnected", { userId });
-  });
+    // Récupérer une route avec OpenRouteService
+    socket.on("chantier/routes", async () => {
+      if (!_.has(routes, `chantier:${socketChantierId}`)) {
+        const res = await sequelize.model("Chantier").findByPk(socketChantierId).get();
+        console.log(res);
+        const apiKey = process.env.ORS_KEY;
+        const {
+          lieuxChargement: start,
+          lieuxDéchargement: end,
+        } = await sequelize.model("Chantier").findByPk(socketChantierId).get();
+        console.log(start, end);
+        // const routes = await fetch({
+        //   method: "GET",
+        //   url : ""
+        // })
+      }
+    });
 
-  // Le client envoie ses coordonnées GPS au chantier
-  socket.on("chantier/sendCoordinates", (coordinates) => {
-    if (!connectedToChantier) {
-      socket.to(socket.conn).emit("erreur", {
-        msg:
-          "Erreur : il faut être connecté à un chantier pour envoyer les coordonnées GPS",
-      });
-    } else {
+    // Le client se déconnecte d'un chantier
+    socket.on("chantier/disconnect", () => {
+      socketConnectedToChantier = false;
+      socketChantierId = undefined;
       socket
-        .to(`chantier:${chantierId}`)
-        .emit("chantier/user/sentCoordinates", { userId, coordinates });
-    }
+        .to(`chantier:${data.chantierId}`)
+        .emit("chantier/user/disconnected", { userId: socketUserId });
+    });
+
+    // Le client envoie ses coordonnées GPS au chantier
+    socket.on("chantier/sendCoordinates", (coordinates) => {
+      if (!socketConnectedToChantier) {
+        socket.to(socket.conn).emit("erreur", {
+          msg:
+            "Erreur : il faut être connecté à un chantier pour envoyer les coordonnées GPS",
+        });
+      } else {
+        socket
+          .to(`chantier:${socketChantierId}`)
+          .emit("chantier/user/sentCoordinates", {
+            userId: socketUserId,
+            coordinates,
+          });
+      }
+    });
   });
+
   // socket.broadcast.emit("user connected");
   // socket.on("disconnect", function () {
   //   console.log("user disconnected");

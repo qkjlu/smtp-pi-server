@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Chantier = require("../models").sequelize.model("Chantier");
-const { updateChantierRules, validate } = require("./helpers/validator");
+const { updateChantierRules, deleteRules, validate } = require("./helpers/validator");
 router.get("/", async (req, res, next) => {
   try {
     res.json(await Chantier.findAll());
@@ -43,7 +43,7 @@ router.patch(
   }
 );
 
-router.delete("/", async (req, res, next) => {
+router.delete("/", deleteRules("Chantier"), validate, async (req, res, next) => {
   try {
     const { id } = req.body;
     res.status(204).json(await Chantier.destroy({ where: { id: id } }));
