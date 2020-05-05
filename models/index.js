@@ -20,7 +20,7 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-sequelize.sync({ force: true});
+sequelize.sync({ alter: true});
 
 exports.MockData = require(__dirname + "/MockData");
 exports.sequelize = sequelize;
