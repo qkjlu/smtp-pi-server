@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       as: "lieuChargement",
       foreignKey: { allowNull: false },
     });
+    Chantier.hasMany(models.Etape);
   };
   return Chantier;
 };

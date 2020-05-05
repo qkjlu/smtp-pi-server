@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Etape.associate = models => {
     Etape.belongsTo(models.Camionneur, { foreignKey: { allowNull: false } })
-    Etape.belongsTo(models.Chantier, { foreignKey: { allowNull: false } });
+    Etape.belongsTo(models.Chantier, { foreignKey: { allowNull: true } });
   }
   return Etape;
 };
