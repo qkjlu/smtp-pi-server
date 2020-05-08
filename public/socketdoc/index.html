@@ -52,12 +52,31 @@
           
           <div style="display:inline-block;">
             
-<span class="string-chunk" style="padding-top: 2px;">chantier</span><span class="string-chunk" style="padding-top: 2px;">/connect</span>
+<span class="string-chunk" style="padding-top: 2px;">chantier/connect</span>
 
           </div>
           
         </a>
         
+        
+        </a>
+      </li>
+      
+      <li>
+        
+        
+        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+          href="#operation-subscribe-chantier/connect/success">
+          <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded"
+            style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
+          
+          <div style="display:inline-block;">
+            
+<span class="string-chunk" style="padding-top: 2px;">chantier/connect/success</span>
+
+          </div>
+          
+        </a>
         
         </a>
       </li>
@@ -72,7 +91,45 @@
           
           <div style="display:inline-block;">
             
-<span class="string-chunk" style="padding-top: 2px;">chantier</span><span class="string-chunk" style="padding-top: 2px;">/user</span><span class="string-chunk" style="padding-top: 2px;">/connected</span>
+<span class="string-chunk" style="padding-top: 2px;">chantier/user/connected</span>
+
+          </div>
+          
+        </a>
+        
+        </a>
+      </li>
+      
+      <li>
+        
+        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+          href="#operation-publish-chantier/disconnect">
+          <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded"
+            style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
+          
+          <div style="display:inline-block;">
+            
+<span class="string-chunk" style="padding-top: 2px;">chantier/disconnect</span>
+
+          </div>
+          
+        </a>
+        
+        
+        </a>
+      </li>
+      
+      <li>
+        
+        
+        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+          href="#operation-subscribe-chantier/user/disconnected">
+          <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded"
+            style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
+          
+          <div style="display:inline-block;">
+            
+<span class="string-chunk" style="padding-top: 2px;">chantier/user/disconnected</span>
 
           </div>
           
@@ -90,7 +147,7 @@
           
           <div style="display:inline-block;">
             
-<span class="string-chunk" style="padding-top: 2px;">chantier</span><span class="string-chunk" style="padding-top: 2px;">/sendCoordinates</span>
+<span class="string-chunk" style="padding-top: 2px;">chantier/sendCoordinates</span>
 
           </div>
           
@@ -110,7 +167,7 @@
           
           <div style="display:inline-block;">
             
-<span class="string-chunk" style="padding-top: 2px;">chantier</span><span class="string-chunk" style="padding-top: 2px;">/user</span><span class="string-chunk" style="padding-top: 2px;">/sentCoordinates</span>
+<span class="string-chunk" style="padding-top: 2px;">chantier/user/sentCoordinates</span>
 
           </div>
           
@@ -166,7 +223,7 @@
         <div>
           <div class="pr-4 font-mono">
             
-<span class="string-chunk" >https:</span><span class="string-chunk" >/</span><span class="string-chunk" >/smtp-pi</span><span class="string-chunk" >.herokuapp</span><span class="string-chunk" >.com</span><span class="string-chunk" >/</span>
+<span class="string-chunk" >https://smtp-pi.herokuapp.com/</span>
 
 
             
@@ -213,11 +270,11 @@
       
       
       
-<span class="string-chunk" >chantier</span><span class="string-chunk" >/connect</span>
+<span class="string-chunk" >chantier/connect</span>
 
     </h3>
 
-    <div class="mt-4 mb-4 markdown"><p>Permet de se connecter un chantier</p>
+    <div class="mt-4 mb-4 markdown"><p>Permet de se connecter à un chantier</p>
 </div>
 
     <p class="text-grey text-sm"></p>
@@ -240,6 +297,16 @@
     
   </div>
   <p class="text-grey-dark text-sm"></p>
+  
+  
+
+<div class="mt-4">
+  
+</div>
+
+
+
+
   <div class="mt-4 mb-4 markdown"></div>
   
 <div>
@@ -249,12 +316,13 @@
   <div class="is-open">
     <div class="js-prop cursor-pointer py-2 flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">Payload</span>
+        <span class="text-sm" style="word-break: break-word;">Payload</span>
         
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
           <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
         </svg>
+        
         
         
       </div>
@@ -299,10 +367,11 @@ object
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">userId</span>
+        <span class="text-sm" style="word-break: break-word;">userId</span>
         
         
           <div class="text-red-dark text-xs">required</div>
+        
         
       </div>
 
@@ -348,10 +417,11 @@ uuid
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">chantierId</span>
+        <span class="text-sm" style="word-break: break-word;">chantierId</span>
         
         
           <div class="text-red-dark text-xs">required</div>
+        
         
       </div>
 
@@ -397,7 +467,7 @@ uuid
   <div class="">
     <div class="js-prop cursor-pointer py-2 flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">coordinates</span>
+        <span class="text-sm" style="word-break: break-word;">coordinates</span>
         
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
@@ -406,6 +476,7 @@ uuid
         
         
           <div class="text-red-dark text-xs">required</div>
+        
         
       </div>
 
@@ -449,7 +520,8 @@ object
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">longitude</span>
+        <span class="text-sm" style="word-break: break-word;">longitude</span>
+        
         
         
       </div>
@@ -496,7 +568,8 @@ number
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">latitude</span>
+        <span class="text-sm" style="word-break: break-word;">latitude</span>
+        
         
         
       </div>
@@ -595,9 +668,11 @@ number
     
 
     
+
 <div class="mt-4">
   
 </div>
+
 
 
   </div>
@@ -655,6 +730,467 @@ number
     
       
 
+<a name="operation-subscribe-chantier/connect/success"></a>
+<div class="center-block p-8">
+  <div class="operation pt-8 pb-8">
+    <h3 class="font-mono text-base">
+      
+      
+      <span class="font-mono border border-green-dark text-green-dark uppercase p-1 rounded"
+        title="Subscribe">Sub</span>
+      
+      
+<span class="string-chunk" >chantier/connect/success</span>
+
+    </h3>
+
+    <div class="mt-4 mb-4 markdown"><p>La connexion au chantier a réussi</p>
+</div>
+
+    <p class="text-grey text-sm"></p>
+    <div class="mt-4 mb-4 markdown"></div>
+
+
+
+    
+
+
+    
+    <p>Accepts the following message:</p>
+    
+
+<div class="bg-grey-lighter rounded p-4 mt-2">
+  <div class="text-sm text-grey-darker mb-2">
+    
+    
+      
+    
+  </div>
+  <p class="text-grey-dark text-sm"></p>
+  
+  
+
+<div class="mt-4">
+  
+</div>
+
+
+
+
+  <div class="mt-4 mb-4 markdown"></div>
+  
+<div>
+  
+
+<div class="bg-grey-lighter  rounded">
+  <div class="is-open">
+    <div class="js-prop cursor-pointer py-2 flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">Payload</span>
+        
+        <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
+          xmlns="http://www.w3.org/2000/svg" y="0">
+          <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
+        </svg>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+object
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+      <div class="children bg-grey-lightest py-4 rounded">
+        
+          
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class="js-prop cursor-pointer py-2 flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">coordinates</span>
+        
+        <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
+          xmlns="http://www.w3.org/2000/svg" y="0">
+          <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
+        </svg>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+object
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+      <div class="children bg-grey-lighter py-4 rounded">
+        
+          
+            
+
+<div class="bg-grey-lighter pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">longitude</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+number
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+            
+
+<div class="bg-grey-lighter pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">latitude</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+number
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+        
+
+        
+        
+
+        
+
+        
+          
+            <p class="pl-6 mb-2 mt-4 text-xs text-grey-darker">Additional properties are allowed.</p>
+          
+        
+
+        
+
+        
+
+        
+      </div>
+    
+  </div>
+</div>
+
+
+          
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">etat</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">previousEtat</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+        
+
+        
+        
+
+        
+
+        
+          
+            <p class="pl-6 mb-2 mt-4 text-xs text-grey-darker">Additional properties are allowed.</p>
+          
+        
+
+        
+
+        
+
+        
+      </div>
+    
+  </div>
+</div>
+
+
+</div>
+
+  
+</div>
+
+
+    
+
+    
+
+<div class="mt-4">
+  
+</div>
+
+
+
+  </div>
+</div>
+
+<div class="right-block p-8">
+  <h4 class="text-lg text-white mb-4">Examples</h4>
+
+  
+  
+
+<form>
+  <input type="radio" checked id="example-payload-chantier/connect/success-&lt;anonymous-message-2&gt;" name="tab" class="examples-payload-tab hidden" />
+  <label for="example-payload-chantier/connect/success-&lt;anonymous-message-2&gt;" class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer text-grey-lightest" >Payload</label>
+
+  <input type="radio" id="example-headers-chantier/connect/success-&lt;anonymous-message-2&gt;" name="tab" class="examples-headers-tab hidden" disabled />
+  <label for="example-headers-chantier/connect/success-&lt;anonymous-message-2&gt;"
+      class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer text-grey-dark border-grey-dark opacity-25" title="This message does not have headers">Headers</label>
+
+  <div class="payload-examples mt-4">
+    
+    <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{
+  "coordinates": {
+    "longitude": 0,
+    "latitude": 0
+  },
+  "etat": "string",
+  "previousEtat": "string"
+}</code></pre>
+    <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
+    
+  </div>
+
+  <div class="headers-examples mt-4">
+    
+  </div>
+</form>
+
+
+  
+</div>
+
+
+
+    
+  </div>
+
+  <div class="responsive-container">
+    
+  </div>
+  <div class="responsive-container">
+    
+      
+
 <a name="operation-subscribe-chantier/user/connected"></a>
 <div class="center-block p-8">
   <div class="operation pt-8 pb-8">
@@ -665,7 +1201,7 @@ number
         title="Subscribe">Sub</span>
       
       
-<span class="string-chunk" >chantier</span><span class="string-chunk" >/user</span><span class="string-chunk" >/connected</span>
+<span class="string-chunk" >chantier/user/connected</span>
 
     </h3>
 
@@ -692,6 +1228,16 @@ number
     
   </div>
   <p class="text-grey-dark text-sm"></p>
+  
+  
+
+<div class="mt-4">
+  
+</div>
+
+
+
+
   <div class="mt-4 mb-4 markdown"></div>
   
 <div>
@@ -701,12 +1247,13 @@ number
   <div class="is-open">
     <div class="js-prop cursor-pointer py-2 flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">Payload</span>
+        <span class="text-sm" style="word-break: break-word;">Payload</span>
         
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
           <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
         </svg>
+        
         
         
       </div>
@@ -751,7 +1298,8 @@ object
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">userId</span>
+        <span class="text-sm" style="word-break: break-word;">userId</span>
+        
         
         
       </div>
@@ -796,14 +1344,111 @@ uuid
 
 <div class="bg-grey-lightest pl-8 pr-8 rounded">
   <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">nom</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">prenom</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
     <div class="js-prop cursor-pointer py-2 flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">coordinates</span>
+        <span class="text-sm" style="word-break: break-word;">coordinates</span>
         
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
           <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
         </svg>
+        
         
         
       </div>
@@ -848,7 +1493,8 @@ object
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">longitude</span>
+        <span class="text-sm" style="word-break: break-word;">longitude</span>
+        
         
         
       </div>
@@ -895,7 +1541,8 @@ number
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">latitude</span>
+        <span class="text-sm" style="word-break: break-word;">latitude</span>
+        
         
         
       </div>
@@ -961,6 +1608,102 @@ number
 
 
           
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">etat</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">previousEtat</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
         
 
         
@@ -994,9 +1737,11 @@ number
     
 
     
+
 <div class="mt-4">
   
 </div>
+
 
 
   </div>
@@ -1009,21 +1754,419 @@ number
   
 
 <form>
-  <input type="radio" checked id="example-payload-chantier/user/connected-&lt;anonymous-message-2&gt;" name="tab" class="examples-payload-tab hidden" />
-  <label for="example-payload-chantier/user/connected-&lt;anonymous-message-2&gt;" class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer text-grey-lightest" >Payload</label>
+  <input type="radio" checked id="example-payload-chantier/user/connected-&lt;anonymous-message-3&gt;" name="tab" class="examples-payload-tab hidden" />
+  <label for="example-payload-chantier/user/connected-&lt;anonymous-message-3&gt;" class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer text-grey-lightest" >Payload</label>
 
-  <input type="radio" id="example-headers-chantier/user/connected-&lt;anonymous-message-2&gt;" name="tab" class="examples-headers-tab hidden" disabled />
-  <label for="example-headers-chantier/user/connected-&lt;anonymous-message-2&gt;"
+  <input type="radio" id="example-headers-chantier/user/connected-&lt;anonymous-message-3&gt;" name="tab" class="examples-headers-tab hidden" disabled />
+  <label for="example-headers-chantier/user/connected-&lt;anonymous-message-3&gt;"
       class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer text-grey-dark border-grey-dark opacity-25" title="This message does not have headers">Headers</label>
 
   <div class="payload-examples mt-4">
     
     <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{
   "userId": null,
+  "nom": "string",
+  "prenom": "string",
   "coordinates": {
     "longitude": 0,
     "latitude": 0
-  }
+  },
+  "etat": "string",
+  "previousEtat": "string"
+}</code></pre>
+    <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
+    
+  </div>
+
+  <div class="headers-examples mt-4">
+    
+  </div>
+</form>
+
+
+  
+</div>
+
+
+
+    
+  </div>
+
+  <div class="responsive-container">
+    
+      
+
+<a name="operation-publish-chantier/disconnect"></a>
+<div class="center-block p-8">
+  <div class="operation pt-8 pb-8">
+    <h3 class="font-mono text-base">
+      
+      <span class="font-mono border border-blue text-blue uppercase p-1 rounded" title="Publish">Pub</span>
+      
+      
+      
+<span class="string-chunk" >chantier/disconnect</span>
+
+    </h3>
+
+    <div class="mt-4 mb-4 markdown"><p>Déconnecte l'utilisateur du chantier</p>
+</div>
+
+    <p class="text-grey text-sm"></p>
+    <div class="mt-4 mb-4 markdown"><p>Envoie l'évènement chantier/user/disconnected aux utilisateurs connectés au chantier</p>
+</div>
+
+
+
+    
+
+
+    
+    <p>Accepts the following message:</p>
+    
+
+<div class="bg-grey-lighter rounded p-4 mt-2">
+  <div class="text-sm text-grey-darker mb-2">
+    
+    
+      
+    
+  </div>
+  <p class="text-grey-dark text-sm"></p>
+  
+  
+
+<div class="mt-4">
+  
+</div>
+
+
+
+
+  <div class="mt-4 mb-4 markdown"></div>
+  
+<div>
+  
+
+<div class="bg-grey-lighter  rounded">
+  <div class="is-open">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">Payload</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+</div>
+
+  
+</div>
+
+
+    
+
+    
+
+<div class="mt-4">
+  
+</div>
+
+
+
+  </div>
+</div>
+
+<div class="right-block p-8">
+  <h4 class="text-lg text-white mb-4">Examples</h4>
+
+  
+  
+
+<form>
+  <input type="radio" checked id="example-payload-chantier/disconnect-&lt;anonymous-message-4&gt;" name="tab" class="examples-payload-tab hidden" />
+  <label for="example-payload-chantier/disconnect-&lt;anonymous-message-4&gt;" class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer text-grey-lightest" >Payload</label>
+
+  <input type="radio" id="example-headers-chantier/disconnect-&lt;anonymous-message-4&gt;" name="tab" class="examples-headers-tab hidden" disabled />
+  <label for="example-headers-chantier/disconnect-&lt;anonymous-message-4&gt;"
+      class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer text-grey-dark border-grey-dark opacity-25" title="This message does not have headers">Headers</label>
+
+  <div class="payload-examples mt-4">
+    
+    <pre class="hljs mb-4 border border-grey-darkest rounded"><code>""</code></pre>
+    <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
+    
+  </div>
+
+  <div class="headers-examples mt-4">
+    
+  </div>
+</form>
+
+
+  
+</div>
+
+
+
+    
+  </div>
+  <div class="responsive-container">
+    
+  </div>
+
+  <div class="responsive-container">
+    
+  </div>
+  <div class="responsive-container">
+    
+      
+
+<a name="operation-subscribe-chantier/user/disconnected"></a>
+<div class="center-block p-8">
+  <div class="operation pt-8 pb-8">
+    <h3 class="font-mono text-base">
+      
+      
+      <span class="font-mono border border-green-dark text-green-dark uppercase p-1 rounded"
+        title="Subscribe">Sub</span>
+      
+      
+<span class="string-chunk" >chantier/user/disconnected</span>
+
+    </h3>
+
+    <div class="mt-4 mb-4 markdown"><p>Un utilisateur vient de se déconnecter du chantier</p>
+</div>
+
+    <p class="text-grey text-sm"></p>
+    <div class="mt-4 mb-4 markdown"></div>
+
+
+
+    
+
+
+    
+    <p>Accepts the following message:</p>
+    
+
+<div class="bg-grey-lighter rounded p-4 mt-2">
+  <div class="text-sm text-grey-darker mb-2">
+    
+    
+      
+    
+  </div>
+  <p class="text-grey-dark text-sm"></p>
+  
+  
+
+<div class="mt-4">
+  
+</div>
+
+
+
+
+  <div class="mt-4 mb-4 markdown"></div>
+  
+<div>
+  
+
+<div class="bg-grey-lighter  rounded">
+  <div class="is-open">
+    <div class="js-prop cursor-pointer py-2 flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">Payload</span>
+        
+        <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
+          xmlns="http://www.w3.org/2000/svg" y="0">
+          <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
+        </svg>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+object
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+      <div class="children bg-grey-lightest py-4 rounded">
+        
+          
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">userId</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+uuid
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+        
+
+        
+        
+
+        
+
+        
+          
+            <p class="pl-6 mb-2 mt-4 text-xs text-grey-darker">Additional properties are allowed.</p>
+          
+        
+
+        
+
+        
+
+        
+      </div>
+    
+  </div>
+</div>
+
+
+</div>
+
+  
+</div>
+
+
+    
+
+    
+
+<div class="mt-4">
+  
+</div>
+
+
+
+  </div>
+</div>
+
+<div class="right-block p-8">
+  <h4 class="text-lg text-white mb-4">Examples</h4>
+
+  
+  
+
+<form>
+  <input type="radio" checked id="example-payload-chantier/user/disconnected-&lt;anonymous-message-5&gt;" name="tab" class="examples-payload-tab hidden" />
+  <label for="example-payload-chantier/user/disconnected-&lt;anonymous-message-5&gt;" class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer text-grey-lightest" >Payload</label>
+
+  <input type="radio" id="example-headers-chantier/user/disconnected-&lt;anonymous-message-5&gt;" name="tab" class="examples-headers-tab hidden" disabled />
+  <label for="example-headers-chantier/user/disconnected-&lt;anonymous-message-5&gt;"
+      class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer text-grey-dark border-grey-dark opacity-25" title="This message does not have headers">Headers</label>
+
+  <div class="payload-examples mt-4">
+    
+    <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{
+  "userId": null
 }</code></pre>
     <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
     
@@ -1056,7 +2199,7 @@ number
       
       
       
-<span class="string-chunk" >chantier</span><span class="string-chunk" >/sendCoordinates</span>
+<span class="string-chunk" >chantier/sendCoordinates</span>
 
     </h3>
 
@@ -1083,6 +2226,16 @@ number
     
   </div>
   <p class="text-grey-dark text-sm"></p>
+  
+  
+
+<div class="mt-4">
+  
+</div>
+
+
+
+
   <div class="mt-4 mb-4 markdown"></div>
   
 <div>
@@ -1092,12 +2245,13 @@ number
   <div class="is-open">
     <div class="js-prop cursor-pointer py-2 flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">Payload</span>
+        <span class="text-sm" style="word-break: break-word;">Payload</span>
         
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
           <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
         </svg>
+        
         
         
       </div>
@@ -1142,7 +2296,7 @@ object
   <div class="">
     <div class="js-prop cursor-pointer py-2 flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">coordinates</span>
+        <span class="text-sm" style="word-break: break-word;">coordinates</span>
         
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
@@ -1151,6 +2305,7 @@ object
         
         
           <div class="text-red-dark text-xs">required</div>
+        
         
       </div>
 
@@ -1194,7 +2349,8 @@ object
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">longitude</span>
+        <span class="text-sm" style="word-break: break-word;">longitude</span>
+        
         
         
       </div>
@@ -1241,7 +2397,8 @@ number
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">latitude</span>
+        <span class="text-sm" style="word-break: break-word;">latitude</span>
+        
         
         
       </div>
@@ -1307,6 +2464,106 @@ number
 
 
           
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">etat</span>
+        
+        
+          <div class="text-red-dark text-xs">required</div>
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">previousEtat</span>
+        
+        
+          <div class="text-red-dark text-xs">required</div>
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
         
 
         
@@ -1340,9 +2597,11 @@ number
     
 
     
+
 <div class="mt-4">
   
 </div>
+
 
 
   </div>
@@ -1355,11 +2614,11 @@ number
   
 
 <form>
-  <input type="radio" checked id="example-payload-chantier/sendCoordinates-&lt;anonymous-message-3&gt;" name="tab" class="examples-payload-tab hidden" />
-  <label for="example-payload-chantier/sendCoordinates-&lt;anonymous-message-3&gt;" class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer text-grey-lightest" >Payload</label>
+  <input type="radio" checked id="example-payload-chantier/sendCoordinates-&lt;anonymous-message-6&gt;" name="tab" class="examples-payload-tab hidden" />
+  <label for="example-payload-chantier/sendCoordinates-&lt;anonymous-message-6&gt;" class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer text-grey-lightest" >Payload</label>
 
-  <input type="radio" id="example-headers-chantier/sendCoordinates-&lt;anonymous-message-3&gt;" name="tab" class="examples-headers-tab hidden" disabled />
-  <label for="example-headers-chantier/sendCoordinates-&lt;anonymous-message-3&gt;"
+  <input type="radio" id="example-headers-chantier/sendCoordinates-&lt;anonymous-message-6&gt;" name="tab" class="examples-headers-tab hidden" disabled />
+  <label for="example-headers-chantier/sendCoordinates-&lt;anonymous-message-6&gt;"
       class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer text-grey-dark border-grey-dark opacity-25" title="This message does not have headers">Headers</label>
 
   <div class="payload-examples mt-4">
@@ -1368,7 +2627,9 @@ number
   "coordinates": {
     "longitude": 0,
     "latitude": 0
-  }
+  },
+  "etat": "string",
+  "previousEtat": "string"
 }</code></pre>
     <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
     
@@ -1408,7 +2669,7 @@ number
         title="Subscribe">Sub</span>
       
       
-<span class="string-chunk" >chantier</span><span class="string-chunk" >/user</span><span class="string-chunk" >/sentCoordinates</span>
+<span class="string-chunk" >chantier/user/sentCoordinates</span>
 
     </h3>
 
@@ -1435,6 +2696,16 @@ number
     
   </div>
   <p class="text-grey-dark text-sm"></p>
+  
+  
+
+<div class="mt-4">
+  
+</div>
+
+
+
+
   <div class="mt-4 mb-4 markdown"></div>
   
 <div>
@@ -1444,12 +2715,13 @@ number
   <div class="is-open">
     <div class="js-prop cursor-pointer py-2 flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">Payload</span>
+        <span class="text-sm" style="word-break: break-word;">Payload</span>
         
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
           <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
         </svg>
+        
         
         
       </div>
@@ -1494,7 +2766,8 @@ object
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">userId</span>
+        <span class="text-sm" style="word-break: break-word;">userId</span>
+        
         
         
       </div>
@@ -1541,12 +2814,13 @@ uuid
   <div class="">
     <div class="js-prop cursor-pointer py-2 flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">coordinates</span>
+        <span class="text-sm" style="word-break: break-word;">coordinates</span>
         
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
           <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
         </svg>
+        
         
         
       </div>
@@ -1591,7 +2865,8 @@ object
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">longitude</span>
+        <span class="text-sm" style="word-break: break-word;">longitude</span>
+        
         
         
       </div>
@@ -1638,7 +2913,8 @@ number
   <div class="">
     <div class=" flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm " style="word-break: break-word;">latitude</span>
+        <span class="text-sm" style="word-break: break-word;">latitude</span>
+        
         
         
       </div>
@@ -1704,6 +2980,102 @@ number
 
 
           
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">etat</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
+            
+
+<div class="bg-grey-lightest pl-8 pr-8 rounded">
+  <div class="">
+    <div class=" flex property">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+        <span class="text-sm" style="word-break: break-word;">previousEtat</span>
+        
+        
+        
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          
+string
+          
+          
+          
+          <div class="inline-block">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </div>
+        </div>
+
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+          
         
 
         
@@ -1737,9 +3109,11 @@ number
     
 
     
+
 <div class="mt-4">
   
 </div>
+
 
 
   </div>
@@ -1752,11 +3126,11 @@ number
   
 
 <form>
-  <input type="radio" checked id="example-payload-chantier/user/sentCoordinates-&lt;anonymous-message-4&gt;" name="tab" class="examples-payload-tab hidden" />
-  <label for="example-payload-chantier/user/sentCoordinates-&lt;anonymous-message-4&gt;" class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer text-grey-lightest" >Payload</label>
+  <input type="radio" checked id="example-payload-chantier/user/sentCoordinates-&lt;anonymous-message-7&gt;" name="tab" class="examples-payload-tab hidden" />
+  <label for="example-payload-chantier/user/sentCoordinates-&lt;anonymous-message-7&gt;" class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer text-grey-lightest" >Payload</label>
 
-  <input type="radio" id="example-headers-chantier/user/sentCoordinates-&lt;anonymous-message-4&gt;" name="tab" class="examples-headers-tab hidden" disabled />
-  <label for="example-headers-chantier/user/sentCoordinates-&lt;anonymous-message-4&gt;"
+  <input type="radio" id="example-headers-chantier/user/sentCoordinates-&lt;anonymous-message-7&gt;" name="tab" class="examples-headers-tab hidden" disabled />
+  <label for="example-headers-chantier/user/sentCoordinates-&lt;anonymous-message-7&gt;"
       class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer text-grey-dark border-grey-dark opacity-25" title="This message does not have headers">Headers</label>
 
   <div class="payload-examples mt-4">
@@ -1766,7 +3140,9 @@ number
   "coordinates": {
     "longitude": 0,
     "latitude": 0
-  }
+  },
+  "etat": "string",
+  "previousEtat": "string"
 }</code></pre>
     <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
     
