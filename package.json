@@ -13,6 +13,7 @@
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
+    "lowdb": "^1.0.0",
     "pg": "^8.0.2",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.6",

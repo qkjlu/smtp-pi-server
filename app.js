@@ -1,3 +1,7 @@
+const low = require("lowdb");
+const FileSync = require("lowdb/adapters/FileSync");
+const adapter = new FileSync("db.json");
+const db = low(adapter);
 require("dotenv").config();
 const jwt = require("express-jwt");
 const express = require("express");
@@ -46,42 +50,72 @@ http.listen(port, function () {
   console.log("Application listening on port " + port);
 });
 
-let usersData = {};
-let routesChantiers = {};
-
+// SOCKETS
+// Initialise le fichier json si il n'existe pas
+db.defaults({ users: [], routes: [] }).write();
 io.on("connection", (socket) => {
-  let socketUserId;
-  let socketChantierId;
-  let socketConnectedToChantier = false;
+  // Initialise les informations liées à la socket
+  let socketInfo = { id: "", chantier: "", connected: false };
 
   // Le client se connecte à un chantier (room)
-  socket.on("chantier/connect", (data) => {
-    usersData = {
-      ...usersData,
-      [data.userId]: {
+  socket.on("chantier/connect", async (data) => {
+    // Enregistre les informations liées à la socket
+    socketInfo.connected = true;
+    socketInfo.id = data.userId;
+    socketInfo.chantier = data.chantierId;
+
+    // Récupère les données précédemment persistées, les initialisent sinon
+    let storedUser = db.get("users").find({ id: data.userId }).value();
+    let camionneur = {};
+    if (storedUser == undefined) {
+      // L'utilisateur n'a pas été persisté précédemment
+      // Récupère le camionneur dans la BD Postgres pour renvoyer nom et prénom
+      camionneur = (
+        await sequelize.model("Camionneur").findByPk(socketInfo.id)
+      ).get();
+
+      // Initialise l'utilisateur à persister
+      storedUser = {
+        id: data.userId,
+        nom: camionneur.nom,
+        prenom: camionneur.prenom,
         chantierId: data.chantierId,
-        coordinates: { longitude: -1, latitude: -1 },
-      },
-    };
-    socketConnectedToChantier = true;
-    socketUserId = data.userId;
-    socketChantierId = data.chantierId;
+        coordinates: data.coordinates || {},
+        etat: "déchargé",
+        previousEtat: "",
+      };
+
+      // Persiste l'utilisateur dans le fichier json
+      db.get("users").push(storedUser).write();
+    }
+
+    // Ajoute l'utilisateur dans la room du chantier
     socket.join(`chantier:${data.chantierId}`, () => {
+      // Notifie tous les utilisateurs de la room qu'un nouvel utilisateur s'est connecté
       socket.to(`chantier:${data.chantierId}`).emit("chantier/user/connected", {
-        userId: data.userId,
+        userId: storedUser.id,
+        nom: camionneur.nom,
+        prenom: camionneur.prenom,
+        coordinates: storedUser.coordinates,
+        etat: storedUser.etat,
+        previousEtat: storedUser.previousEtat,
+      });
+
+      // Notifie l'utilisateur que la connexion à la room a réussi
+      socket.to(socket.conn).emit("chantier/connect/success", {
+        coordinates: storedUser.coordinates,
+        etat: storedUser.etat,
+        previousEtat: storedUser.previousEtat,
       });
     });
 
     // Récupérer une route avec OpenRouteService
     socket.on("chantier/routes", async () => {
-      if (!_.has(routes, `chantier:${socketChantierId}`)) {
-        const res = await sequelize.model("Chantier").findByPk(socketChantierId).get();
-        console.log(res);
+      if (!_.has(routes, `chantier:${socketInfo.chantier}`)) {
         const apiKey = process.env.ORS_KEY;
-        const {
-          lieuxChargement: start,
-          lieuxDéchargement: end,
-        } = await sequelize.model("Chantier").findByPk(socketChantierId).get();
+        const { lieuxChargement: start, lieuxDéchargement: end } = (
+          await sequelize.model("Chantier").findByPk(socketInfo.chantier)
+        ).get();
         console.log(start, end);
         // const routes = await fetch({
         //   method: "GET",
@@ -92,26 +126,42 @@ io.on("connection", (socket) => {
 
     // Le client se déconnecte d'un chantier
     socket.on("chantier/disconnect", () => {
-      socketConnectedToChantier = false;
-      socketChantierId = undefined;
+      // Notifie les utilisateurs de la room qu'un utilisateur s'est déconnecté
       socket
-        .to(`chantier:${data.chantierId}`)
-        .emit("chantier/user/disconnected", { userId: socketUserId });
+        .to(`chantier:${socketInfo.chantier}`)
+        .emit("chantier/user/disconnected", { userId: socketInfo.id });
+
+      socketInfo.connected = false;
+      socketInfo.chantier = undefined;
     });
 
     // Le client envoie ses coordonnées GPS au chantier
-    socket.on("chantier/sendCoordinates", (coordinates) => {
-      if (!socketConnectedToChantier) {
+    socket.on("chantier/sendCoordinates", (data) => {
+      if (!socketInfo.connected) {
+        // Notifie l'utilisateur d'une erreur
         socket.to(socket.conn).emit("erreur", {
           msg:
             "Erreur : il faut être connecté à un chantier pour envoyer les coordonnées GPS",
         });
       } else {
+        // Persiste les données reçues
+        db.get("users")
+          .find({ id: socketInfo.id })
+          .assign({
+            coordinates: data.coordinates,
+            etat: data.etat,
+            previousEtat: data.etat,
+          })
+          .write();
+
+        // Notifie les utilisateurs de la room qu'un utilisateur a envoyé de nouvelles coordonnées
         socket
-          .to(`chantier:${socketChantierId}`)
+          .to(`chantier:${socketInfo.chantier}`)
           .emit("chantier/user/sentCoordinates", {
-            userId: socketUserId,
-            coordinates,
+            userId: socketInfo.id,
+            coordinates: data.coordinates,
+            etat: data.etat,
+            previousEtat: data.previousEtat,
           });
       }
     });

@@ -48,7 +48,7 @@
   <script>
     $(function () {
       var socket = io();
-      const userId = Math.floor(Math.random() * 100);
+      const userId = "97068b94-96d5-4bcd-846b-e698c08273b6";
       const chantierId = "7ef473b7-0e99-45c1-85bb-80df719e3041";
       const coordinates = {
         longitude: -128,
@@ -64,6 +64,8 @@
       $("#routes").click(function () {
         socket.emit("chantier/routes");
       });
+
+
       socket.on("chantier/user/connected", function (data) {
         $("#messages").append(
           $("<li>")
@@ -72,7 +74,7 @@
             Latitude: ${data.coordinates.latitude}
             `)
         );
-        socket.emit("chantier/sendCoordinates", coordinates);
+        socket.emit("chantier/sendCoordinates", {coordinates, etat: "déchargé", previousEtat: "chargé"});
       });
       socket.on("chantier/user/sentCoordinates", (data) => {
         $("#messages").append(

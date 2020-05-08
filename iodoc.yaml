@@ -42,6 +42,26 @@ channels:
                   type: number
                 latitude:
                   type: number
+
+  chantier/connect/success:
+    description: La connexion au chantier a réussi
+    subscribe:
+      message:
+        payload:
+          type: object
+          properties:
+            coordinates:
+              type: object
+              properties:
+                longitude:
+                  type: number
+                latitude:
+                  type: number      
+            etat:
+              type: string
+            previousEtat:
+              type: string
+
   chantier/user/connected:
     description: Un utilisateur vient de se connecter au chantier
     subscribe:
@@ -51,6 +71,39 @@ channels:
           properties:
             userId:
               type: uuid
+            nom:
+              type: string
+            prenom:
+              type: string
+            coordinates:
+              type: object
+              properties:
+                longitude:
+                  type: number
+                latitude:
+                  type: number
+            etat:
+              type: string
+            previousEtat:
+              type: string
+
+  chantier/disconnect:
+      description: Déconnecte l'utilisateur du chantier
+      publish:
+        description: Envoie l'évènement chantier/user/disconnected aux utilisateurs connectés au chantier
+        message:
+          payload: undefined
+  
+  chantier/user/disconnected:
+      description: Un utilisateur vient de se déconnecter du chantier
+      subscribe: 
+        message:
+          payload:
+            type: object
+            properties:
+              userId:
+                type: uuid
+
   chantier/sendCoordinates:
     description: Permet d'envoyer des coordonnées à un chantier
     publish:
@@ -59,6 +112,8 @@ channels:
           type: object
           required:
             - coordinates
+            - etat
+            - previousEtat
           properties:
             coordinates:
               type: object
@@ -67,6 +122,11 @@ channels:
                   type: number
                 latitude:
                   type: number
+            etat:
+              type: string
+            previousEtat:
+              type: string
+
   chantier/user/sentCoordinates:
     description: Un utilisateur a envoyé des coordonnées
     subscribe:
@@ -83,3 +143,7 @@ channels:
                   type: number
                 latitude:
                   type: number
+            etat:
+              type: string
+            previousEtat:
+              type: string
