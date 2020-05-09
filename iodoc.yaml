@@ -1,7 +1,7 @@
 asyncapi: 2.0.0
 info:
   title: SMTP Map API
-  version: "0.1.0"
+  version: "0.2.0"
   description: |
     L'API SMTP Map permet de gérer la flotte de camion des chantiers
 
