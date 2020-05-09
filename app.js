@@ -85,6 +85,7 @@ io.on("connection", (socket) => {
 
     // Ajoute l'utilisateur dans la room du chantier
     socket.join(`chantier:${data.chantierId}`, () => {
+      
       // Notifie tous les utilisateurs de la room qu'un nouvel utilisateur s'est connecté
       socket.to(`chantier:${data.chantierId}`).emit("chantier/user/connected", {
         userId: storedUser.id,
@@ -94,11 +95,12 @@ io.on("connection", (socket) => {
       });
 
       // Notifie l'utilisateur que la connexion à la room a réussi
-      socket.to(socket.conn).emit("chantier/connect/success", {
+      io.to(socket.id).emit("chantier/connect/success", {
         coordinates: storedUser.coordinates,
         etat: storedUser.etat,
         previousEtat: storedUser.previousEtat,
       });
+      
     });
 
     // Récupérer une route avec OpenRouteService
@@ -131,7 +133,7 @@ io.on("connection", (socket) => {
     socket.on("chantier/sendCoordinates", (data) => {
       if (!socketInfo.connected) {
         // Notifie l'utilisateur d'une erreur
-        socket.to(socket.conn).emit("erreur", {
+        io.to(socket.id).emit("erreur", {
           msg:
             "Erreur : il faut être connecté à un chantier pour envoyer les coordonnées GPS",
         });

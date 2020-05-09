@@ -65,7 +65,7 @@
         socket.emit("chantier/sendCoordinates", {
           coordinates: { longitude: 120, latitude: 50 },
           etat: "chargé",
-          previousEtat: "déchargé"
+          previousEtat: "déchargé",
         });
       });
       $("#routes").click(function () {
@@ -94,6 +94,10 @@
             `)
         );
       });
+      socket.on("chantier/connect/success",
+        (data) => {
+          $("#messages").append($("<li>").text(` Connexion réussie !`));
+        });
     });
   </script>
   <body>

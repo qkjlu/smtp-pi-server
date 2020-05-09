@@ -29,7 +29,6 @@ channels:
           required:
             - userId
             - chantierId
-            - coordinates
           properties:
             userId:
               type: uuid
