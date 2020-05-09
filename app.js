@@ -144,7 +144,7 @@ io.on("connection", (socket) => {
           .assign({
             coordinates: data.coordinates,
             etat: data.etat,
-            previousEtat: data.etat,
+            previousEtat: data.previousEtat,
           })
           .write();
 
