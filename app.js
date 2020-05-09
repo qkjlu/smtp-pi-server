@@ -66,19 +66,13 @@ io.on("connection", (socket) => {
 
     // Récupère les données précédemment persistées, les initialisent sinon
     let storedUser = db.get("users").find({ id: data.userId }).value();
-    let camionneur = {};
+
     if (storedUser == undefined) {
       // L'utilisateur n'a pas été persisté précédemment
-      // Récupère le camionneur dans la BD Postgres pour renvoyer nom et prénom
-      camionneur = (
-        await sequelize.model("Camionneur").findByPk(socketInfo.id)
-      ).get();
 
       // Initialise l'utilisateur à persister
       storedUser = {
         id: data.userId,
-        nom: camionneur.nom,
-        prenom: camionneur.prenom,
         chantierId: data.chantierId,
         coordinates: data.coordinates || {},
         etat: "déchargé",
@@ -94,8 +88,6 @@ io.on("connection", (socket) => {
       // Notifie tous les utilisateurs de la room qu'un nouvel utilisateur s'est connecté
       socket.to(`chantier:${data.chantierId}`).emit("chantier/user/connected", {
         userId: storedUser.id,
-        nom: camionneur.nom,
-        prenom: camionneur.prenom,
         coordinates: storedUser.coordinates,
         etat: storedUser.etat,
         previousEtat: storedUser.previousEtat,

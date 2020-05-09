@@ -61,10 +61,16 @@
           coordinates,
         });
       });
+      $("#coord").click(function () {
+        socket.emit("chantier/sendCoordinates", {
+          coordinates: { longitude: 120, latitude: 50 },
+          etat: "chargé",
+          previousEtat: "déchargé"
+        });
+      });
       $("#routes").click(function () {
         socket.emit("chantier/routes");
       });
-
 
       socket.on("chantier/user/connected", function (data) {
         $("#messages").append(
@@ -74,59 +80,26 @@
             Latitude: ${data.coordinates.latitude}
             `)
         );
-        socket.emit("chantier/sendCoordinates", {coordinates, etat: "déchargé", previousEtat: "chargé"});
+        socket.emit("chantier/sendCoordinates", {
+          coordinates,
+          etat: "déchargé",
+          previousEtat: "chargé",
+        });
       });
       socket.on("chantier/user/sentCoordinates", (data) => {
         $("#messages").append(
-          $("<li>")
-            .text(` Utilisateur ${data.userId} : \n
+          $("<li>").text(` Utilisateur ${data.userId} : \n
                 Longitude: ${data.coordinates.longitude} \n
                 Latitude: ${data.coordinates.latitude}
             `)
         );
-      })
-      //   $("form").submit(function (e) {
-      //     e.preventDefault(); // prevents page reloading
-      //     const msg = {
-      //       nickname: $("#n").val(),
-      //       content: $("#m").val(),
-      //     };
-      //     socket.emit("chat message", msg);
-      //     $("#messages").append(
-      //       $("<li>").text(msg.nickname + " : " + msg.content)
-      //     );
-      //     $("#m").val("");
-      //     return false;
-      //   });
-      //   $("#m").keyup(function(e) {
-      //       const value = e.target.value
-      //       const nickname = $('#n').val()
-      //       if(value.length > 0) {
-      //           socket.emit('is typing', nickname)
-      //       } else {
-      //         socket.emit('stop typing')
-      //       }
-      //   })
-      //   socket.on("is typing", function(nickname){
-      //     $("#t").html(nickname + " is typing...")
-      //   });
-      //   socket.on("stop typing", function(){
-      //     $("#t").html("")
-      //   });
-      //   socket.on("chat message", function (msg) {
-      //     $("#messages").append(
-      //       $("<li>").text(msg.nickname + " : " + msg.content)
-      //     );
-      //   });
-
-      //   socket.on("user disconnected", function () {
-      //     $("#messages").append($("<li>").text("a user disconnected"));
-      //   });
+      });
     });
   </script>
   <body>
     <button id="con">ConnectToChantier</button>
     <button id="routes">chantier/routes</button>
+    <button id="coord">chantier/sendCoordinates</button>
     <ul id="messages"></ul>
     <!-- <ul id="messages"></ul>
     <p id="t"></p>
