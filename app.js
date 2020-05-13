@@ -1,3 +1,4 @@
+const cors = require("cors");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync("db.json");
@@ -13,6 +14,7 @@ const _ = require("lodash");
 const sequelize = require("./models").sequelize;
 const port = process.env.PORT || 3000;
 
+app.use(cors())
 app.use(express.static("public"));
 app.use(express.json());
 app.use(
