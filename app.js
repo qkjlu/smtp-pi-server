@@ -147,6 +147,7 @@ io.on("connection", (socket) => {
             coordinates: data.coordinates,
             etat: data.etat,
             previousEtat: data.previousEtat,
+            ETA: data.ETA || undefined
           })
           .write();
 
@@ -158,6 +159,7 @@ io.on("connection", (socket) => {
             coordinates: data.coordinates,
             etat: data.etat,
             previousEtat: data.previousEtat,
+            ETA: data.ETA || undefined
           });
       }
     });
