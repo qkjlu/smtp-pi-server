@@ -72,7 +72,8 @@ router.post("/:id/entreprise", async (req, res, next) => {
     if (!entreprise) {
       res.sendStatus(400);
     }
-    const camionneurToAddEntreprise = await Camionneur.findByPk(id, {
+    const camionneurToAddEntreprise = await 
+    Camionneur.findByPk(id, {
       include: {
         model: Entreprise,
       },

@@ -77,7 +77,7 @@ io.on("connection", (socket) => {
         id: data.userId,
         chantierId: data.chantierId,
         coordinates: data.coordinates || {},
-        etat: "déchargé",
+        etat: "chargé",
         previousEtat: "",
       };
 
@@ -103,21 +103,6 @@ io.on("connection", (socket) => {
         previousEtat: storedUser.previousEtat,
       });
       
-    });
-
-    // Récupérer une route avec OpenRouteService
-    socket.on("chantier/routes", async () => {
-      if (!_.has(routes, `chantier:${socketInfo.chantier}`)) {
-        const apiKey = process.env.ORS_KEY;
-        const { lieuxChargement: start, lieuxDéchargement: end } = (
-          await sequelize.model("Chantier").findByPk(socketInfo.chantier)
-        ).get();
-        console.log(start, end);
-        // const routes = await fetch({
-        //   method: "GET",
-        //   url : ""
-        // })
-      }
     });
 
     // Le client se déconnecte d'un chantier
@@ -164,22 +149,4 @@ io.on("connection", (socket) => {
       }
     });
   });
-
-  // socket.broadcast.emit("user connected");
-  // socket.on("disconnect", function () {
-  //   console.log("user disconnected");
-  //   socket.broadcast.emit("user disconnected");
-  // });
-  // socket.on("chat message", function (msg) {
-  //   console.log("message: " + msg.nickname + " : " + msg.content);
-  //   socket.broadcast.emit("chat message", msg);
-  // });
-  // socket.on("is typing", function (nickname) {
-  //   console.log(nickname + " is typing");
-  //   socket.broadcast.emit("is typing", nickname);
-  // });
-  // socket.on("stop typing", function () {
-  //   console.log("stop typing");
-  //   socket.broadcast.emit("stop typing");
-  // });
 });
