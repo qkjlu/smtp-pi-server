@@ -77,7 +77,7 @@ io.on("connection", (socket) => {
         id: data.userId,
         chantierId: data.chantierId,
         coordinates: data.coordinates || {},
-        etat: "chargé",
+        etat: "déchargé",
         previousEtat: "",
       };
 
