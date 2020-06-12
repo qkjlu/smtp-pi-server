@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test Socket SMTP</title>
+  </head>
+  <body>
+    <button id="conn">Send</button>
+  </body>
+</html>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+  $(function () {
+    var socket = io();
+    let userId = "0991690b-d7c2-4950-8282-246e3edf9bda";
+    let chantierId = "6247e2cd-ed1c-41a7-abd7-a6cb9005baf0";
+    $('#conn').on('click', function(e) {
+        socket.emit('chantier/connect', {userId, chantierId});
+    });
+  });
+</script>
