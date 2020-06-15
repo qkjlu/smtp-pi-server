@@ -1,4 +1,5 @@
 const cors = require("cors");
+const fs = require("fs");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync("db.json");
@@ -12,6 +13,25 @@ const io = require("socket.io")(http);
 const routes = require("./routes");
 const _ = require("lodash");
 const sequelize = require("./models").sequelize;
+const winston = require("winston");
+const CronJob = require("cron").CronJob;
+const job = new CronJob(
+	'* 59 23 * * *',
+	function() {
+    fs.unlinkSync("/var/log/info.log");
+	},
+	null,
+	true,
+	'Europe/Paris'
+);
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.logstash(),
+  transports: [new winston.transports.File({ filename: 'info.log' })]
+});
+
+
 const port = process.env.PORT || 3000;
 
 app.use(cors())
@@ -63,6 +83,7 @@ io.on("connection", (socket) => {
 
   // Le client se connecte à un chantier (room)
   socket.on("chantier/connect", async (data) => {
+    logger.info(`Action [connected to chantier] User [${data.userId}] Chantier [${data.chantierId}]`);
     // Enregistre les informations liées à la socket
     socketInfo.connected = true;
     socketInfo.id = data.userId;
@@ -109,6 +130,7 @@ io.on("connection", (socket) => {
 
     // Le client se déconnecte d'un chantier
     socket.on("chantier/disconnect", () => {
+      logger.info(`Action [disconnected from chantier] User [${socketInfo.id}] Chantier [${socketInfo.chantier}]`);
       // Notifie les utilisateurs de la room qu'un utilisateur s'est déconnecté
       socket
         .to(`chantier:${socketInfo.chantier}`)
@@ -137,6 +159,8 @@ io.on("connection", (socket) => {
             ETA: data.ETA || undefined
           })
           .write();
+
+        logger.info(`Action [send coordinate] User [${socketInfo.id}] Coordinate [${data.coordinates}] Etat [${data.etat}] ETA [${data.ETA}]`);
 
         // Notifie les utilisateurs de la room qu'un utilisateur a envoyé de nouvelles coordonnées
         socket
