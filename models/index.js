@@ -12,6 +12,8 @@ const db = {
   Etape: sequelize.import(__dirname + "/etape"),
   Grutier: sequelize.import(__dirname + "/grutier"),
   Lieu: sequelize.import(__dirname + "/lieu"),
+  Route: sequelize.import(__dirname + "/route"),
+  Waypoint: sequelize.import(__dirname + "/waypoint"),
 };
 
 Object.keys(db).forEach((modelName) => {
