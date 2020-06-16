@@ -30,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: { allowNull: false },
     });
     Chantier.hasMany(models.Etape);
+    Chantier.hasOne(Route, {
+      as: "routeChantierToDécharge"
+    })
+    Chantier.hasOne(Route, {
+      as: "routeDéchargeToChantier"
+    })
   };
   return Chantier;
 };
