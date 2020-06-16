@@ -30,11 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: { allowNull: false },
     });
     Chantier.hasMany(models.Etape);
+
     Chantier.belongsTo(models.Route, {
-      as: "routeChantierToDécharge"
+      as: "aller"
     })
     Chantier.belongsTo(models.Route, {
-      as: "routeDéchargeToChantier"
+      as: "retour"
     })
   };
   return Chantier;

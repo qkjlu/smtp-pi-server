@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     Route.belongsTo(models.Waypoint, {
         as: "destination"
     });
+    Route.hasOne(models.Chantier, {
+        as: "aller"
+    });
+    Route.hasOne(models.Chantier, {
+        as: "retour"
+    });
     Route.hasMany(models.Waypoint, {
         as: "waypoints"
     });
