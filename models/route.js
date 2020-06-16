@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     Route.hasOne(models.Waypoint, {
         as: "destination"
     });
-    Route.hasMany(model.Waypoint, {
+    Route.hasMany(models.Waypoint, {
         as: "waypoints"
     });
     
