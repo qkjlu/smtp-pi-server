@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     { sequelize, modelName: "Route"  }
   );
   Route.associate = (models) => {
-    Route.hasOne(models.Waypoint, {
+    Route.belongsTo(models.Waypoint, {
         as: "origin"
     });
-    Route.hasOne(models.Waypoint, {
+    Route.belongsTo(models.Waypoint, {
         as: "destination"
     });
     Route.hasMany(models.Waypoint, {
