@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV4
             },
+            longitude: {
+                type: DataTypes.DOUBLE,
+                allowNull: false,
+            },
+            latitude: {
+                type: DataTypes.DOUBLE,
+                allowNull: false,
+            },
         },
         { sequelize, modelName: "Waypoint" }
     );
@@ -19,7 +27,9 @@ module.exports = (sequelize, DataTypes) => {
         Waypoint.hasOne(models.Route, {
             as: "destination"
         });
-        Waypoint.belongsTo(models.Route);
+        Waypoint.belongsTo(models.Route, {
+            as: "waypointOfRoute"
+        });
     };
     return Waypoint;
 };

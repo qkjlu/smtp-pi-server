@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "retour"
     });
     Route.hasMany(models.Waypoint, {
-        as: "waypoints"
+        as: "waypointOfRoute"
     });
     
   };
