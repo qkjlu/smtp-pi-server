@@ -11,66 +11,66 @@ module.exports = {
     */
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable("Routes", {
-        id: {
-          type: Sequelize.DataTypes.UUID,
-          primaryKey: true,
-          defaultValue: Sequelize.DataTypes.UUIDV4
-        }
-      }, { transaction });
-      await queryInterface.createTable("Waypoints", {
-        id: {
-          type: Sequelize.DataTypes.UUID,
-          primaryKey: true,
-          defaultValue: Sequelize.DataTypes.UUIDV4
-        },
-        longitude: {
-          type: Sequelize.DataTypes.DOUBLE,
-          allowNull: false,
-        },
-        latitude: {
-          type: Sequelize.DataTypes.DOUBLE,
-          allowNull: false,
-        }
-      }, { transaction });
-      await queryInterface.addColumn("Waypoints", "waypointOfRouteId", Sequelize.DataTypes.UUID, { transaction });
-      await queryInterface.addConstraint("Waypoints", {
-        type: "FOREIGN KEY",
-        name: "FK_ROUTE",
-        fields: ["waypointOfRouteId"],
-        references: {
-          table: "Routes",
-          field: "id"
-        },
-        transaction
-      });
-      await queryInterface.addColumn("Routes", "originId", Sequelize.DataTypes.UUID, { transaction });
-      await queryInterface.addColumn("Routes", "destinationId", Sequelize.DataTypes.UUID, { transaction });
-      await queryInterface.addConstraint("Routes", {
-        type: "FOREIGN KEY",
-        name: "FK_WAYPOINT_ORIGIN",
-        fields: ["originId"],
-        references: {
-          table: "Waypoints",
-          field: "id"
-        }, 
-        transaction
-      });
-      await queryInterface.addConstraint("Routes", {
-        type: "FOREIGN KEY",
-        name: "FK_WAYPOINT_DESTINATION",
-        fields: ["destinationId"],
-        references: {
-          table: "Waypoints",
-          field: "id"
-        }, 
-        transaction
-      });
+      // await queryInterface.createTable("Routes", {
+      //   id: {
+      //     type: Sequelize.DataTypes.UUID,
+      //     primaryKey: true,
+      //     defaultValue: Sequelize.DataTypes.UUIDV4
+      //   }
+      // }, { transaction });
+      // await queryInterface.createTable("Waypoints", {
+      //   id: {
+      //     type: Sequelize.DataTypes.UUID,
+      //     primaryKey: true,
+      //     defaultValue: Sequelize.DataTypes.UUIDV4
+      //   },
+      //   longitude: {
+      //     type: Sequelize.DataTypes.DOUBLE,
+      //     allowNull: false,
+      //   },
+      //   latitude: {
+      //     type: Sequelize.DataTypes.DOUBLE,
+      //     allowNull: false,
+      //   }
+      // }, { transaction });
+      // await queryInterface.addColumn("Waypoints", "waypointOfRouteId", Sequelize.DataTypes.UUID, { transaction });
+      // await queryInterface.addConstraint("Waypoints", {
+      //   type: "FOREIGN KEY",
+      //   name: "FK_ROUTE",
+      //   fields: ["waypointOfRouteId"],
+      //   references: {
+      //     table: "Routes",
+      //     field: "id"
+      //   },
+      //   transaction
+      // });
+      // await queryInterface.addColumn("Routes", "originId", Sequelize.DataTypes.UUID, { transaction });
+      // await queryInterface.addColumn("Routes", "destinationId", Sequelize.DataTypes.UUID, { transaction });
+      // await queryInterface.addConstraint("Routes", {
+      //   type: "FOREIGN KEY",
+      //   name: "FK_WAYPOINT_ORIGIN",
+      //   fields: ["originId"],
+      //   references: {
+      //     table: "Waypoints",
+      //     field: "id"
+      //   }, 
+      //   transaction
+      // });
+      // await queryInterface.addConstraint("Routes", {
+      //   type: "FOREIGN KEY",
+      //   name: "FK_WAYPOINT_DESTINATION",
+      //   fields: ["destinationId"],
+      //   references: {
+      //     table: "Waypoints",
+      //     field: "id"
+      //   }, 
+      //   transaction
+      // });
       await queryInterface.addColumn("Chantiers", "allerId", Sequelize.DataTypes.UUID, { transaction });
       await queryInterface.addColumn("Chantiers", "retourId", Sequelize.DataTypes.UUID, { transaction });
       await queryInterface.addConstraint("Chantiers", {
         type: "FOREIGN KEY",
-        name: "FK_ROUTE_ALLER",
+        name: "Chantiers_allerId_fkey",
         fields: ["allerId"],
         references: {
           table: "Routes",
@@ -80,7 +80,7 @@ module.exports = {
       });
       await queryInterface.addConstraint("Chantiers", {
         type: "FOREIGN KEY",
-        name: "FK_ROUTE_RETOUR",
+        name: "Chantiers_retourId_fkey",
         fields: ["retourId"],
         references: {
           table: "Routes",
@@ -107,9 +107,11 @@ module.exports = {
     */
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.removeConstraint("Chantiers", "FK_ROUTE", { transaction });
-      await queryInterface.removeConstraint("Routes", "FK_WAYPOINT", { transaction });
-      await queryInterface.removeConstraint("Waypoints", "FK_ROUTE", { transaction });
+      await queryInterface.removeConstraint("Chantiers", "Chantiers_allerId_fkey", { transaction });
+      await queryInterface.removeConstraint("Chantiers", "Chantiers_retourId_fkey", { transaction });
+      // await queryInterface.removeConstraint("Routes", "FK_WAYPOINT_ORIGIN", { transaction });
+      // await queryInterface.removeConstraint("Routes", "FK_WAYPOINT_DESTINATION", { transaction });
+      // await queryInterface.removeConstraint("Waypoints", "FK_ROUTE", { transaction });
       await queryInterface.removeColumn("Chantiers", "allerId", { transaction });
       await queryInterface.removeColumn("Chantiers", "retourId", { transaction });
       await queryInterface.dropTable("Waypoints", { transaction });
@@ -117,6 +119,7 @@ module.exports = {
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
+      console.log(error);
       throw error;
     }
    

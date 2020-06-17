@@ -5,4 +5,5 @@ exports.etapes = require(__dirname + '/etapes');
 exports.grutiers = require(__dirname + '/grutiers');
 exports.lieux = require(__dirname + '/lieux');
 exports.entreprises = require(__dirname + '/entreprises');
+exports.chartes = require(__dirname + '/chartes');
 

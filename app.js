@@ -58,6 +58,7 @@ app.use("/etapes", routes.etapes);
 app.use("/grutiers", routes.grutiers);
 app.use("/lieux", routes.lieux);
 app.use("/entreprises", routes.entreprises);
+app.use("/chartes", routes.chartes);
 
 app.get("/", (req, res) => {
   res.send(
