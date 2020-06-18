@@ -18,7 +18,12 @@ const CronJob = require("cron").CronJob;
 const job = new CronJob(
 	'* 59 23 * * *',
 	function() {
-    fs.unlinkSync("info.log");
+    try {
+      fs.unlinkSync("info.log");
+    } catch (error) {
+      console.log(error);
+    }
+    
 	},
 	null,
 	true,
