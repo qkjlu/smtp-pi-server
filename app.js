@@ -89,7 +89,7 @@ io.on("connection", (socket) => {
 
   // Le client se connecte à un chantier (room)
   socket.on("chantier/connect", async (data) => {
-    logger.info(`Action [connected to chantier] User [${data.userId}] Chantier [${data.chantierId}]`);
+    logger.info(`Date [${Date.now()}] Action [connected to chantier] User [${data.userId}] Chantier [${data.chantierId}]`);
     // Enregistre les informations liées à la socket
     socketInfo.connected = true;
     socketInfo.id = data.userId;
@@ -136,7 +136,7 @@ io.on("connection", (socket) => {
 
     // Le client se déconnecte d'un chantier
     socket.on("chantier/disconnect", () => {
-      logger.info(`Action [disconnected from chantier] User [${socketInfo.id}] Chantier [${socketInfo.chantier}]`);
+      logger.info(`Date [${Date.now()}] Action [disconnected from chantier] User [${socketInfo.id}] Chantier [${socketInfo.chantier}]`);
       // Notifie les utilisateurs de la room qu'un utilisateur s'est déconnecté
       socket
         .to(`chantier:${socketInfo.chantier}`)
@@ -166,7 +166,7 @@ io.on("connection", (socket) => {
           })
           .write();
 
-        logger.info(`Action [send coordinate] User [${socketInfo.id}] Coordinate [${data.coordinates}] Etat [${data.etat}] ETA [${data.ETA}]`);
+        logger.info(`Date [${Date.now()}] Action [send coordinate] User [${socketInfo.id}] Coordinate [${data.coordinates}] Etat [${data.etat}] ETA [${data.ETA}]`);
 
         // Notifie les utilisateurs de la room qu'un utilisateur a envoyé de nouvelles coordonnées
         socket
