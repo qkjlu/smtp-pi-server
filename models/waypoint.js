@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.DOUBLE,
                 allowNull: false,
             },
+            ordre: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            }
         },
         { sequelize, modelName: "Waypoint" }
     );
