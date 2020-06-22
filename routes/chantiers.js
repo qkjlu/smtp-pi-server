@@ -2,8 +2,10 @@ const router = require("express").Router();
 const sequelize = require("../models").sequelize;
 const Chantier = require("../models").sequelize.model("Chantier");
 const Route = require("../models").sequelize.model("Route");
+const _ = require("lodash"); 
 const { updateChantierRules, deleteRules, validate } = require("./helpers/validator");
 const { createLogger } = require("winston");
+
 router.get("/", async (req, res, next) => {
   try {
     res.json(await Chantier.findAll());
@@ -72,6 +74,9 @@ router.get("/:id/route/:type", async (req, res, next) => {
     let route = null;
     if(type == "aller") route = await chantier.getAller();
     else if (type == "retour") route = await chantier.getRetour();
+    
+    if(_.isEmpty(route)) res.sendStatus(404);
+
     const waypoints = await route.getWaypoints();
     if (_.isEmpty(waypoints)) {
       res.sendStatus(404);
