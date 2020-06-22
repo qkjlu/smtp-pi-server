@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const sequelize = require("../models").sequelize;
 const Chantier = require("../models").sequelize.model("Chantier");
+const Route = require("../models").sequelize.model("Route");
 const { updateChantierRules, deleteRules, validate } = require("./helpers/validator");
 const { createLogger } = require("winston");
 router.get("/", async (req, res, next) => {
@@ -61,7 +62,25 @@ router.put("/:id/route/:type", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
 
+router.get("/:id/route/:type", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { type } = req.params;
+    const chantier = await Chantier.findByPk(id);
+    let route = null;
+    if(type == "aller") route = await chantier.getAller();
+    else if (type == "retour") route = await chantier.getRetour();
+    const waypoints = await route.getWaypoints();
+    if (_.isEmpty(waypoints)) {
+      res.sendStatus(404);
+    } else {
+      res.json(waypoints);
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.delete("/", deleteRules("Chantier"), validate, async (req, res, next) => {
