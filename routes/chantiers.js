@@ -75,11 +75,15 @@ router.get("/:id/route/:type", async (req, res, next) => {
     if(type == "aller") route = await chantier.getAller();
     else if (type == "retour") route = await chantier.getRetour();
     
-    if(_.isEmpty(route)) res.sendStatus(404);
+    if(_.isNull(route)){
+      res.sendStatus(404);
+      return;
+    } 
 
     const waypoints = await route.getWaypoints();
     if (_.isEmpty(waypoints)) {
       res.sendStatus(404);
+      return;
     } else {
       res.json(waypoints);
     }
