@@ -40,8 +40,6 @@ router.post("/", async (req, res, next) => {
 
 router.patch(
   "/:id",
-  // updateChantierRules(),
-  // validate,
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -53,5 +51,19 @@ router.patch(
     }
   }
 );
+
+router.put("/:id", async (req, res, next) => {
+  const { adresse, longitude, latitude, rayon } = req.body;
+  const { id } = req.params;
+  if(!(adresse && longitude && latitude && rayon)){
+    res.sendStatus(400)
+  }
+  try {
+    await Lieu.update({ adresse, longitude, latitude, rayon }, { where: { id } });
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

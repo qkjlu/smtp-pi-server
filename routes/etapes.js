@@ -11,13 +11,14 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const { dateDebut, type, CamionneurId, ChantierId, etapePrec } = req.body;
+  const { id, dateDebut, type, CamionneurId, ChantierId, etapePrec } = req.body;
   if (!(dateDebut && type && CamionneurId && ChantierId)) {
     res.sendStatus(400);
   }
   try {
     res.status(201).json(
       await Etape.create({
+        id,
         dateDebut,
         type,
         CamionneurId,
@@ -40,4 +41,5 @@ router.patch("/:id", async (req, res, next) => {
     next(error);
   }
 });
+
 module.exports = router;
