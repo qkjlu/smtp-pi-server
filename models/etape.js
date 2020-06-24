@@ -20,10 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       type: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          isIn: [['chargement', 'déchargement', 'pause', 'panne']]
-        }
+        allowNull: false
       },
       tempsManoeuvre: {
         type: DataTypes.INTEGER,
