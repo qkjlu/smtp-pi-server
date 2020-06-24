@@ -53,4 +53,14 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await Lieu.destroy({ where: { id } });
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
