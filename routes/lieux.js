@@ -38,20 +38,6 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.patch(
-  "/:id",
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const { adresse, longitude, latitude } = req.body;
-      await Lieu.update({ adresse, longitude, latitude }, { where: { id } });
-      res.sendStatus(204);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 router.put("/:id", async (req, res, next) => {
   const { adresse, longitude, latitude, rayon } = req.body;
   const { id } = req.params;
