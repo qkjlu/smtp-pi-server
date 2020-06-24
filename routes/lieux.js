@@ -22,7 +22,7 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { adresse, longitude, latitude } = req.body;
+    const { adresse, longitude, latitude, rayon } = req.body;
     if (!(adresse && longitude && latitude)) {
       res.sendStatus(400);
     }
@@ -31,6 +31,7 @@ router.post("/", async (req, res, next) => {
         adresse,
         longitude,
         latitude,
+        rayon
       })
     );
   } catch (error) {
