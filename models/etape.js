@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
   Etape.associate = models => {
     Etape.belongsTo(models.Camionneur, { foreignKey: { allowNull: true } })
     Etape.belongsTo(models.Chantier, { foreignKey: { allowNull: true } });
+    Etape.hasOne(models.Etape, { as: "etapePrec" });
   }
   return Etape;
 };

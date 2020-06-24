@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const { dateDebut, type, CamionneurId, ChantierId } = req.body;
+  const { dateDebut, type, CamionneurId, ChantierId, etapePrec } = req.body;
   if (!(dateDebut && type && CamionneurId && ChantierId)) {
     res.sendStatus(400);
   }
@@ -22,6 +22,7 @@ router.post("/", async (req, res, next) => {
         type,
         CamionneurId,
         ChantierId,
+        etapePrec
       })
     );
   } catch (error) {
@@ -29,4 +30,14 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.patch("/:id", async (req, res, next) => {
+  const { dateFin } = req.body;
+  const { id } = req.params;
+  try {
+    await Etape.update({ dateFin }, { where: { id } });
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;
