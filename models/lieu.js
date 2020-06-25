@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
+      rayon: {
+        type: DataTypes.INTEGER,
+        //allowNull: false
+      }
     },
     {
       sequelize,
@@ -33,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
   );
   Lieu.associate = models => {
     Lieu.belongsToMany(models.Grutier, { through: "LieuGrutier" });
-    Lieu.hasMany(models.Chantier)
+    Lieu.hasMany(models.Chantier);
+
   }
   return Lieu;
 };

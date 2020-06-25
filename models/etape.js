@@ -20,10 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       type: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          isIn: [['chargement', 'déchargement', 'pause', 'panne']]
-        }
+        allowNull: false
       },
       tempsManoeuvre: {
         type: DataTypes.INTEGER,
@@ -34,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   Etape.associate = models => {
     Etape.belongsTo(models.Camionneur, { foreignKey: { allowNull: true } })
     Etape.belongsTo(models.Chantier, { foreignKey: { allowNull: true } });
+    Etape.hasOne(models.Etape, { as: "etapePrec" });
   }
   return Etape;
 };
