@@ -23,7 +23,7 @@ const job = new CronJob(
     } catch (error) {
       console.log(error);
     }
-    
+
 	},
 	null,
 	true,
@@ -64,6 +64,7 @@ app.use("/grutiers", routes.grutiers);
 app.use("/lieux", routes.lieux);
 app.use("/entreprises", routes.entreprises);
 app.use("/chartes", routes.chartes);
+app.use("/versions", routes.versions);
 
 app.get("/", (req, res) => {
   res.send(
@@ -116,7 +117,7 @@ io.on("connection", (socket) => {
 
     // Ajoute l'utilisateur dans la room du chantier
     socket.join(`chantier:${data.chantierId}`, () => {
-      
+
       // Notifie tous les utilisateurs de la room qu'un nouvel utilisateur s'est connecté
       socket.to(`chantier:${data.chantierId}`).emit("chantier/user/connected", {
         userId: storedUser.id,
@@ -131,7 +132,7 @@ io.on("connection", (socket) => {
         etat: storedUser.etat,
         previousEtat: storedUser.previousEtat,
       });
-      
+
     });
 
     // Le client se déconnecte d'un chantier
