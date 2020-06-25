@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const { id, dateDebut, type, CamionneurId, ChantierId, etapePrec } = req.body;
+  const { id, dateDebut, type, CamionneurId, ChantierId, etapePrecId } = req.body;
   if (!(dateDebut && type && CamionneurId && ChantierId)) {
     res.sendStatus(400);
   }
@@ -23,7 +23,7 @@ router.post("/", async (req, res, next) => {
         type,
         CamionneurId,
         ChantierId,
-        etapePrec
+        etapePrecId
       })
     );
   } catch (error) {
