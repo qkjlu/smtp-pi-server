@@ -19,12 +19,12 @@ router.get("/type/:type", async (req, res, next) => {
 
 router.put("/", async (req, res, next) => {
   try{
-    const { type, version } = req.body;
-    if (!(type && version)) {
+    const { type, numero } = req.body;
+    if (!(type && numero)) {
       res.sendStatus(400);
     }
-    const { id } =  await Version.findOne({ where: {type: type} });
-    await Version.update({version: version},{where : { id }});
+    const { id } =  await Version.findOne({ where: {type : type} });
+    await Version.update({type, numero},{where : { id }});
     res.sendStatus(204);
   }catch(error){
     next(error);

@@ -50,6 +50,7 @@ app.use(
       { url: "/entreprises", methods: ["GET"] },
       { url: "/camionneurs", methods: ["GET"] },
       { url: "/grutiers", methods: ["GET"] },
+			{ url: /^\/versions\/type\/.*/, methods: ["GET"] },
       "/io",
       "/socketdoc/index.html",
       "/favicon.ico",
