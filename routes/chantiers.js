@@ -49,7 +49,25 @@ router.patch(
 );
 
 router.get("/:id", async (req, res, next) => {
-    helper.getById(Chantier, req, res, next);
+  const { id } = req.params;
+  try {
+    res.json(
+      await Chantier.findByPk(id,
+        {
+          include:
+            [{
+              model: sequelize.model("Lieu"),
+              as: "lieuDéchargement"
+            },
+            {
+              model: sequelize.model("Lieu"),
+              as: "lieuChargement"
+            }]
+        })
+    );
+  } catch (error) {
+    next(error)
+  }
 });
 
 router.put("/:id/route/:type", async (req, res, next) => {
@@ -58,7 +76,7 @@ router.put("/:id/route/:type", async (req, res, next) => {
     const { waypoints } = req.body;
     const chantier = await Chantier.findByPk(id);
     const route = await sequelize.model("Route").create();
-    if(type == "aller") chantier.setAller(route);
+    if (type == "aller") chantier.setAller(route);
     else if (type == "retour") chantier.setRetour(route);
     waypoints.map(async w => {
       const createdWaypoint = await sequelize.model("Waypoint").create({ longitude: w.longitude, latitude: w.latitude, ordre: w.ordre });
@@ -76,10 +94,10 @@ router.get("/:id/route/:type", async (req, res, next) => {
     const { type } = req.params;
     const chantier = await Chantier.findByPk(id);
     let route = null;
-    if(type == "aller") route = await chantier.getAller();
+    if (type == "aller") route = await chantier.getAller();
     else if (type == "retour") route = await chantier.getRetour();
 
-    if(_.isNull(route)){
+    if (_.isNull(route)) {
       res.sendStatus(404);
       return;
     }
