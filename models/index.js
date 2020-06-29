@@ -15,6 +15,7 @@ const db = {
   Route: sequelize.import(__dirname + "/route"),
   Waypoint: sequelize.import(__dirname + "/waypoint"),
   Charte: sequelize.import(__dirname + "/charte"),
+  Version: sequelize.import(__dirname + "/version"),
 };
 
 Object.keys(db).forEach((modelName) => {
@@ -23,7 +24,7 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-sequelize.sync({ alter: true });
+sequelize.sync({ alter: false });
 
 exports.MockData = require(__dirname + "/MockData");
 exports.sequelize = sequelize;
