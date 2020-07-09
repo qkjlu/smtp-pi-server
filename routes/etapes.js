@@ -1,6 +1,8 @@
 
 
+
 const router = require("express").Router();
+const { Op } = require("sequelize");
 const Etape = require("../models").sequelize.model('Etape');
 const Camionneur = require("../models").sequelize.model("Camionneur");
 const Chantier = require("../models").sequelize.model("Chantier");
@@ -143,6 +145,25 @@ function getWorstTime(etapes){
     };
 }
 
+
+function getNbTrucks(etapes){
+    let nbChargement = 0
+    let nbDechargement = 0
+    for (let i = 0; i < etapes.length; i++) {
+        if(etapes[i].type.equal("enChargement") && etapes[i].dateFin != null){
+            nbChargement++
+        }else{
+            if(etapes[i].type.equal("enDéchargement") && etapes[i].dateFin != null){
+                nbDechargement++
+            }
+        }
+    }
+    return {
+        chargé : nbChargement,
+        déchargé : nbChargement,
+    };
+}
+
 router.get("/:type/average/chantiers/", async (req, res, next) => {
     const { type  } = req.params;
     const { date } = req.body;
@@ -202,6 +223,28 @@ router.get("/:type/data/chantiers/", async (req, res, next) => {
     }
 });
 
+router.get("/:type/data/chantiers/:ChantierId/", async (req, res, next) => {
+    const { type, ChantierId} = req.params;
+    const { date } = req.body;
+    try {
+        const etapes = await getEtapes(type,ChantierId,null,date)
+        res.json({etapes : etapes});
+    } catch (error) {
+        next(error)
+    }
+});
+
+router.get("/:type/data/chantiers/:ChantierId/camionneurs/:CamionneurId", async (req, res, next) => {
+    const { type, ChantierId , CamionneurId} = req.params;
+    const { date } = req.body;
+    try {
+        const etapes = await getEtapes(type,ChantierId,CamionneurId,date)
+        res.json({etapes : etapes});
+    } catch (error) {
+        next(error)
+    }
+});
+
 router.get("/:type/data/chantiers/best", async (req, res, next) => {
     const { type } = req.params;
     const { date } = req.body;
@@ -250,23 +293,31 @@ router.get("/:type/data/chantiers/:ChantierId/worst", async (req, res, next) => 
     }
 });
 
-router.get("/:type/data/chantiers/:ChantierId/", async (req, res, next) => {
-    const { type, ChantierId} = req.params;
-    const { date } = req.body;
+router.get("/chantiers/:ChantierId/nombre", async (req, res, next) => {
+
+    const { ChantierId } = req.params;
     try {
-        const etapes = await getEtapes(type,ChantierId,null,date)
-        res.json({etapes : etapes});
+        const chargement = await Etape.findAll({where :  { type : "enChargement", ChantierId, [Op.not] : {dateFin : null} }});
+        const dechargement = await Etape.findAll({where :  { type : "enDéchargement",ChantierId,[Op.not] : {dateFin : null} }});
+        const result = {
+            chargé : chargement.length,
+            déchargé : dechargement.length
+        }
+        res.json({result});
     } catch (error) {
         next(error)
     }
 });
 
-router.get("/:type/data/chantiers/:ChantierId/camionneurs/:CamionneurId", async (req, res, next) => {
-    const { type, ChantierId , CamionneurId} = req.params;
-    const { date } = req.body;
+router.get("/chantiers/nombre/", async (req, res, next) => {
     try {
-        const etapes = await getEtapes(type,ChantierId,CamionneurId,date)
-        res.json({etapes : etapes});
+        const chargement = await Etape.findAll({where :  { type : "enChargement", [Op.not] : {dateFin : null} } });
+        const dechargement = await Etape.findAll({where :  { type : "enDéchargement", [Op.not] : {dateFin : null} } });
+        const result = {
+            chargé : chargement.length,
+            déchargé : dechargement.length
+        }
+        res.json({result});
     } catch (error) {
         next(error)
     }
