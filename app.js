@@ -176,6 +176,7 @@ io.on("connection", (socket) => {
           .to(`chantier:${socketInfo.chantier}`)
           .emit("chantier/user/sentCoordinates", {
             userId: socketInfo.id,
+            chantierId: data.chantierId,
             coordinates: data.coordinates,
             etat: data.etat,
             previousEtat: data.previousEtat,
