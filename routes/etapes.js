@@ -296,7 +296,6 @@ router.get("/:type/data/chantiers/:ChantierId/worst", async (req, res, next) => 
 router.get("/chantiers/:ChantierId/nombre", async (req, res, next) => {
     const { date } = req.body;
     const { ChantierId } = req.params;
-    datee.getDay()
     try {
         let chargement = await Etape.findAll({ where: { type : "enChargement" ,ChantierId, [Op.not] : {dateFin : null} } })
         let dechargement = await Etape.findAll({ where: { type : "enDéchargement" ,ChantierId, [Op.not] : {dateFin : null} } })
