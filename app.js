@@ -122,6 +122,7 @@ io.on("connection", (socket) => {
       // Notifie tous les utilisateurs de la room qu'un nouvel utilisateur s'est connecté
       socket.to(`chantier:${data.chantierId}`).emit("chantier/user/connected", {
         userId: storedUser.id,
+        chantierId: storedUser.chantierId,
         coordinates: storedUser.coordinates,
         etat: storedUser.etat,
         previousEtat: storedUser.previousEtat,

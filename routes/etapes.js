@@ -64,6 +64,7 @@ function calculSumTimesEtapes(etapes) {
     let sum = 0;
     let invalidData = 0;
     for (let i = 0; i < etapes.length; i++) {
+        console.log(etapes[i])
         let time = new Date(etapes[i].dateFin).getTime() - new Date(etapes[i].dateDebut).getTime()
         let secondes = Math.floor(time / 1000);
         if (secondes < 0) {
@@ -169,14 +170,13 @@ router.get("/:type/average/chantiers/", async (req, res, next) => {
     const { date } = req.body;
     try {
         const etapes = await getEtapes(type,null,null,date)
+        console.log("etapes"+ etapes.length);
         let result = calculSumTimesEtapes(etapes);
         let sum = result[0]
+        console.log("result"+ result[0]);
         let invalidData = result[1]
         let moyenne = Math.floor(sum/(etapes.length - invalidData));
-        const res = {
-            time : moyenne,
-        }
-        res.json(res);
+        res.json({time : moyenne});
     } catch (error) {
         next(error)
     }
@@ -294,11 +294,14 @@ router.get("/:type/data/chantiers/:ChantierId/worst", async (req, res, next) => 
 });
 
 router.get("/chantiers/:ChantierId/nombre", async (req, res, next) => {
-
+    const { date } = req.body;
     const { ChantierId } = req.params;
+    datee.getDay()
     try {
-        const chargement = await Etape.findAll({where :  { type : "enChargement", ChantierId, [Op.not] : {dateFin : null} }});
-        const dechargement = await Etape.findAll({where :  { type : "enDéchargement",ChantierId,[Op.not] : {dateFin : null} }});
+        let chargement = await Etape.findAll({ where: { type : "enChargement" ,ChantierId, [Op.not] : {dateFin : null} } })
+        let dechargement = await Etape.findAll({ where: { type : "enDéchargement" ,ChantierId, [Op.not] : {dateFin : null} } })
+        console.log("day : "+chargement[0].dateDebut.getDay(), "/"+chargement[0].dateDebut.getMonth()+"/"+chargement[0].dateDebut.getFullYear())
+        chargement = groupByHour(chargement)
         const result = {
             chargé : chargement.length,
             déchargé : dechargement.length
@@ -309,15 +312,41 @@ router.get("/chantiers/:ChantierId/nombre", async (req, res, next) => {
     }
 });
 
-router.get("/chantiers/nombre/", async (req, res, next) => {
-    try {
-        const chargement = await Etape.findAll({where :  { type : "enChargement", [Op.not] : {dateFin : null} } });
-        const dechargement = await Etape.findAll({where :  { type : "enDéchargement", [Op.not] : {dateFin : null} } });
-        const result = {
-            chargé : chargement.length,
-            déchargé : dechargement.length
+function groupByHour(etapes,date){
+    let result = {
+        6 : 0, 7 : 0, 9 : 0, 10 : 0, 11 : 0, 12 : 0, 13 : 0, 14 : 0, 15 : 0, 16 : 0, 17 : 0, 18 : 0
+    }
+    for (let i = 0; i < etapes.length; i++) {
+        if(date.getDay() == etapes[i].getDay() && date.getMonth() == etapes[i].getMonth() && date.getFullYear() == etapes[i].getFullYear()){
+            let hour = date.getHours()
+            result[hour].add(result[hour]+1)
         }
-        res.json({result});
+    }
+    return result;
+}
+
+
+router.get("/chantiers/nombre/", async (req, res, next) => {
+    const { date } = req.body;
+    try {
+        console.log(date);
+        let chargement = null
+        let dechargement = null
+        if(date == null){
+            chargement = await Etape.findAll({where :  { type : "enChargement", [Op.not] : {dateFin : null} }});
+            dechargement = await Etape.findAll({where :  { type : "enDéchargement",[Op.not] : {dateFin : null} }});
+        }else{
+            chargement = await Etape.findAll({ where: { type : "enChargement" , dateDebut: {[Op.gte]: date} , dateDebut: {[Op.lte]: date}, [Op.not] : {dateFin : null} } })
+            dechargement = await Etape.findAll({ where: { type : "enDéchargement" , dateDebut: {[Op.gte]: date} , dateDebut: {[Op.lte]: date}, [Op.not] : {dateFin : null} } })
+            chargement = groupByHour(chargement);
+            dechargement = groupByHour(dechargement);
+        }
+
+        const result = {
+            chargé : chargement,
+            déchargé : dechargement
+        }
+        res.json(result);
     } catch (error) {
         next(error)
     }
