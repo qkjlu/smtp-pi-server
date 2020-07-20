@@ -85,6 +85,7 @@ http.listen(port, function () {
 // SOCKETS
 // Initialise le fichier json si il n'existe pas
 db.defaults({ users: [], routes: [] }).write();
+
 io.on("connection", (socket) => {
   // Initialise les informations liées à la socket
   let socketInfo = { id: "", chantier: "", connected: false };
@@ -92,6 +93,7 @@ io.on("connection", (socket) => {
   // Le client se connecte à un chantier (room)
   socket.on("chantier/connect", async (data) => {
     logger.info(`Date [${Date.now()}] Action [connected to chantier] User [${data.userId}] Chantier [${data.chantierId}]`);
+
     // Enregistre les informations liées à la socket
     socketInfo.connected = true;
     socketInfo.id = data.userId;
@@ -176,7 +178,7 @@ io.on("connection", (socket) => {
           .to(`chantier:${socketInfo.chantier}`)
           .emit("chantier/user/sentCoordinates", {
             userId: socketInfo.id,
-            chantierId: data.chantierId,
+            chantierId: socketInfo.chantier,
             coordinates: data.coordinates,
             etat: data.etat,
             previousEtat: data.previousEtat,
