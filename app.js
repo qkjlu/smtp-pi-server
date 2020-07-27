@@ -187,7 +187,7 @@ io.on("connection", (socket) => {
 
     // Le client envoie souhaite detourner un camion
     socket.on("chantier/detournement", (data) => {
-      socket.to(`chantier:${data.chantierId}`)
+      socket.to(`chantier:${socketInfo.chantier}`)
           .emit("chantier/detournement", {
               userId: data.userId,
               chantierId: data.chantierId,
