@@ -186,5 +186,18 @@ io.on("connection", (socket) => {
           });
       }
     });
+
+    // Le client envoie souhaite detourner un camion
+    socket.on("chantier/detournement", (data) => {
+      socket.to(`chantier:${data.chantierId}`)
+          .emit("chantier/detournement", {
+              userId: data.userId,
+              chantierId: data.chantierId,
+              originLong: data.originLong,
+              originLat: data.originLat,
+              destinationLong: data.destinationLong,
+              destinationLat: data.destinationLat,
+          });
+    });
   });
 });
