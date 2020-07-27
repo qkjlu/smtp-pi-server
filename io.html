@@ -5,6 +5,10 @@
   </head>
   <body>
     <button id="conn">Connect</button>
+    <button id="disc">Disconnect</button> 
+      |
+    <button id="det">Detournement</button>
+    <p id="chantierId"></p>
   </body>
 </html>
 
@@ -12,11 +16,11 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
   $(function () {
-    var socket = io();
+    var socket = io("http://smtp-dev-env.eba-5jqrxjhz.eu-west-3.elasticbeanstalk.com/");
     let userId = "0991690b-d7c2-4950-8282-246e3edf9bda";
-    let chantierId = "6247e2cd-ed1c-41a7-abd7-a6cb9005baf0";
-    $('#conn').on('click', function(e) {
-        socket.emit('chantier/connect', {userId, chantierId});
-    });
+    let chantierId = "baa17eb6-360f-43ed-8231-c86e868b1b53";
+    $('#conn').on('click', (e) => socket.emit('chantier/connect', {userId, chantierId}) );
+    $('#det').on('click', (e) => socket.emit('chantier/detournement', {}) );
+    $("#chantierId").html("chantierId: " + chantierId);
   });
 </script>
