@@ -63,29 +63,34 @@ router.get("/:id/carburant/:date", async (req, res, next) => {
   
 });
 
-router.post("/:id/carburant", async (req, res, next) => {
+router.put("/:id/carburant", async (req, res, next) => {
   try {
     const { id } = req.params;
     const { volume, type } = req.body;
     const grutier = await Grutier.findByPk(id);
     const existingOperationCarburant = await grutier.getOperationCarburants();
-    for (const e of existingOperationCarburant) {
-      if(type === e.type) {
-        res.sendStatus(409);
-        next();
-        return;
-      }
+
+    // Create if the operation doesn't exist, update if not
+    const existingOperation = existingOperationCarburant.find( e => e.type === type);
+    if(existingOperation !== undefined){
+      await OperationCarburant.upsert({
+        id: existingOperation.id,
+        type, 
+        volume
+      })
+    } else {
+      const operationCarburant = await OperationCarburant.create({
+        type, 
+        volume
+      })
+      await operationCarburant.setGrutier(grutier);
     }
-    const operationCarburant = await OperationCarburant.create({
-      type, 
-      volume
-    })
-    grutier.addOperationCarburant(operationCarburant)
-    res.sendStatus(201);
+    // ------------------
+
+    res.sendStatus(200);
   } catch (error) {
     next(error)
   }
-  
 });
 
 router.post(

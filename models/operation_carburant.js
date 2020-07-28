@@ -1,5 +1,5 @@
 const uuid = require('uuid').v4
-const Model = require('sequelize').Model;
+const Model = require('sequelize').Model; 
 
 module.exports = (sequelize, DataTypes) => {
     class OperationCarburant extends Model {}
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       { sequelize, modelName: "OperationCarburant"  }
     );
     OperationCarburant.associate = models => {
-        OperationCarburant.belongsTo(models.Grutier);
+      OperationCarburant.belongsTo(models.Grutier);
     }
     return OperationCarburant;
   };
