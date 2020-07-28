@@ -16,6 +16,7 @@ const db = {
   Waypoint: sequelize.import(__dirname + "/waypoint"),
   Charte: sequelize.import(__dirname + "/charte"),
   Version: sequelize.import(__dirname + "/version"),
+  OperationCarburant: sequelize.import(__dirname + "/operation_carburant")
 };
 
 Object.keys(db).forEach((modelName) => {

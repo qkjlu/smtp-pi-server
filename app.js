@@ -36,7 +36,6 @@ const logger = winston.createLogger({
   transports: [new winston.transports.File({ filename: 'info.log' })]
 });
 
-
 const port = process.env.PORT || 3000;
 
 app.use(cors())

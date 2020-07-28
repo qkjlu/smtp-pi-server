@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const sequelize = require("../models").sequelize;
 const Grutier = sequelize.model("Grutier");
+const OperationCarburant = sequelize.model("OperationCarburant");
 const Entreprise = sequelize.model("Entreprise");
 const Lieu = sequelize.model("Lieu");
 var _ = require("lodash");
@@ -13,6 +14,7 @@ const {
   deleteRules,
   validate,
 } = require("./helpers/validator");
+const e = require("express");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -38,6 +40,52 @@ router.get("/:id", async (req, res, next) => {
 
 router.get("/:id/entreprises", async (req, res, next) => {
   helper.getAssociatedById(Grutier, Entreprise, req, res, next);
+});
+
+router.get("/:id/carburant/:date", async (req, res, next) => {
+  try {
+    const { id, date } = req.params;
+    const dateObj = new Date(Number(date));
+    const grutier = await Grutier.findByPk(id);
+    const operationCarburants = await grutier.getOperationCarburants();
+    const byDate = operationCarburants.filter(e => {
+      const createdAt = e.createdAt;
+      return ( 
+        dateObj.getDate() === createdAt.getDate()
+        && dateObj.getMonth() === createdAt.getMonth()
+        && dateObj.getFullYear() == createdAt.getFullYear()
+        )
+    })
+    res.json(byDate);
+  } catch (error) {
+    next(error)
+  }
+  
+});
+
+router.post("/:id/carburant", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { volume, type } = req.body;
+    const grutier = await Grutier.findByPk(id);
+    const existingOperationCarburant = await grutier.getOperationCarburants();
+    for (const e of existingOperationCarburant) {
+      if(type === e.type) {
+        res.sendStatus(409);
+        next();
+        return;
+      }
+    }
+    const operationCarburant = await OperationCarburant.create({
+      type, 
+      volume
+    })
+    grutier.addOperationCarburant(operationCarburant)
+    res.sendStatus(201);
+  } catch (error) {
+    next(error)
+  }
+  
 });
 
 router.post(

@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     Grutier.associate = models => {
       Grutier.belongsToMany(models.Lieu, { through: "LieuGrutier" });
       Grutier.belongsToMany(models.Entreprise, { through: "EntrepriseGrutier", allowNull : false })
+      Grutier.hasMany(models.OperationCarburant);
     }
     return Grutier;
   };

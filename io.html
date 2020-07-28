@@ -4,23 +4,33 @@
     <title>Test Socket SMTP</title>
   </head>
   <body>
+    <select id="list"></select>
+      |
     <button id="conn">Connect</button>
     <button id="disc">Disconnect</button> 
       |
     <button id="det">Detournement</button>
-    <p id="chantierId"></p>
   </body>
 </html>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script> 
+  let userId = "0991690b-d7c2-4950-8282-246e3edf9bda";
+  let chantierId = "15481aca-8869-44b2-89f5-584ad50e1406";
+  let host = "http://smtp-dev-env.eba-5jqrxjhz.eu-west-3.elasticbeanstalk.com/"
+  let socket = io(host);
+  async function getChantiers() {
+    const res = await axios.get(`${host}chantiers`, { headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJiYTg0YmM3LTlmNDMtNDAxZS04ZjAyLTQ3ZTAyZDc4NDQ2OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU4NzQxODQ0MX0.zRTuqPl0UbiwJn7zZSxErvBYhkhPibEZ51S4Aqgd6LI'} })
+    return res.data
+  }
+</script>
 <script>
-  $(function () {
-    var socket = io("http://smtp-dev-env.eba-5jqrxjhz.eu-west-3.elasticbeanstalk.com/");
-    let userId = "0991690b-d7c2-4950-8282-246e3edf9bda";
-    let chantierId = "baa17eb6-360f-43ed-8231-c86e868b1b53";
+  $( async function () {
+    const chantiers = await getChantiers();
+    chantiers.forEach( e => $("#list").append(`<option>${e.nom} - ${e.id}</option>`) );
     $('#conn').on('click', (e) => socket.emit('chantier/connect', {userId, chantierId}) );
     $('#det').on('click', (e) => socket.emit('chantier/detournement', {}) );
-    $("#chantierId").html("chantierId: " + chantierId);
   });
 </script>
