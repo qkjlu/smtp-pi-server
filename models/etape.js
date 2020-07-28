@@ -25,6 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       tempsManoeuvre: {
         type: DataTypes.INTEGER,
       },
+      debutPause: {
+        type: DataTypes.DATE
+      },
+      finPause:{
+        type: DataTypes.DATE
+      }
     },
     { sequelize, modelName: "Etape"  }
   );

@@ -14,7 +14,6 @@ router.get("/", async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-
 });
 
 router.post("/", async (req, res, next) => {
@@ -38,11 +37,42 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.get("/id", async (req, res, next) =>{
+    const { id } = req.params;
+    try {
+        res.json(await Etape.findAll({where: { id } }));
+    } catch (error) {
+        next(error)
+    }
+});
+
 router.patch("/:id", async (req, res, next) => {
   const { dateFin } = req.body;
   const { id } = req.params;
   try {
     await Etape.update({ dateFin }, { where: { id } });
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/:id/debutPause", async (req, res, next) => {
+  const { debutPause } = req.body;
+  const { id } = req.params;
+  try {
+    await Etape.update({ debutPause }, { where: { id } });
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/:id/finPause", async (req, res, next) => {
+  const { finPause } = req.body;
+  const { id } = req.params;
+  try {
+    await Etape.update({ finPause }, { where: { id } });
     res.sendStatus(204);
   } catch (error) {
     next(error);
@@ -58,6 +88,7 @@ router.get("/:id", async (req, res, next) => {
         next(error)
     }
 });
+
 /* ---- Statistics ---- */
 
 function calculSumTimesEtapes(etapes) {
@@ -145,7 +176,6 @@ function getWorstTime(etapes){
     };
 }
 
-
 function getNbTrucks(etapes){
     let nbChargement = 0
     let nbDechargement = 0
@@ -163,6 +193,8 @@ function getNbTrucks(etapes){
         déchargé : nbChargement,
     };
 }
+
+/* ---- Fin Statistics ---- */
 
 router.get("/:type/average/chantiers/", async (req, res, next) => {
     const { type  } = req.params;
