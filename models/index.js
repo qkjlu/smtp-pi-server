@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 let sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   protocol: "postgres",
+  logging: false
 });
 const db = {
   Entreprise: sequelize.import(__dirname + "/entreprise"),
