@@ -17,6 +17,7 @@ const db = {
   Waypoint: sequelize.import(__dirname + "/waypoint"),
   Charte: sequelize.import(__dirname + "/charte"),
   Version: sequelize.import(__dirname + "/version"),
+  Pause: sequelize.import(__dirname + "/pause"),
   OperationCarburant: sequelize.import(__dirname + "/operation_carburant"),
   Prelevement: sequelize.import(__dirname + "/prelevement"),
   Materiau: sequelize.import(__dirname + "/materiau")
