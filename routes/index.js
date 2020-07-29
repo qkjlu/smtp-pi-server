@@ -7,3 +7,4 @@ exports.lieux = require(__dirname + '/lieux');
 exports.entreprises = require(__dirname + '/entreprises');
 exports.chartes = require(__dirname + '/chartes');
 exports.versions = require(__dirname + '/versions');
+exports.pauses = require(__dirname + '/pauses');
