@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 const Etape = require("../models").sequelize.model('Etape');
 const Camionneur = require("../models").sequelize.model("Camionneur");
 const Chantier = require("../models").sequelize.model("Chantier");
-
+const Pause = require("../models").sequelize.model("Pause");
 
 router.get("/", async (req, res, next) => {
     try {
@@ -91,8 +91,28 @@ router.get("/:id", async (req, res, next) => {
 
 /* ---- Statistics ---- */
 
+// get all pause for a etape where datefin is not null
+async function getPause(etapeId){
+  let pauses = await Pause.findAll({where : {EtapeId : etapeId, [Op.not] : {dateFin : null}}});
+  return pauses
+}
+
+// sum of all pause of an etape
+async function calculTimesPauseEtapes(etape){
+  let pauses = await getPause(etape.id);
+  let sum = 0;
+  for (let i = 0; i < pauses.length; i++) {
+    let time = new Date(pauses[i].dateFin).getTime() - new Date(pauses[i].dateDebut).getTime()
+    let secondes = Math.floor(time / 1000);
+    sum += secondes
+  }
+  return sum;
+}
+
+
 function calculSumTimesEtapes(etapes) {
     let sum = 0;
+    let sum_pauses = 0;
     let invalidData = 0;
     for (let i = 0; i < etapes.length; i++) {
         let time = new Date(etapes[i].dateFin).getTime() - new Date(etapes[i].dateDebut).getTime()
@@ -102,10 +122,11 @@ function calculSumTimesEtapes(etapes) {
             invalidData++
         } else {
             console.log(secondes)
+            sum_pauses += calculTimesPauseEtapes(etapes[i]);
             sum += secondes
         }
     }
-    return [sum, invalidData];
+    return [sum, invalidData, sum_pauses];
 }
 
 async function describeEtapes(etapes){
@@ -204,6 +225,7 @@ router.get("/:type/average/chantiers/", async (req, res, next) => {
         let result = calculSumTimesEtapes(etapes);
         let sum = result[0]
         let invalidData = result[1]
+        let all_pause = result[1]
         let moyenne = Math.floor(sum/(etapes.length - invalidData));
         const data = {
             time : moyenne,

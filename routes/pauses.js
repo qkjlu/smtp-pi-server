@@ -20,6 +20,15 @@ router.get("/:id", async (req, res, next) =>{
     }
 });
 
+router.get("/etapes/:EtapeId", async (req, res, next) =>{
+    const { EtapeId } = req.params;
+    try {
+        res.json(await Pause.findAll({where : {EtapeId, [Op.not] : {dateFin : null}}}));
+    } catch (error) {
+        next(error)
+    }
+});
+
 router.post("/", async (req, res, next) => {
   const { id, dateDebut, EtapeId} = req.body;
   if (!(dateDebut && id && EtapeId)) {
