@@ -66,6 +66,8 @@ app.use("/entreprises", routes.entreprises);
 app.use("/chartes", routes.chartes);
 app.use("/versions", routes.versions);
 app.use("/pauses", routes.pauses);
+app.use("/prelevements", routes.prelevements);
+app.use("/materiaux", routes.materiaux);
 
 
 app.get("/", (req, res) => {

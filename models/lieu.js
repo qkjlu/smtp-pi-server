@@ -23,7 +23,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       rayon: {
         type: DataTypes.INTEGER,
-        //allowNull: false
+      },
+      type: {
+        type: DataTypes.STRING
       }
     },
     {
@@ -38,7 +40,8 @@ module.exports = (sequelize, DataTypes) => {
   Lieu.associate = models => {
     Lieu.belongsToMany(models.Grutier, { through: "LieuGrutier" });
     Lieu.hasMany(models.Chantier);
-
+    Lieu.hasMany(models.Prelevement, { as: "dons", foreignKey: "lieuChargementId"});
+    Lieu.hasMany(models.Prelevement, { as: "reprises", foreignKey: "lieuDéchargementId"});
   }
   return Lieu;
 };

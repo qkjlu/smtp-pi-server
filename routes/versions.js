@@ -3,6 +3,20 @@ const Version = require("../models").sequelize.model("Version");
 var jwt = require("jsonwebtoken");
 const _ = require("lodash");
 
+router.put("/", async (req, res, next) => {
+  try{
+    const { type, numero } = req.body;
+    if (!(type && numero)) {
+      res.sendStatus(400);
+    }
+    const { id } =  await Version.findOne({ where: {type : type} });
+    await Version.update({type, numero},{where : { id }});
+    res.sendStatus(204);
+  }catch(error){
+    next(error);
+  }
+});
+
 router.get("/type/:type", async (req, res, next) => {
   try{
     const { type } = req.params;
@@ -17,18 +31,6 @@ router.get("/type/:type", async (req, res, next) => {
   }
 });
 
-router.put("/", async (req, res, next) => {
-  try{
-    const { type, numero } = req.body;
-    if (!(type && numero)) {
-      res.sendStatus(400);
-    }
-    const { id } =  await Version.findOne({ where: {type : type} });
-    await Version.update({type, numero},{where : { id }});
-    res.sendStatus(204);
-  }catch(error){
-    next(error);
-  }
-});
+
 
 module.exports = router;

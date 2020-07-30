@@ -18,7 +18,9 @@ const db = {
   Charte: sequelize.import(__dirname + "/charte"),
   Version: sequelize.import(__dirname + "/version"),
   Pause: sequelize.import(__dirname + "/pause"),
-  OperationCarburant: sequelize.import(__dirname + "/operation_carburant")
+  OperationCarburant: sequelize.import(__dirname + "/operation_carburant"),
+  Prelevement: sequelize.import(__dirname + "/prelevement"),
+  Materiau: sequelize.import(__dirname + "/materiau")
 };
 
 Object.keys(db).forEach((modelName) => {
@@ -27,7 +29,7 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-sequelize.sync({ alter: false });
+sequelize.sync({ alter: true }).catch( e => console.error(e) );
 
 exports.MockData = require(__dirname + "/MockData");
 exports.sequelize = sequelize;

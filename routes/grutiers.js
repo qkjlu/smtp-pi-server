@@ -30,6 +30,29 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/carburants", async (req, res, next) => {
+  try {
+    let operationCarburants = await OperationCarburant.findAll({include: {
+      model : Grutier
+    }});
+
+    let result = {};
+    operationCarburants.forEach(element => {
+      const createdAt = element.createdAt.toISOString().split("T")[0];
+      const grutier = element.GrutierId;
+      const carburant = element.get({plain: true});
+      const type = carburant.type;
+      result[createdAt] = result[createdAt] || {};
+      result[createdAt][grutier] = result[createdAt][grutier] || {};
+      result[createdAt][grutier][type] = result[createdAt][grutier][type] || {};
+      result[createdAt][grutier][type] = {...result[createdAt][grutier][type], ...carburant };
+    });
+    res.json(result);
+  } catch (error) {
+    next(error)
+  }
+});
+
 router.get("/:id", async (req, res, next) => {
   helper.getById(Grutier, req, res, next, {
     include: {
@@ -40,27 +63,6 @@ router.get("/:id", async (req, res, next) => {
 
 router.get("/:id/entreprises", async (req, res, next) => {
   helper.getAssociatedById(Grutier, Entreprise, req, res, next);
-});
-
-router.get("/:id/carburant/:date", async (req, res, next) => {
-  try {
-    const { id, date } = req.params;
-    const dateObj = new Date(Number(date));
-    const grutier = await Grutier.findByPk(id);
-    const operationCarburants = await grutier.getOperationCarburants();
-    const byDate = operationCarburants.filter(e => {
-      const createdAt = e.createdAt;
-      return ( 
-        dateObj.getDate() === createdAt.getDate()
-        && dateObj.getMonth() === createdAt.getMonth()
-        && dateObj.getFullYear() == createdAt.getFullYear()
-        )
-    })
-    res.json(byDate);
-  } catch (error) {
-    next(error)
-  }
-  
 });
 
 router.put("/:id/carburant", async (req, res, next) => {
@@ -75,12 +77,12 @@ router.put("/:id/carburant", async (req, res, next) => {
     if(existingOperation !== undefined){
       await OperationCarburant.upsert({
         id: existingOperation.id,
-        type, 
+        type,
         volume
       })
     } else {
       const operationCarburant = await OperationCarburant.create({
-        type, 
+        type,
         volume
       })
       await operationCarburant.setGrutier(grutier);
