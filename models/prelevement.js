@@ -15,10 +15,13 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false,
         }
       },
-      { sequelize, modelName: "Prelevement"  }
+      { sequelize, modelName: "Prelevement" }
     );
     Prelevement.associate = models => {
-      Prelevement.belongsTo(models.Grutier);
+      Prelevement.belongsTo(models.Lieu, { as: "lieuChargement" });
+      Prelevement.belongsTo(models.Lieu, { as: "lieuDéchargement" });
+      Prelevement.belongsTo(models.Materiau);
+      Prelevement.belongsTo(models.Camionneur);
     }
     return Prelevement;
   };

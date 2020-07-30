@@ -29,7 +29,7 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-sequelize.sync({ alter: false });
+sequelize.sync({ alter: true }).catch( e => console.error(e) );
 
 exports.MockData = require(__dirname + "/MockData");
 exports.sequelize = sequelize;

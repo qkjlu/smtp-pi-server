@@ -40,8 +40,8 @@ module.exports = (sequelize, DataTypes) => {
   Lieu.associate = models => {
     Lieu.belongsToMany(models.Grutier, { through: "LieuGrutier" });
     Lieu.hasMany(models.Chantier);
-    Lieu.hasMany(models.Prelevement, { through: "donsPrelevements" });
-    Lieu.hasMany(models.Prelevement, { through: "receptionsPrelevements" });
+    Lieu.hasMany(models.Prelevement, { as: "dons", foreignKey: "lieuChargementId"});
+    Lieu.hasMany(models.Prelevement, { as: "reprises", foreignKey: "lieuDéchargementId"});
   }
   return Lieu;
 };

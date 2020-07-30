@@ -11,14 +11,21 @@ module.exports = (sequelize, DataTypes) => {
           defaultValue: DataTypes.UUIDV4
         },
         nom: {
-          type: DataTypes.FLOAT,
+          type: DataTypes.STRING,
           allowNull: false,
         }
       },
-      { sequelize, modelName: "Materiau"  }
+      { 
+        sequelize, modelName: "Materiau", 
+        name: {
+          singular: "Materiau",
+          plural: "Materiaux",
+        },
+        tableName: "Materiaux" 
+      }
     );
     Materiau.associate = models => {
-      
+      Materiau.hasMany(models.Prelevement);
     }
     return Materiau;
   };

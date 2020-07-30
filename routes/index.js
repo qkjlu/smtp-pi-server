@@ -8,3 +8,5 @@ exports.entreprises = require(__dirname + '/entreprises');
 exports.chartes = require(__dirname + '/chartes');
 exports.versions = require(__dirname + '/versions');
 exports.pauses = require(__dirname + '/pauses');
+exports.prelevements = require(__dirname + '/prelevements');
+exports.materiaux = require(__dirname + '/materiaux');
