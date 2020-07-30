@@ -30,28 +30,24 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/carburant", async (req, res, next) => {
+router.get("/carburants", async (req, res, next) => {
   try {
     let operationCarburants = await OperationCarburant.findAll({include: {
       model : Grutier
     }});
 
-    let b = {};
-    for(i=0;i<operationCarburants.length;i++){
-      let splittedDate = operationCarburants[i].createdAt.toISOString().split("T");
-      let date= splittedDate[0];
-      console.log(date);
-      b[date] = [];
-    }
-
-    for(i=0;i<operationCarburants.length;i++){
-      let splittedDate = operationCarburants[i].createdAt.toISOString().split("T");
-      let date= splittedDate[0];
-      //b[date].push(operationCarburants[i]);
-      b[date] = [ ...b[date], operationCarburants[i] ]
-    }
-
-    res.json(b);
+    let result = {};
+    operationCarburants.forEach(element => {
+      const createdAt = element.createdAt.toISOString().split("T")[0];
+      const grutier = element.GrutierId;
+      const carburant = element.get({plain: true});
+      const type = carburant.type;
+      result[createdAt] = result[createdAt] || {};
+      result[createdAt][grutier] = result[createdAt][grutier] || {};
+      result[createdAt][grutier][type] = result[createdAt][grutier][type] || {};
+      result[createdAt][grutier][type] = {...result[createdAt][grutier][type], ...carburant };
+    });
+    res.json(result);
   } catch (error) {
     next(error)
   }
