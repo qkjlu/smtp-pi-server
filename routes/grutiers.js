@@ -30,26 +30,52 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+
+function setCarburantRow(row){
+  //check if each type is defined
+  let difAvailable = row["début"] != undefined && row["fin"] != undefined ;
+  let volDebut = row["début"] != undefined ? row["début"] : "non cummuniqué";
+  let volFin = row["fin"] != undefined ? row["fin"] : 0;
+  let ajout = row["ajout"]!= undefined ? row["ajout"] : "non cummuniqué";
+  // calculate diff
+  let diff = difAvailable ? volDebut + ajout - volFin : "non cummuniqué";
+  let result = { date: "date", nom: "nom", volDebut: volDebut, ajout : ajout, volFin : volFin, diff : diff};
+  return result;
+}
+
 router.get("/carburant", async (req, res, next) => {
   try {
     let operationCarburants = await OperationCarburant.findAll({include: {
       model : Grutier
     }});
 
-    let b = {};
-    for(i=0;i<operationCarburants.length;i++){
-      let splittedDate = operationCarburants[i].createdAt.toISOString().split("T");
-      let date= splittedDate[0];
-      console.log(date);
-      b[date] = [];
+    let result = [];
+    let date = [];
+    let grutiers = [];
+    //parcourir chaque date
+    for(var i= 0; i < date.length; i++){
+      // ajouter la date
+      //parcourir chaque grutier
+      for(var i= 0; i < grutier.length; i++){
+        // ajouter la date et le nom
+        let row = setCarburant(grutiers[i]);
+        result.push(row);
+      }
     }
-
-    for(i=0;i<operationCarburants.length;i++){
-      let splittedDate = operationCarburants[i].createdAt.toISOString().split("T");
-      let date= splittedDate[0];
-      //b[date].push(operationCarburants[i]);
-      b[date] = [ ...b[date], operationCarburants[i] ]
-    }
+    // let b = {};
+    // for(i=0;i<operationCarburants.length;i++){
+    //   let splittedDate = operationCarburants[i].createdAt.toISOString().split("T");
+    //   let date= splittedDate[0];
+    //   console.log(date);
+    //   b[date] = [];
+    // }
+    //
+    // for(i=0;i<operationCarburants.length;i++){
+    //   let splittedDate = operationCarburants[i].createdAt.toISOString().split("T");
+    //   let date= splittedDate[0];
+    //   //b[date].push(operationCarburants[i]);
+    //   b[date] = [ ...b[date], operationCarburants[i] ]
+    // }
 
     res.json(b);
   } catch (error) {
