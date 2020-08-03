@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "retour"
     });
     Route.hasMany(models.Waypoint);
-    
+    Route.belongsToMany(models.JourSemaine, { through: "Coef" });
   };
   return Route;
 };
