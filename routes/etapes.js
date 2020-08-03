@@ -367,6 +367,41 @@ router.get("/chantiers/:ChantierId/date/:date/nombre", async (req, res, next) =>
     }
 });
 
+router.get("/chantiers/:ChantierId/camionneurs/:CamionneurId/date/:date/nombre", async (req, res, next) => {
+
+    const { ChantierId, CamionneurId } = req.params;
+    const dateRequest = req.params.date
+
+    // set the beginning date to 00:00 and te end to 23:59
+    const dateDebut = dateRequest + "T00:00:00.000Z";
+    const dateFin = dateRequest + "T23:59:59.000Z";
+
+    try {
+        //const chargement = await Etape.findAll({where :  { type : "enChargement", ChantierId, [Op.not] : {dateFin : null} }});
+        const chargement = await Etape.findAll({where :  { type : "enChargement",
+          ChantierId,
+          dateDebut : { [Op.gte] : new Date(dateDebut) },
+          dateFin:{ [Op.lt]: new Date(dateFin)},
+          CamionneurId
+         }});
+        const dechargement = await Etape.findAll({where :  { type : "enDéchargement",
+          ChantierId,
+          dateDebut : { [Op.gte] : new Date(dateDebut) },
+          dateFin:{ [Op.lt]: new Date(dateFin)},
+          CamionneurId
+         }});
+        const result = {
+            chargé : chargement,
+            déchargé : dechargement
+        }
+        res.json({result});
+    } catch (error) {
+        next(error)
+    }
+});
+
+
+
 router.get("/chantiers/nombre/", async (req, res, next) => {
     try {
         const chargement = await Etape.findAll({where :  { type : "enChargement", [Op.not] : {dateFin : null} } });
