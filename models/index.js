@@ -20,7 +20,9 @@ const db = {
   Pause: sequelize.import(__dirname + "/pause"),
   OperationCarburant: sequelize.import(__dirname + "/operation_carburant"),
   Prelevement: sequelize.import(__dirname + "/prelevement"),
-  Materiau: sequelize.import(__dirname + "/materiau")
+  Materiau: sequelize.import(__dirname + "/materiau"),
+  JourSemaine: sequelize.import(__dirname + "/jour_semaine"),
+  Coef: sequelize.import(__dirname + "/coef")
 };
 
 Object.keys(db).forEach((modelName) => {

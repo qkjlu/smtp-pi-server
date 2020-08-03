@@ -2,6 +2,9 @@ const router = require("express").Router();
 const sequelize = require("../models").sequelize;
 const Chantier = require("../models").sequelize.model("Chantier");
 const Route = require("../models").sequelize.model("Route");
+const JourSemaine = require("../models").sequelize.model("JourSemaine");
+const Coef = require("../models").sequelize.model("Coef");
+
 const _ = require("lodash");
 const { updateChantierRules, deleteRules, validate } = require("./helpers/validator");
 const { createLogger } = require("winston");
@@ -78,6 +81,12 @@ router.put("/:id/route/:type", async (req, res, next) => {
     const route = await sequelize.model("Route").create();
     if (type == "aller") chantier.setAller(route);
     else if (type == "retour") chantier.setRetour(route);
+
+    const jours = await JourSemaine.findAll();
+    jours.forEach(jour => {
+      Coef.create({ RouteId: route.id, JourSemaineId: jour.id, value: 1.25 });
+    });
+
     waypoints.map(async w => {
       const createdWaypoint = await sequelize.model("Waypoint").create({ longitude: w.longitude, latitude: w.latitude, ordre: w.ordre });
       await createdWaypoint.setRoute(route);
@@ -88,11 +97,43 @@ router.put("/:id/route/:type", async (req, res, next) => {
   }
 });
 
+router.patch("/:id/route/:type/coefs", async (req, res, next) => {
+  try {
+    const { id, type } = req.params;
+    const { day, value } = req.body;
+    const chantier = await Chantier.findByPk(id, { include : type});
+    const jour = await JourSemaine.findOne({ where : { nom: day }});
+    const route = chantier[type];
+    const result = await Coef.update({value}, {where : { RouteId: route.id, JourSemaineId: jour.id }});
+    res.sendStatus(200);
+  } catch (error) {
+    next(error)
+  }
+});
+
+router.get("/:id/route/:type/coefs", async (req, res, next) => {
+  try {
+    const { id, type } = req.params;
+    const chantier = await Chantier.findByPk(id,{ 
+      include : {
+        model: Route, 
+        as: type,
+        include : {
+          model: JourSemaine
+        }
+      }
+    });
+    res.json(chantier)
+  } catch (error) {
+    next(error)
+  }
+});
+
 router.get("/:id/route/:type", async (req, res, next) => {
   try {
     const { id } = req.params;
     const { type } = req.params;
-    const chantier = await Chantier.findByPk(id);
+    const chantier = await Chantier.findByPk(id, { include : type});
     let route = null;
     if (type == "aller") route = await chantier.getAller();
     else if (type == "retour") route = await chantier.getRetour();
