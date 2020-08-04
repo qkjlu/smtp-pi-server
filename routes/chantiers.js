@@ -77,15 +77,21 @@ router.put("/:id/route/:type", async (req, res, next) => {
   try {
     const { id, type } = req.params;
     const { waypoints } = req.body;
-    const chantier = await Chantier.findByPk(id);
-    const route = await sequelize.model("Route").create();
+    const chantier = await Chantier.findByPk(id, { include : { model: Route, as: type }});
+    let route = chantier[type];
+
+    if(route === undefined){
+      route = await sequelize.model("Route").create();
+      const jours = await JourSemaine.findAll();
+      jours.forEach(jour => {
+        Coef.create({ RouteId: route.id, JourSemaineId: jour.id, value: 1.25 });
+      });
+    } else {
+      const previousWaypoints = await route.getWaypoints();
+      previousWaypoints.forEach(pw => pw.destroy());
+    }
     if (type == "aller") chantier.setAller(route);
     else if (type == "retour") chantier.setRetour(route);
-
-    const jours = await JourSemaine.findAll();
-    jours.forEach(jour => {
-      Coef.create({ RouteId: route.id, JourSemaineId: jour.id, value: 1.25 });
-    });
 
     waypoints.map(async w => {
       const createdWaypoint = await sequelize.model("Waypoint").create({ longitude: w.longitude, latitude: w.latitude, ordre: w.ordre });
