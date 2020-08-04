@@ -11,17 +11,17 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-jwt": "^5.3.3",
-    "express-validator": "^6.5.0",
+    "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "lowdb": "^1.0.0",
     "nodemon": "^2.0.4",
-    "pg": "^8.2.1",
+    "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^5.21.13",
+    "sequelize": "^5.22.3",
     "socket.io": "^2.3.0",
     "uuid": "^7.0.3",
-    "winston": "^3.2.1"
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "sequelize-cli": "^5.5.1"
@@ -29,7 +29,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "archive" : "git archive -o smtp.zip --format=zip HEAD"
+    "archive": "git archive -o smtp.zip --format=zip HEAD"
   },
   "author": "Lucas Mas",
   "license": "ISC",
