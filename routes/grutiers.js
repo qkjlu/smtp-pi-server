@@ -30,6 +30,25 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// function used in the endpoint : GET : /carburants
+function setCarburantRow(row, date ){
+  //check if each type is defined
+  let name = "non communiqué";
+  if(row["début"] != undefined){
+    name = row["début"].Grutier.nom + " " + row["début"].Grutier.prenom;
+  }else if(row["fin"] != undefined){
+    name = row["fin"].Grutier.nom + " " + row["fin"].Grutier.prenom;
+  }
+  let difAvailable = row["début"] != undefined && row["fin"] != undefined ;
+  let volDebut = row["début"] != undefined ? row["début"].volume : "non cummuniqué";
+  let volFin = row["fin"] != undefined ? row["fin"].volume : "non cummuniqué";
+  let ajout = row["ajout"]!= undefined ? row["ajout"].volume : 0;
+  // calculate diff
+  let diff = difAvailable ? volDebut + ajout - volFin : "non cummuniqué";
+  let result = { date: date, nom: name , volDebut: volDebut, ajout : ajout, volFin : volFin, diff : diff};
+  return result;
+}
+
 router.get("/carburants", async (req, res, next) => {
   try {
     let operationCarburants = await OperationCarburant.findAll({include: {
@@ -47,7 +66,19 @@ router.get("/carburants", async (req, res, next) => {
       result[createdAt][grutier][type] = result[createdAt][grutier][type] || {};
       result[createdAt][grutier][type] = {...result[createdAt][grutier][type], ...carburant };
     });
-    res.json(result);
+
+    let resultat = [];
+    //parcourir chaque date
+    for(let date in result){
+      let i = result[date];
+      //parcourir chaque grutier
+      for(let grutier in i){
+        let row = setCarburantRow(i[grutier],date);
+        resultat.push(row);
+      }
+    }
+
+    res.json(resultat);
   } catch (error) {
     next(error)
   }
