@@ -51,7 +51,7 @@ router.patch("/:id", async (req, res, next) => {
   const { dateFin } = req.body;
   const { id } = req.params;
   try {
-    await Etape.update({ dateFin }, { where: { id } });
+    await Pause.update({ dateFin }, { where: { id } });
     res.sendStatus(204);
   } catch (error) {
     next(error);
