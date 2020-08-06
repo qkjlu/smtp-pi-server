@@ -1,5 +1,5 @@
 const uuid = require('uuid').v4
-const Model = require('sequelize').Model; 
+const Model = require('sequelize').Model;
 
 module.exports = (sequelize, DataTypes) => {
     class Prelevement extends Model {}
@@ -18,10 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       { sequelize, modelName: "Prelevement" }
     );
     Prelevement.associate = models => {
-      Prelevement.belongsTo(models.Lieu, { as: "lieuChargement" });
-      Prelevement.belongsTo(models.Lieu, { as: "lieuDéchargement" });
-      Prelevement.belongsTo(models.Materiau);
-      Prelevement.belongsTo(models.Camionneur);
+      Prelevement.belongsTo(models.Lieu, { as: "lieuChargement", allowNull: false  });
+      Prelevement.belongsTo(models.Lieu, { as: "lieuDéchargement", allowNull: false });
+      Prelevement.belongsTo(models.Materiau, { allowNull: false });
+      Prelevement.belongsTo(models.Camionneur, { allowNull: false });
     }
     return Prelevement;
   };

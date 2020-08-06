@@ -23,6 +23,7 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
     try {
         const prelevements = await Prelevement.findAll({
+            order: [['updatedAt', 'DESC']],
             include: { all: true }
         });
         res.status(200).json(prelevements);
