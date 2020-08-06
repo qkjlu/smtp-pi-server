@@ -79,8 +79,8 @@ router.put("/:id/route/:type", async (req, res, next) => {
     const { waypoints } = req.body;
     const chantier = await Chantier.findByPk(id, { include : { model: Route, as: type }});
     let route = chantier[type];
-
-    if(route === undefined){
+    
+    if(_.isNull(route)){
       route = await sequelize.model("Route").create();
       const jours = await JourSemaine.findAll();
       jours.forEach(jour => {
@@ -90,6 +90,7 @@ router.put("/:id/route/:type", async (req, res, next) => {
       const previousWaypoints = await route.getWaypoints();
       previousWaypoints.forEach(pw => pw.destroy());
     }
+
     if (type == "aller") chantier.setAller(route);
     else if (type == "retour") chantier.setRetour(route);
 
