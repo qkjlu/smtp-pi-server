@@ -68,6 +68,7 @@ app.use("/versions", routes.versions);
 app.use("/pauses", routes.pauses);
 app.use("/prelevements", routes.prelevements);
 app.use("/materiaux", routes.materiaux);
+app.use("/sorties",routes.sorties)
 
 
 app.get("/", (req, res) => {

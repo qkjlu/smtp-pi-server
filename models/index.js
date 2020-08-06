@@ -22,7 +22,8 @@ const db = {
   Prelevement: sequelize.import(__dirname + "/prelevement"),
   Materiau: sequelize.import(__dirname + "/materiau"),
   JourSemaine: sequelize.import(__dirname + "/jour_semaine"),
-  Coef: sequelize.import(__dirname + "/coef")
+  Coef: sequelize.import(__dirname + "/coef"),
+  Sortie: sequelize.import(__dirname + "/sortie"),
 };
 
 Object.keys(db).forEach((modelName) => {

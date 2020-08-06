@@ -10,3 +10,4 @@ exports.versions = require(__dirname + '/versions');
 exports.pauses = require(__dirname + '/pauses');
 exports.prelevements = require(__dirname + '/prelevements');
 exports.materiaux = require(__dirname + '/materiaux');
+exports.sorties = require(__dirname + '/sorties');
