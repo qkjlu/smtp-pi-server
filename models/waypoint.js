@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     );
     Waypoint.associate = (models) => {
         Waypoint.belongsTo(models.Route);
+        Waypoint.belongsTo(models.Sortie);
     };
     return Waypoint;
 };
