@@ -9,8 +9,14 @@ router.put("/", async (req, res, next) => {
     if (!(type && numero)) {
       res.sendStatus(400);
     }
-    const { id } =  await Version.findOne({ where: {type : type} });
-    await Version.update({type, numero},{where : { id }});
+    const version = await Version.findOne({ where: {type : type} });
+    if(_.isNull(version)){
+      await Version.create({type, numero});
+    } else {
+      const { id } =  version;
+      await Version.update({type, numero},{where : { id }});
+    }
+
     res.sendStatus(204);
   }catch(error){
     next(error);
