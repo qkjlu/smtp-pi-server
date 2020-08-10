@@ -48,6 +48,14 @@ router.post("/point",async (req, res, next) => {
     }
 });
 
+router.get("/nouveaux", async (req, res, next) =>{
+    try {
+        res.json(await Sortie.count({where: { ouvert : 0 } }));
+    } catch (error) {
+        next(error)
+    }
+});
+
 router.get("/:id", async (req, res, next) =>{
     const { id } = req.params;
     try {
@@ -88,5 +96,7 @@ router.delete("/",
         }
     }
 );
+
+
 
 module.exports = router;
