@@ -24,6 +24,7 @@ router.post("/", async (req, res, next) => {
                 type,
                 CamionneurId,
                 ChantierId,
+                ouvert : 0,
             })
         );
     } catch (error) {
@@ -76,5 +77,16 @@ router.patch("/:id", async (req, res, next) => {
         next(error);
     }
 });
+
+router.delete("/",
+    async (req, res, next) => {
+        try {
+            const { id } = req.body;
+            res.status(204).json(await Sortie.destroy({ where: { id: id } }));
+        } catch (error) {
+            next(error);
+        }
+    }
+);
 
 module.exports = router;

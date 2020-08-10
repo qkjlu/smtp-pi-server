@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.DATE,
                 allowNull: true,
             },
+            ouvert : {
+                type : DataTypes.BOOLEAN,
+                allowNull : false,
+            }
         },
         { sequelize, modelName: "Sortie" }
     );
