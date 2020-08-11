@@ -24,6 +24,7 @@ const db = {
   JourSemaine: sequelize.import(__dirname + "/jour_semaine"),
   Coef: sequelize.import(__dirname + "/coef"),
   Sortie: sequelize.import(__dirname + "/sortie"),
+  WorkTime: sequelize.import(__dirname + "/work_time")
 };
 
 Object.keys(db).forEach((modelName) => {
@@ -32,7 +33,7 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-sequelize.sync({ alter: true }).catch( e => console.error(e) );
+sequelize.sync({ alter: false }).catch( e => console.error(e) );
 
 exports.MockData = require(__dirname + "/MockData");
 exports.sequelize = sequelize;

@@ -4,6 +4,7 @@ const Grutier = sequelize.model("Grutier");
 const OperationCarburant = sequelize.model("OperationCarburant");
 const Entreprise = sequelize.model("Entreprise");
 const Lieu = sequelize.model("Lieu");
+const WorkTime = sequelize.model("WorkTime");
 var _ = require("lodash");
 var jwt = require("jsonwebtoken");
 const helper = require("./helpers/helper");
@@ -99,7 +100,7 @@ router.get("/:id/entreprises", async (req, res, next) => {
 router.put("/:id/carburant", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { volume, type } = req.body;
+    const { volume, type, machine_time } = req.body;
     const grutier = await Grutier.findByPk(id);
     const existingOperationCarburant = await grutier.getOperationCarburants();
 
@@ -109,18 +110,47 @@ router.put("/:id/carburant", async (req, res, next) => {
       await OperationCarburant.upsert({
         id: existingOperation.id,
         type,
-        volume
+        volume,
+        machine_time
       })
     } else {
       const operationCarburant = await OperationCarburant.create({
         type,
-        volume
+        volume,
+        machine_time
       })
       await operationCarburant.setGrutier(grutier);
     }
     // ------------------
 
     res.sendStatus(200);
+  } catch (error) {
+    next(error)
+  }
+});
+
+router.put("/:id/work-time", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { idWorkTime, hour, minute } = req.body;
+    await WorkTime.upsert({id: idWorkTime, hour, minute, GrutierId: id});
+    res.sendStatus(200);
+  } catch (error) {
+    next(error)
+  }
+});
+
+router.get("/:id/work-time", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const grutier = await Grutier.findByPk(id);
+    const worktimes = await grutier.getWorkTimes();
+    let response;
+    worktimes.forEach( worktime => {
+      let date = worktime.createdAt.toISOString().split("T")[0];
+      response = { ...response, [date] : {hour: worktime.hour, minute: worktime.minute} };
+    });
+    res.json(response);
   } catch (error) {
     next(error)
   }
