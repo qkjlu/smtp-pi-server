@@ -19,7 +19,6 @@ router.get("/v5/mapbox/driving-traffic/:coordinates", async (req, res, next) => 
             flattenSteps = [...flattenSteps, ...leg.steps];
         })
         direction.matchings[0].legs = [{ steps: flattenSteps }];
-        console.log(direction);
         res.json(direction);
     } catch (error) {
         next(error)
