@@ -2,9 +2,6 @@ const router = require("express").Router();
 const _ = require("lodash");
 const fetch = require('node-fetch');
 
-const { createLogger } = require("winston");
-const { directions } = require(".");
-
 router.get("/v5/gh/car/:coordinates", async (req, res, next) => {
   try {
     const { coordinates } = req.params;
