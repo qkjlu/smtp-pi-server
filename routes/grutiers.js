@@ -133,8 +133,8 @@ router.put("/:id/work-time", async (req, res, next) => {
   try {
     const { id } = req.params;
     const { idWorkTime, hour, minute } = req.body;
-    await WorkTime.upsert({id: idWorkTime, hour, minute, GrutierId: id});
-    res.sendStatus(200);
+    const result = await WorkTime.upsert({id: idWorkTime, hour, minute, GrutierId: id}, { returning: true });
+    res.status(201).json(result);
   } catch (error) {
     next(error)
   }
