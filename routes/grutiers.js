@@ -97,6 +97,27 @@ router.get("/:id/entreprises", async (req, res, next) => {
   helper.getAssociatedById(Grutier, Entreprise, req, res, next);
 });
 
+router.get("/:id/carburant/:date", async (req, res, next) => {
+  try {
+    const { id, date } = req.params;
+    const dateObj = new Date(Number(date));
+    const grutier = await Grutier.findByPk(id);
+    const operationCarburants = await grutier.getOperationCarburants();
+    const byDate = operationCarburants.filter(e => {
+      const createdAt = e.createdAt;
+      return ( 
+        dateObj.getDate() === createdAt.getDate()
+        && dateObj.getMonth() === createdAt.getMonth()
+        && dateObj.getFullYear() == createdAt.getFullYear()
+        )
+    })
+    res.json(byDate);
+  } catch (error) {
+    next(error)
+  }
+  
+});
+
 router.put("/:id/carburant", async (req, res, next) => {
   try {
     const { id } = req.params;
