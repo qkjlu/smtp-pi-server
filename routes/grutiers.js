@@ -121,24 +121,31 @@ router.get("/:id/carburant/:date", async (req, res, next) => {
 router.put("/:id/carburant", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { volume, type, machine_time } = req.body;
+    const { volume, type } = req.body;
     const grutier = await Grutier.findByPk(id);
     const existingOperationCarburant = await grutier.getOperationCarburants();
-
+    const todayDate = new Date();
     // Create if the operation doesn't exist, update if not
-    const existingOperation = existingOperationCarburant.find( e => e.type === type);
+    const existingOperation = existingOperationCarburant.find( e => {
+          return (
+            e.type === type 
+            && todayDate.getDate() === e.createdAt.getDate()
+            && todayDate.getMonth() === e.createdAt.getMonth()
+            && todayDate.getFullYear() == e.createdAt.getFullYear()
+          )
+        }
+      );
+  
     if(existingOperation !== undefined){
       await OperationCarburant.upsert({
         id: existingOperation.id,
         type,
         volume,
-        machine_time
       })
     } else {
       const operationCarburant = await OperationCarburant.create({
         type,
         volume,
-        machine_time
       })
       await operationCarburant.setGrutier(grutier);
     }
