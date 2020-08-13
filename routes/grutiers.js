@@ -148,7 +148,7 @@ router.get("/:id/work-time", async (req, res, next) => {
     let response;
     worktimes.forEach( worktime => {
       let date = worktime.createdAt.toISOString().split("T")[0];
-      response = { ...response, [date] : {hour: worktime.hour, minute: worktime.minute} };
+      response = { ...response, [date] : {id: worktime.id, hour: worktime.hour, minute: worktime.minute} };
     });
     res.json(response);
   } catch (error) {
