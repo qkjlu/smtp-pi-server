@@ -2,27 +2,27 @@ const uuid = require('uuid').v4
 const Model = require('sequelize').Model; 
 
 module.exports = (sequelize, DataTypes) => {
-    class OperationCarburant extends Model {}
-    OperationCarburant.init(
+    class WorkTime extends Model {}
+    WorkTime.init(
       {
         id: {
           primaryKey: true,
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4
         },
-        type: {
-          type: DataTypes.STRING,
+        hour: {
+          type: DataTypes.INTEGER,
           allowNull: false,
         },
-        volume: {
-          type: DataTypes.FLOAT,
+        minute: {
+          type: DataTypes.INTEGER,
           allowNull: false,
         },
       },
-      { sequelize, modelName: "OperationCarburant"  }
+      { sequelize, modelName: "WorkTime"  }
     );
-    OperationCarburant.associate = models => {
-      OperationCarburant.belongsTo(models.Grutier);
+    WorkTime.associate = models => {
+      WorkTime.belongsTo(models.Grutier);
     }
-    return OperationCarburant;
+    return WorkTime;
   };

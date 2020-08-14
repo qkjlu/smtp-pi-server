@@ -53,7 +53,8 @@ app.use(
       "/io",
       "/socketdoc/index.html",
       "/favicon.ico",
-      /.*\/directions/
+      /.*\/directions/,
+      /.*\/matching/
     ],
   })
 );
@@ -71,6 +72,7 @@ app.use("/prelevements", routes.prelevements);
 app.use("/materiaux", routes.materiaux);
 app.use("/sorties",routes.sorties);
 app.use("/directions", routes.directions);
+app.use("/matching", routes.matching);
 
 
 app.get("/", (req, res) => {

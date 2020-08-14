@@ -4,6 +4,7 @@ const Grutier = sequelize.model("Grutier");
 const OperationCarburant = sequelize.model("OperationCarburant");
 const Entreprise = sequelize.model("Entreprise");
 const Lieu = sequelize.model("Lieu");
+const WorkTime = sequelize.model("WorkTime");
 var _ = require("lodash");
 var jwt = require("jsonwebtoken");
 const helper = require("./helpers/helper");
@@ -96,31 +97,88 @@ router.get("/:id/entreprises", async (req, res, next) => {
   helper.getAssociatedById(Grutier, Entreprise, req, res, next);
 });
 
+router.get("/:id/carburant/:date", async (req, res, next) => {
+  try {
+    const { id, date } = req.params;
+    const dateObj = new Date(Number(date));
+    const grutier = await Grutier.findByPk(id);
+    const operationCarburants = await grutier.getOperationCarburants();
+    const byDate = operationCarburants.filter(e => {
+      const createdAt = e.createdAt;
+      return ( 
+        dateObj.getDate() === createdAt.getDate()
+        && dateObj.getMonth() === createdAt.getMonth()
+        && dateObj.getFullYear() == createdAt.getFullYear()
+        )
+    })
+    res.json(byDate);
+  } catch (error) {
+    next(error)
+  }
+  
+});
+
 router.put("/:id/carburant", async (req, res, next) => {
   try {
     const { id } = req.params;
     const { volume, type } = req.body;
     const grutier = await Grutier.findByPk(id);
     const existingOperationCarburant = await grutier.getOperationCarburants();
-
+    const todayDate = new Date();
     // Create if the operation doesn't exist, update if not
-    const existingOperation = existingOperationCarburant.find( e => e.type === type);
+    const existingOperation = existingOperationCarburant.find( e => {
+          return (
+            e.type === type 
+            && todayDate.getDate() === e.createdAt.getDate()
+            && todayDate.getMonth() === e.createdAt.getMonth()
+            && todayDate.getFullYear() == e.createdAt.getFullYear()
+          )
+        }
+      );
+  
     if(existingOperation !== undefined){
       await OperationCarburant.upsert({
         id: existingOperation.id,
         type,
-        volume
+        volume,
       })
     } else {
       const operationCarburant = await OperationCarburant.create({
         type,
-        volume
+        volume,
       })
       await operationCarburant.setGrutier(grutier);
     }
     // ------------------
 
     res.sendStatus(200);
+  } catch (error) {
+    next(error)
+  }
+});
+
+router.put("/:id/work-time", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { idWorkTime, hour, minute } = req.body;
+    const result = await WorkTime.upsert({id: idWorkTime, hour, minute, GrutierId: id}, { returning: true });
+    res.status(201).json(result);
+  } catch (error) {
+    next(error)
+  }
+});
+
+router.get("/:id/work-time", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const grutier = await Grutier.findByPk(id);
+    const worktimes = await grutier.getWorkTimes();
+    let response;
+    worktimes.forEach( worktime => {
+      let date = worktime.createdAt.toISOString().split("T")[0];
+      response = { ...response, [date] : {id: worktime.id, hour: worktime.hour, minute: worktime.minute} };
+    });
+    res.json(response);
   } catch (error) {
     next(error)
   }
