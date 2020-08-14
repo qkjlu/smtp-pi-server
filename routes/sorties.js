@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-    const { id, dateDebut, type, CamionneurId, ChantierId } = req.body;
+    const { id, dateDebut, type, CamionneurId, ChantierId , ouvert } = req.body;
     if (!( dateDebut && type && CamionneurId && ChantierId)) {
         res.sendStatus(400);
     }
@@ -24,7 +24,7 @@ router.post("/", async (req, res, next) => {
                 type,
                 CamionneurId,
                 ChantierId,
-                ouvert : 0,
+                ouvert,
             })
         );
     } catch (error) {
@@ -86,10 +86,10 @@ router.patch("/:id", async (req, res, next) => {
     }
 });
 
-router.delete("/",
+router.delete("/:id",
     async (req, res, next) => {
         try {
-            const { id } = req.body;
+            const { id } = req.params;
             res.status(204).json(await Sortie.destroy({ where: { id: id } }));
         } catch (error) {
             next(error);
@@ -97,6 +97,25 @@ router.delete("/",
     }
 );
 
+router.delete("/",
+    async (req, res, next) => {
+        try {
+            res.status(204).json(await Sortie.destroy({where : {}}));
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
+router.delete("/ouverts",
+    async (req, res, next) => {
+        try {
+            res.status(204).json(await Sortie.destroy({where : {ouvert : true}}));
+        } catch (error) {
+            next(error);
+        }
+    }
+);
 
 
 module.exports = router;
