@@ -33,7 +33,7 @@ router.post("/", async (req, res, next) => {
 });
 
 router.post("/point",async (req, res, next) => {
-    const { longitude, latitude, ordre, SortieId } = req.body;
+    const { id, longitude, latitude, ordre, SortieId } = req.body;
     try {
         res.status(201).json(
             await Waypoint.create({
@@ -41,6 +41,7 @@ router.post("/point",async (req, res, next) => {
                 latitude,
                 ordre,
                 SortieId,
+                id,
             })
         );
     } catch (error) {
